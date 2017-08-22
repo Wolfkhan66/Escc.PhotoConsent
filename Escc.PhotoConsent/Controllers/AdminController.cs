@@ -21,7 +21,7 @@ namespace Escc.PhotoConsent.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateForm(AdminCreateFormModel model)
+        public ActionResult CreateForm(ConsentFormModel model)
         {
             return View(model);
         }

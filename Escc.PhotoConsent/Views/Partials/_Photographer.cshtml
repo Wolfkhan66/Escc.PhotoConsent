@@ -1,23 +1,23 @@
-﻿@model Escc.PhotoConsent.Models.DataModels.AdminCreateFormModel
+﻿@model Escc.PhotoConsent.Models.DataModels.PhotographerModel
 
 <div class="col-sm-6 col-md-6 col-lg-6">
     <div class="panel panel-default">
         <div class="panel-heading">Photographer / Videographer</div>
         <div class="panel-body">
             <div class="row well-sm">
-                @Html.LabelFor(model => model.Photographer_Name, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Participant_Name, new { @placeholder = "Jane Doe", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Photographer_Name, null, new { @class = "alert alert-error" })
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { @placeholder = "Jane Doe", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "alert alert-error" })
             </div>
             <div class="row well-sm">
-                @Html.LabelFor(model => model.Photographer_Email, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Photographer_Email, new { @placeholder = "Jane@doe.com", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Photographer_Email, null, new { @class = "alert alert-error" })
+                @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Email, new { @placeholder = "Jane@doe.com", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "alert alert-error" })
             </div>
             <div class="row well-sm">
-                @Html.LabelFor(model => model.Photographer_ContactNumber, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Photographer_ContactNumber, new { @placeholder = "01234567890", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Photographer_ContactNumber, null, new { @class = "alert alert-error" })
+                @Html.LabelFor(model => model.ContactNumber, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.ContactNumber, new { @placeholder = "01234567890", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ContactNumber, null, new { @class = "alert alert-error" })
             </div>
         </div>
     </div>
