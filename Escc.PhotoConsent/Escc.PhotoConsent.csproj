@@ -180,6 +180,13 @@
     <Content Include="Views\Partials\_CommissioningOfficer.cshtml" />
     <Content Include="Views\Partials\_Photographer.cshtml" />
     <Content Include="Views\Partials\_NewConsentForm.cshtml" />
+    <Content Include="Web.example.config" />
+    <Content Include="Web.example.Debug.config">
+      <DependentUpon>Web.example.config</DependentUpon>
+    </Content>
+    <Content Include="Web.example.Release.config">
+      <DependentUpon>Web.example.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
