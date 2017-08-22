@@ -3,6 +3,8 @@
 
 # Manual Files
 Escc.PhotoConsent/Web.config
+Escc.PhotoConsent/Web.Debug.config
+Escc.PhotoConsent/Web.Release.config
 
 # User-specific files
 *.suo

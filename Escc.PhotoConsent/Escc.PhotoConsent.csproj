@@ -180,6 +180,13 @@
     <Content Include="Web.example.Release.config">
       <DependentUpon>Web.example.config</DependentUpon>
     </Content>
+    <None Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
