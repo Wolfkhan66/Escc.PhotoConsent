@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PetaPoco;
+using Escc.PhotoConsent.Models.DataModels;
 
 namespace Escc.PhotoConsent.Services
 {
@@ -24,9 +25,9 @@ namespace Escc.PhotoConsent.Services
         /// Run SP to input the consent form into the database
         /// </summary>
         /// <param name="model">ConsentFormModel - </param>
-        public void InsertConsentForm()
+        public void InsertConsentForm(ConsentFormModel model)
         {
-            //_db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes });
+            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes });
         }
 
         //TO DO 
@@ -41,9 +42,9 @@ namespace Escc.PhotoConsent.Services
         /// Run SP to input a participant into the database
         /// </summary>
         /// <param name="model">ParticipantModel - </param>
-        public void InsertParticipant()
+        public void InsertParticipant(ParticipantModel model)
         {
-            //_db.Execute("EXEC InsertParticipant @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });
+            _db.Execute("EXEC InsertParticipant @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });
         }
 
         //TO DO 
@@ -58,7 +59,7 @@ namespace Escc.PhotoConsent.Services
         /// Run SP to input a Commissioning Officer into the database
         /// </summary>
         /// <param name="model">ConsentFormModel - </param>
-        public void InsertCommissioningOfficer()
+        public void InsertCommissioningOfficer(CommissioningOfficerModel model)
         {
             //_db.Execute("EXEC InsertCommissioningOfficer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
         }
@@ -75,9 +76,9 @@ namespace Escc.PhotoConsent.Services
         /// Run SP to input a Photographer into the database
         /// </summary>
         /// <param name="model">ConsentFormModel - </param>
-        public void InsertPhotographer()
+        public void InsertPhotographer(PhotographerModel model)
         {
-            //_db.Execute("EXEC InsertPhotographer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
+            _db.Execute("EXEC InsertPhotographer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
         }
 
         //TO DO 
@@ -92,9 +93,9 @@ namespace Escc.PhotoConsent.Services
         /// Run SP to input an image into the database
         /// </summary>
         /// <param name="model">ConsentFormModel - </param>
-        public void InsertPhoto()
+        public void InsertPhoto(PhotoModel model)
         {
-            //_db.Execute("EXEC InsertPhoto @ParticipantID, @Image", new { model.ParticipantID, model.Image });
+            _db.Execute("EXEC InsertPhoto @ParticipantID, @Image", new { model.ParticipantID, model.Image });
         }
 
         //TO DO 

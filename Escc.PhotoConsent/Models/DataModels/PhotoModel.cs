@@ -9,6 +9,6 @@ namespace Escc.PhotoConsent.Models.DataModels
     {
         public int PhotoID { get; set; }
         public int ParticipantID { get; set; }
-        // public something Image { get; set; }
+        public string Image { get; set; }
     }
 }

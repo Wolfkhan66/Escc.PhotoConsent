@@ -11,7 +11,7 @@ namespace Escc.PhotoConsent.Models.DataModels
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
         public string ProjectReference { get; set; }
-        public DateTime DateSubmitted { get; set; }
+        public DateTime? DateSubmitted { get; set; }
         public bool ConsentGiven { get; set; }
         public string Notes { get; set; }
     }
