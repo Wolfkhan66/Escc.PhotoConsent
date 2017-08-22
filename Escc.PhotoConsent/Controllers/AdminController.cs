@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Escc.PhotoConsent.Models.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,18 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [Route("ViewForms", Name = "ViewForms")]
+        public ActionResult ViewForms()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateForm(AdminCreateFormModel model)
+        {
+            return View(model);
         }
     }
 }

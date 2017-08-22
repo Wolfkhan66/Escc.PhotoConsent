@@ -13,6 +13,9 @@ namespace Escc.PhotoConsent
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Map Custom Routes
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

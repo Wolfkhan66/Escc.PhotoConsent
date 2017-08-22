@@ -1,4 +1,62 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Escc.PhotoConsent.Models.DataModels.AdminCreateFormModel
+<p></p>
+<div class="jumbotron">
+    <h1>Escc.PhotoConsent</h1>
+    <p><b>Welcome to the admin application for Escc.PhotoConsent.</b></p>
+    <p>This application allows you to view, create and manage consent forms for participants of photoshoots and videos.</p>
+</div>
 
+<div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Create New Form</h3>
+            </div>
+            <div class="panel-body">
+                <p>Click here to create a new consent form.</p>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreateFormModal">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">View Consent Forms</h3>
+            </div>
+            <div class="panel-body">
+                <p>Click here to view and manage consent forms.</p>
+                @Html.RouteLink("View", "ViewForms", new { }, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("CreateForm", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="modal fade" id="CreateFormModal" tabindex="-1" role="dialog" aria-labelledby="CreateFormModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="CreateFormModalLabel">Create New Consent Form</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{Html.RenderPartial("~/Views/Partials/_NewConsentForm.cshtml", Model);}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            }
