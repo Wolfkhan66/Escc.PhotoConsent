@@ -1,4 +1,5 @@
 ﻿@using Escc.PhotoConsent.Models.DataModels
+@model string
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreatePhotographerModal">
     Create
@@ -15,7 +16,11 @@
                         <h4 class="modal-title" id="CreatePhotographerModalLabel">Create New Photographer</h4>
                     </div>
                     <div class="modal-body">
-                        @{Html.RenderPartial("~/Views/Partials/_Photographer.cshtml", new PhotographerModel());}
+                        @{
+                            PhotographerModel FormModel = new PhotographerModel();
+                            FormModel.FormID = int.Parse(Model);
+                        }
+                        @{Html.RenderPartial("~/Views/Partials/_Photographer.cshtml", FormModel);}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

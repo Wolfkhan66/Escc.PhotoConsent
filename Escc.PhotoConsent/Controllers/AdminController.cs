@@ -41,5 +41,25 @@ namespace Escc.PhotoConsent.Controllers
             var FormID = _databaseService.GetFormIDAfterCreation(model.ProjectReference, model.DateCreated, model.CreatedBy);
             return RedirectToRoute("ViewForm", new { ID = FormID });
         }
+
+        [HttpPost]
+        public ActionResult CreateOfficer(CommissioningOfficerModel model)
+        {
+            _databaseService.InsertCommissioningOfficer(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+
+        [HttpPost]
+        public ActionResult CreateParticipant(ParticipantModel model)
+        {
+            _databaseService.InsertParticipant(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+        [HttpPost]
+        public ActionResult CreatePhotographer(PhotographerModel model)
+        {
+            _databaseService.InsertPhotographer(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
     }
 }
