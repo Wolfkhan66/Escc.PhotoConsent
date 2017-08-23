@@ -35,13 +35,13 @@ namespace Escc.PhotoConsent.Services
         /// Run query to get form ID form by Project Reference, Date Created and Created By
         /// </summary>
         /// <param name="ProjectReference, DateCreated, CreatedBy">string, DateTime, string </param>
-        public int GetFormIDAfterCreation(string ProjectReference, DateTime DateCreated, string CreatedBy)
+        public int GetFormIDAfterCreation(string ProjectReference, string DateCreated, string CreatedBy)
         {
             int FormID = 0;
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
             {
                 cn.Open();
-                var sql = string.Format("SELECT FormID FROM ConsentForms WHERE [DateCreated] = {0} AND [ProjectReference] = {1} And [CreatedBy] = {2}", DateCreated, ProjectReference, CreatedBy);
+                var sql = string.Format("SELECT FormID FROM ConsentForms WHERE [DateCreated] = '{0}' AND [ProjectReference] = '{1}' And [CreatedBy] = '{2}'", DateCreated, ProjectReference, CreatedBy);
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -71,11 +71,33 @@ namespace Escc.PhotoConsent.Services
                     var model = new ConsentFormModel();
                     model.ConsentGiven = (bool)reader["ConsentGiven"];
                     model.CreatedBy = (string)reader["CreatedBy"];
-                    model.DateCreated = (DateTime)reader["DateCreated"];
-                    model.DateSubmitted = (DateTime)reader["DateSubmitted"];
-                    model.FormID = (int)reader["FormID"]; 
-                    model.Notes = (string)reader["Notes"];
-                    model.ProjectReference = (string)reader["ProjectReference"];
+                    model.DateCreated = (string)reader["DateCreated"];
+                    model.FormID = (int)reader["FormID"];
+
+                    try
+                    {
+                        model.DateSubmitted = (string)reader["DateSubmitted"];
+                    }
+                    catch (Exception)
+                    {
+                        model.DateSubmitted = "";
+                    }
+                    try
+                    {
+                        model.Notes = (string)reader["Notes"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Notes = "";
+                    }
+                    try
+                    {
+                        model.ProjectReference = (string)reader["ProjectReference"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ProjectReference = "";
+                    }
 
                     form = model;
                 }
@@ -101,11 +123,33 @@ namespace Escc.PhotoConsent.Services
                     var model = new ConsentFormModel();
                     model.ConsentGiven = (bool)reader["ConsentGiven"];
                     model.CreatedBy = (string)reader["CreatedBy"];
-                    model.DateCreated = (DateTime)reader["DateCreated"];
-                    model.DateSubmitted = (DateTime)reader["DateSubmitted"];
+                    model.DateCreated = (string)reader["DateCreated"];
                     model.FormID = (int)reader["FormID"];
-                    model.Notes = (string)reader["Notes"];
-                    model.ProjectReference = (string)reader["ProjectReference"];
+
+                    try
+                    {
+                        model.DateSubmitted = (string)reader["DateSubmitted"];
+                    }
+                    catch (Exception)
+                    {
+                        model.DateSubmitted = "";
+                    }
+                    try
+                    {
+                        model.Notes = (string)reader["Notes"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Notes = "";
+                    }
+                    try
+                    {
+                        model.ProjectReference = (string)reader["ProjectReference"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ProjectReference = "";
+                    }
 
                     forms.Add(model);
                 }

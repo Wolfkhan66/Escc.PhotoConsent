@@ -17,7 +17,7 @@ namespace Escc.PhotoConsent.Services.Interfaces
         #endregion
 
         #region ConsentForm
-        int GetFormIDAfterCreation(string ProjectReference, DateTime DateCreated, string CreatedBy);
+        int GetFormIDAfterCreation(string ProjectReference, string DateCreated, string CreatedBy);
         ConsentFormModel GetFormByID(int FormID);
         List<ConsentFormModel> GetConsentForms();
         #endregion

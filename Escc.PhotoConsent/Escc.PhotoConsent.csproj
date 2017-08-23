@@ -188,6 +188,9 @@
     <Content Include="Web.example.Release.config">
       <DependentUpon>Web.example.config</DependentUpon>
     </Content>
+    <Content Include="Views\Partials\_PhotographerForm.cshtml" />
+    <Content Include="Views\Partials\_CommissioningOfficerForm.cshtml" />
+    <Content Include="Views\Partials\_ParticipantForm.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

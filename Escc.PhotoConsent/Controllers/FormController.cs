@@ -11,6 +11,7 @@ namespace Escc.PhotoConsent.Controllers
         // GET: Form
         public ActionResult Index(int FormId = 0)
         {
+
             return View();
         }
     }

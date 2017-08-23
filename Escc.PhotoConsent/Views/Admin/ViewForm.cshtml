@@ -2,4 +2,185 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+<p></p>
+<div id="ConsentForm">
+    <div class="list-group panel panel-info">
+        <a href="#FormPanel" class="list-group-item" data-toggle="active" data-parent="#ConsentForm"><b>Form @Model.Form.FormID</b></a>
+        <div class="active" id="FormPanel">
+            <div class="thumbnail">
+                <p>  </p>
+                <div class="panel with-nav-tabs">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#Form" data-toggle="tab"><b>Form</b></a></li>
+                            <li><a href="#Participants" data-toggle="tab"><b>Participants</b></a></li>
+                            <li><a href="#Officers" data-toggle="tab"><b>Commissioning Officers</b></a></li>
+                            <li><a href="#Photographers" data-toggle="tab"><b>Photographers</b></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="Form">
+                                <div class="row">
+                                    <div class="col-sm-9 col-md-9 col-lg-9">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        @Html.LabelFor(model => model.Form.CreatedBy, new { @class = "control-label" })
+                                                        @Html.TextBoxFor(model => model.Form.CreatedBy, new { @placeholder = "CreatedBy", @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        @Html.LabelFor(model => model.Form.DateCreated, new { @class = "control-label" })
+                                                        @Html.TextBoxFor(model => model.Form.DateCreated, new { @placeholder = "DateCreated", @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        @Html.LabelFor(model => model.Form.ProjectReference, new { @class = "control-label" })
+                                                        @Html.TextBoxFor(model => model.Form.ProjectReference, new { @placeholder = "ProjectReference", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-9 col-md-9 col-lg-9">
+                                                        @Html.LabelFor(model => model.Form.Notes, new { @class = "control-label" })
+                                                        @Html.TextAreaFor(model => model.Form.Notes, new { @placeholder = "Notes", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.Form.ConsentGiven)
+                                    {
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel panel-success">
+                                                <div class="panel-heading"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Consent Given</div>
+                                                <div class="panel-body">
+                                                    @Html.LabelFor(model => model.Form.DateSubmitted, new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.Form.DateSubmitted, new { @placeholder = "DateSubmitted", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel panel-danger">
+                                                <div class="panel-heading"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Consent Not Given</div>
+                                                <div class="panel-body">
+                                                    The participant has not given consent yet.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="Participants">
+                                <div class="row">
+                                    <div class="col-sm-9 col-md-9 col-lg-9">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    @if (Model.Participants.Count == 0)
+                                                    {
+                                                        <p class="text-center"><b>No Participants have been added to this form</b></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var Participant in Model.Participants)
+                                                        {
+                                                            //TO DO
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Participant</div>
+                                            <div class="panel-body">
+                                                @{Html.RenderPartial("~/Views/Partials/_ParticipantForm.cshtml");}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="Officers">
+                                <div class="row">
+                                    <div class="col-sm-9 col-md-9 col-lg-9">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-tower" aria-hidden="true"></span></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    @if (Model.Officers.Count == 0)
+                                                    {
+                                                        <p class="text-center"><b>No Commissioning Officers have been added to this form</b></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var Officer in Model.Officers)
+                                                        {
+                                                            //TO DO
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Commissioning Officer</div>
+                                            <div class="panel-body">
+                                                @{Html.RenderPartial("~/Views/Partials/_CommissioningOfficerForm.cshtml");}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="Photographers">
+                                <div class="row">
+                                    <div class="col-sm-9 col-md-9 col-lg-9">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    @if (Model.Photographers.Count == 0)
+                                                    {
+                                                        <p class="text-center"><b>No Photographers have been added to this form</b></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var Photographer in Model.Photographers)
+                                                        {
+                                                            //TO DO
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Photographer</div>
+                                            <div class="panel-body">
+                                                @{Html.RenderPartial("~/Views/Partials/_PhotographerForm.cshtml");}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 

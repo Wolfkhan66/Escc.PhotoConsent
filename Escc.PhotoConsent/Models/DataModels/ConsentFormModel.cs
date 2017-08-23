@@ -9,7 +9,7 @@ namespace Escc.PhotoConsent.Models.DataModels
     public class ConsentFormModel
     {
         public int FormID { get; set; }
-        public DateTime DateCreated { get; set; }
+        public string DateCreated { get; set; }
 
         [Display(Name = "Created By")]
         [Required(ErrorMessage = "Please enter your name")]
@@ -18,7 +18,7 @@ namespace Escc.PhotoConsent.Models.DataModels
         [Required(ErrorMessage = "Please enter a project reference i.e. project name or number")]
         public string ProjectReference { get; set; }
 
-        public DateTime? DateSubmitted { get; set; }
+        public string DateSubmitted { get; set; }
         public bool ConsentGiven { get; set; }
         public string Notes { get; set; }
     }

@@ -1,0 +1,28 @@
+﻿@using Escc.PhotoConsent.Models.DataModels
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreatePhotographerModal">
+    Create
+</button>
+
+@using (Html.BeginForm("CreatePhotographer", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="modal fade" id="CreatePhotographerModal" tabindex="-1" role="dialog" aria-labelledby="CreatePhotographerModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="CreatePhotographerModalLabel">Create New Photographer</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{Html.RenderPartial("~/Views/Partials/_Photographer.cshtml", new PhotographerModel());}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            }

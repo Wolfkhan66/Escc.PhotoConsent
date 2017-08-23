@@ -23,6 +23,5 @@ D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\System.Web.Razor.xml
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\System.Web.WebPages.xml
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\System.Web.WebPages.Deployment.xml
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\System.Web.WebPages.Razor.xml
-D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\obj\Debug\Escc.PhotoConsent.csprojResolveAssemblyReference.cache
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\obj\Debug\Escc.PhotoConsent.dll
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\obj\Debug\Escc.PhotoConsent.pdb

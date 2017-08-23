@@ -3,9 +3,6 @@ using Escc.PhotoConsent.Models.ViewModels;
 using Escc.PhotoConsent.Services;
 using Escc.PhotoConsent.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Escc.PhotoConsent.Controllers
@@ -29,14 +26,20 @@ namespace Escc.PhotoConsent.Controllers
             return View(ViewModel);
         }
 
+        [Route("ManageForms", Name = "ManageForms")]
+        public ActionResult ManageForms()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult CreateForm(ConsentFormModel model)
         {
-            model.DateCreated = DateTime.Now;
+            model.DateCreated = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
             model.ConsentGiven = false;
             _databaseService.InsertConsentForm(model);
             var FormID = _databaseService.GetFormIDAfterCreation(model.ProjectReference, model.DateCreated, model.CreatedBy);
-            return ViewForm(FormID);
+            return RedirectToRoute("ViewForm", new { ID = FormID });
         }
     }
 }
