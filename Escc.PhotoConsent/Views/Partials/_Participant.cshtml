@@ -4,7 +4,7 @@
 <div class="row well-sm">
     @Html.LabelFor(model => model.Name, new { @class = "control-label" })
     @Html.TextBoxFor(model => model.Name, new { @placeholder = "Jane Doe", @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Name, null, new { @class = "alert alert-error" })
+    @Html.ValidationMessageFor(model => model.Name, "Please enter a name", new { @class = "alert alert-error" })
 </div>
 <div class="row well-sm">
     @Html.LabelFor(model => model.Email, new { @class = "control-label" })
