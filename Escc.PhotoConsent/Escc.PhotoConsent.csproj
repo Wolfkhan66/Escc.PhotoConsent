@@ -130,6 +130,7 @@
     <Compile Include="Models\DataModels\PhotographerModel.cs" />
     <Compile Include="Models\DataModels\PhotoModel.cs" />
     <Compile Include="Models\PetaPoco.cs" />
+    <Compile Include="Models\ViewModels\FormViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\Interfaces\IDatabaseService.cs" />
@@ -175,7 +176,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Form\Index.cshtml" />
-    <Content Include="Views\Admin\ViewForms.cshtml" />
+    <Content Include="Views\Admin\ViewForm.cshtml" />
     <Content Include="Views\Partials\_Participant.cshtml" />
     <Content Include="Views\Partials\_CommissioningOfficer.cshtml" />
     <Content Include="Views\Partials\_Photographer.cshtml" />
@@ -197,7 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,4 +1,5 @@
 ﻿using Escc.PhotoConsent.Models.DataModels;
+using Escc.PhotoConsent.Models.ViewModels;
 using Escc.PhotoConsent.Services;
 using Escc.PhotoConsent.Services.Interfaces;
 using System;
@@ -17,10 +18,15 @@ namespace Escc.PhotoConsent.Controllers
             return View();
         }
 
-        [Route("ViewForms", Name = "ViewForms")]
-        public ActionResult ViewForms()
+        [Route("ViewForm/{ID}", Name = "ViewForm")]
+        public ActionResult ViewForm(int ID)
         {
-            return View();
+            var ViewModel = new FormViewModel();
+            ViewModel.Form = _databaseService.GetFormByID(ID);
+            ViewModel.Officers = _databaseService.GetOfficersByFormID(ID);
+            ViewModel.Participants = _databaseService.GetParticipantsByFormID(ID);
+            ViewModel.Photographers = _databaseService.GetPhotographersByFormID(ID);
+            return View(ViewModel);
         }
 
         [HttpPost]
@@ -29,7 +35,8 @@ namespace Escc.PhotoConsent.Controllers
             model.DateCreated = DateTime.Now;
             model.ConsentGiven = false;
             _databaseService.InsertConsentForm(model);
-            return View("ViewForms", model);
+            var FormID = _databaseService.GetFormIDAfterCreation(model.ProjectReference, model.DateCreated, model.CreatedBy);
+            return ViewForm(FormID);
         }
     }
 }
