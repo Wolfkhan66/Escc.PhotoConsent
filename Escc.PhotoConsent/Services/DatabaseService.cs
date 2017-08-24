@@ -179,7 +179,7 @@ namespace Escc.PhotoConsent.Services
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
             {
                 cn.Open();
-                var sql = string.Format("SELECT * FROM Participants");
+                var sql = string.Format("SELECT * FROM Participants WHERE FormID = {0}", FormID);
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -219,7 +219,7 @@ namespace Escc.PhotoConsent.Services
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
             {
                 cn.Open();
-                var sql = string.Format("SELECT * FROM CommissioningOfficer");
+                var sql = string.Format("SELECT * FROM CommissioningOfficer WHERE FormID = {0}", FormID);
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -259,7 +259,7 @@ namespace Escc.PhotoConsent.Services
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
             {
                 cn.Open();
-                var sql = string.Format("SELECT * FROM Photographers");
+                var sql = string.Format("SELECT * FROM Photographers WHERE FormID = {0}", FormID);
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -299,7 +299,7 @@ namespace Escc.PhotoConsent.Services
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
             {
                 cn.Open();
-                var sql = string.Format("SELECT * FROM Photos");
+                var sql = string.Format("SELECT * FROM Photos WHERE ParticipantID = {0}", ParticipantID);
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
