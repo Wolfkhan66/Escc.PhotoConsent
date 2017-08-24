@@ -9,6 +9,7 @@ namespace Escc.PhotoConsent.Models.DataModels
     public class ConsentFormModel
     {
         public int FormID { get; set; }
+        public Guid GUID { get; set; }
         public string DateCreated { get; set; }
 
         [Display(Name = "Created By")]
@@ -21,6 +22,6 @@ namespace Escc.PhotoConsent.Models.DataModels
         public string DateSubmitted { get; set; }
         public bool ConsentGiven { get; set; }
         public string Notes { get; set; }
-        public Guid GUID { get; set; }
+       
     }
 }

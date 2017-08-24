@@ -3,6 +3,12 @@
 }
 @using System.Configuration;
 @model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+@{
+    var FormDictionary = new Dictionary<string, string>();
+    FormDictionary.Add("Controller", "Admin");
+    FormDictionary.Add("FormID", Model.Form.FormID.ToString());
+    FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+}
 <p></p>
 <div id="ConsentForm">
     <div class="list-group panel panel-info">
@@ -81,10 +87,10 @@
                                 <div class="row">
                                     <div class="panel panel-default">
                                         <div class="panel-heading"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Link to Consent Form</div>
-                                        <div class="panel-body text-center">     
-                                            @{ 
+                                        <div class="panel-body text-center">
+                                            @{
                                                 var LinkToForm = string.Format("{0}/ConsentForm/{1}", @ConfigurationManager.AppSettings["ServerUrl"], @Model.Form.GUID);
-                                            }                                      
+                                            }
                                             <a href="@LinkToForm">@LinkToForm</a>
                                         </div>
                                     </div>
@@ -123,7 +129,6 @@
                                                                                 }
                                                                                 <!---// TO DO // Add Button to Photo Form Modal-->
                                                                             </div>
-
                                                                             <div class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-6 col-md-6 col-lg-6">
                                                                                 @Html.Label("Name", "Name", new { @class = "control-label" })
                                                                                 @Html.TextBox("Name", Participant.Name, new { @class = "form-control" })
@@ -146,7 +151,7 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Participant</div>
                                             <div class="panel-body">
-                                                @{Html.RenderPartial("~/Views/Partials/_ParticipantForm.cshtml", Model.Form.FormID.ToString());}
+                                                @{Html.RenderPartial("~/Views/Partials/_ParticipantForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +195,7 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Commissioning Officer</div>
                                             <div class="panel-body">
-                                                @{Html.RenderPartial("~/Views/Partials/_CommissioningOfficerForm.cshtml", Model.Form.FormID.ToString());}
+                                                @{Html.RenderPartial("~/Views/Partials/_CommissioningOfficerForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
                                     </div>
@@ -234,7 +239,7 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Photographer</div>
                                             <div class="panel-body">
-                                                @{Html.RenderPartial("~/Views/Partials/_PhotographerForm.cshtml", Model.Form.FormID.ToString());}
+                                                @{Html.RenderPartial("~/Views/Partials/_PhotographerForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
                                     </div>

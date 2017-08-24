@@ -1,7 +1,7 @@
 ﻿@model Escc.PhotoConsent.Models.DataModels.CommissioningOfficerModel
 
 @Html.HiddenFor(model => model.FormID)
-
+@Html.HiddenFor(model => model.FormGUID)
 <div class="row well-sm">
     @Html.LabelFor(model => model.Name, new { @class = "control-label" })
     @Html.TextBoxFor(model => model.Name, new { @placeholder = "Jane Doe", @class = "form-control" })

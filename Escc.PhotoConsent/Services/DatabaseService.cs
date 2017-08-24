@@ -35,7 +35,7 @@ namespace Escc.PhotoConsent.Services
         /// Run query to get form ID form by Project Reference, Date Created and Created By
         /// </summary>
         /// <param name="ProjectReference, DateCreated, CreatedBy">string, DateTime, string </param>
-        public int GetFormIDAfterCreation(Guid GUID)
+        public int GetFormIDByGuid(Guid GUID)
         {
             int FormID = 0;
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))

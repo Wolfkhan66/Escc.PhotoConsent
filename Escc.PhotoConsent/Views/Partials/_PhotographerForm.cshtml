@@ -1,5 +1,5 @@
 ﻿@using Escc.PhotoConsent.Models.DataModels
-@model string
+@model Dictionary<string, string>
 
 <script src="~/Scripts/jquery-3.1.1.js"></script>
 <script src="~/Scripts/jquery.validate.js"></script>
@@ -11,8 +11,10 @@
     </button>
 </div>
 
-@using (Html.BeginForm("CreatePhotographer", "Admin", FormMethod.Post))
+@using (Html.BeginForm("CreatePhotographer", Model["Controller"], FormMethod.Post))
 {
+    @Html.Hidden(Model["FormID"])
+    @Html.Hidden(Model["FormGUID"])
     <div class="form-group">
         <div class="modal fade" id="CreatePhotographerModal" tabindex="-1" role="dialog" aria-labelledby="CreatePhotographerModalLabel">
             <div class="modal-dialog modal-sm" role="document">
@@ -24,7 +26,8 @@
                     <div class="modal-body">
                         @{
                             PhotographerModel FormModel = new PhotographerModel();
-                            FormModel.FormID = int.Parse(Model);
+                            FormModel.FormID = int.Parse(Model["FormID"]);
+                            FormModel.FormGUID = Guid.Parse(Model["FormGUID"]);
                         }
                         @{Html.RenderPartial("~/Views/Partials/_Photographer.cshtml", FormModel);}
                     </div>

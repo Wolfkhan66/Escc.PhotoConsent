@@ -93,7 +93,7 @@ namespace Escc.PhotoConsent.Controllers
             model.ConsentGiven = false;
             model.GUID = Guid.NewGuid();
             _databaseService.InsertConsentForm(model);
-            var FormID = _databaseService.GetFormIDAfterCreation(model.GUID);
+            var FormID = _databaseService.GetFormIDByGuid(model.GUID);
             return RedirectToRoute("ViewForm", new { ID = FormID });
         }
 

@@ -10,6 +10,7 @@ namespace Escc.PhotoConsent.Models.DataModels
     {
         public int ParticipantID { get; set; }
         public int FormID { get; set; }
+        public Guid FormGUID { get; set; }
 
         [Required(ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
