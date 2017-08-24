@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using System.Configuration;
 @model Escc.PhotoConsent.Models.ViewModels.FormViewModel
 <p></p>
 <div id="ConsentForm">
@@ -74,6 +75,17 @@
                                             <div class="panel-body text-center">
                                                 @Html.RouteLink("View All Forms ", "ManageForms", new { }, new { @class = "btn btn-info" })
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Link to Consent Form</div>
+                                        <div class="panel-body text-center">     
+                                            @{ 
+                                                var LinkToForm = string.Format("{0}/ConsentForm/{1}", @ConfigurationManager.AppSettings["ServerUrl"], @Model.Form.GUID);
+                                            }                                      
+                                            <a href="@LinkToForm">@LinkToForm</a>
                                         </div>
                                     </div>
                                 </div>

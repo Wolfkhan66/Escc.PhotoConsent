@@ -28,20 +28,20 @@ namespace Escc.PhotoConsent.Services
         /// <param name="model">ConsentFormModel - </param>
         public void InsertConsentForm(ConsentFormModel model)
         {
-            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes });
+            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes, @GUID", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes, model.GUID });
         }
 
         /// <summary>
         /// Run query to get form ID form by Project Reference, Date Created and Created By
         /// </summary>
         /// <param name="ProjectReference, DateCreated, CreatedBy">string, DateTime, string </param>
-        public int GetFormIDAfterCreation(string ProjectReference, string DateCreated, string CreatedBy)
+        public int GetFormIDAfterCreation(Guid GUID)
         {
             int FormID = 0;
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
             {
                 cn.Open();
-                var sql = string.Format("SELECT FormID FROM ConsentForms WHERE [DateCreated] = '{0}' AND [ProjectReference] = '{1}' And [CreatedBy] = '{2}'", DateCreated, ProjectReference, CreatedBy);
+                var sql = string.Format("SELECT FormID FROM ConsentForms WHERE [GUID] = '{0}'", GUID.ToString());
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -73,6 +73,7 @@ namespace Escc.PhotoConsent.Services
                     model.CreatedBy = (string)reader["CreatedBy"];
                     model.DateCreated = (string)reader["DateCreated"];
                     model.FormID = (int)reader["FormID"];
+                    model.GUID = Guid.Parse(reader["GUID"].ToString());
 
                     try
                     {
@@ -125,6 +126,7 @@ namespace Escc.PhotoConsent.Services
                     model.CreatedBy = (string)reader["CreatedBy"];
                     model.DateCreated = (string)reader["DateCreated"];
                     model.FormID = (int)reader["FormID"];
+                    model.GUID = Guid.Parse(reader["GUID"].ToString());
 
                     try
                     {

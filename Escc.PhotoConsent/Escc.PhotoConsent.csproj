@@ -414,7 +414,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Form\ConsentForm.cshtml" />
     <Content Include="Views\Admin\ViewForm.cshtml" />
     <Content Include="Views\Partials\_Participant.cshtml" />
     <Content Include="Views\Partials\_CommissioningOfficer.cshtml" />

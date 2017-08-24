@@ -21,6 +21,12 @@ namespace Escc.PhotoConsent
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Form",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Form", action = "ConsentForm", id = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -55,10 +55,8 @@ namespace Escc.PhotoConsent.Controllers
 
             foreach (var Form in Forms)
             {
-
                 var Consent = Form.ConsentGiven ? new HtmlString("<span class=\"glyphicon glyphicon-ok text-success\" aria-hidden=\"true\"></span>") : new HtmlString("<span class=\"glyphicon glyphicon-remove text-danger\" aria-hidden=\"true\"></span></div>");
                 var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewForm/{0}\">View</a>", Form.FormID));
-
                 Table.Rows.Add(Form.FormID, Form.ProjectReference, Form.CreatedBy, Form.DateCreated, Consent, ViewLink);
             }
             return Table;
@@ -93,8 +91,9 @@ namespace Escc.PhotoConsent.Controllers
         {
             model.DateCreated = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
             model.ConsentGiven = false;
+            model.GUID = Guid.NewGuid();
             _databaseService.InsertConsentForm(model);
-            var FormID = _databaseService.GetFormIDAfterCreation(model.ProjectReference, model.DateCreated, model.CreatedBy);
+            var FormID = _databaseService.GetFormIDAfterCreation(model.GUID);
             return RedirectToRoute("ViewForm", new { ID = FormID });
         }
 

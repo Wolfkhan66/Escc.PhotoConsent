@@ -8,8 +8,9 @@ namespace Escc.PhotoConsent.Controllers
 {
     public class FormController : Controller
     {
-        // GET: Form
-        public ActionResult Index(int FormId = 0)
+
+        [Route("ConsentForm/{formGuid}", Name = "ConsentForm")]
+        public ActionResult ConsentForm(string formGuid  = "")
         {
 
             return View();
