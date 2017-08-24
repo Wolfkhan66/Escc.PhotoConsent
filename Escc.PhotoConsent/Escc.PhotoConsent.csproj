@@ -434,6 +434,9 @@
     <Content Include="Views\Partials\_DataTable.cshtml" />
     <Content Include="Views\Partials\_NewConsentFormForm.cshtml" />
     <Content Include="Views\Shared\_ConsentFormLayout.cshtml" />
+    <Content Include="Views\Partials\_ParticipantAccordion.cshtml" />
+    <Content Include="Views\Partials\_PhotographerAccordion.cshtml" />
+    <Content Include="Views\Partials\_CommissioningOfficerAccordion.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

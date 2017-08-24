@@ -26,40 +26,7 @@
                     }
                     else
                     {
-                        foreach (var Participant in Model.Participants)
-                        {
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading"><h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Participant ID: @Participant.ParticipantID</h3></div>
-                                    <div class="panel-body">
-                                        <div class="row well-sm">
-                                            <div class="col-sm-4 col-md-4 col-lg-4">
-                                                @if (Model.Photos.SingleOrDefault(x => x.ParticipantID == Participant.ParticipantID) == null)
-                                                {
-                                                    <div class="thumbnail">
-                                                        <img src="~/Content/Images/No_Image.png" />
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    // TO DO
-                                                }
-                                                <!---// TO DO // Add Button to Photo Form Modal-->
-                                            </div>
-
-                                            <div class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-6 col-md-6 col-lg-6">
-                                                @Html.Label("Name", "Name", new { @class = "control-label" })
-                                                @Html.TextBox("Name", Participant.Name, new { @class = "form-control" })
-                                                @Html.Label("Email", "Email", new { @class = "control-label" })
-                                                @Html.TextBox("Email", Participant.Email, new { @class = "form-control" })
-                                                @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
-                                                @Html.TextBox("Contact Number", Participant.ContactNumber, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        Html.RenderPartial("~/Views/Partials/_ParticipantAccordion.cshtml", Model);
                     }
                 </div>
             </div>
@@ -86,22 +53,7 @@
                     }
                     else
                     {
-                        foreach (var Officer in Model.Officers)
-                        {
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading"><h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Commissioning Officer ID: @Officer.OfficerID</h3></div>
-                                    <div class="panel-body">
-                                        @Html.Label("Name", "Name", new { @class = "control-label" })
-                                        @Html.TextBox("Name", Officer.Name, new { @class = "form-control" })
-                                        @Html.Label("Email", "Email", new { @class = "control-label" })
-                                        @Html.TextBox("Email", Officer.Email, new { @class = "form-control" })
-                                        @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
-                                        @Html.TextBox("Contact Number", Officer.ContactNumber, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        Html.RenderPartial("~/Views/Partials/_CommissioningOfficerAccordion.cshtml", Model);
                     }
                 </div>
             </div>
@@ -128,22 +80,7 @@
                     }
                     else
                     {
-                        foreach (var Photographer in Model.Photographers)
-                        {
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading"><h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Photographer ID: @Photographer.PhotographerID</h3></div>
-                                    <div class="panel-body">
-                                        @Html.Label("Name", "Name", new { @class = "control-label" })
-                                        @Html.TextBox("Name", Photographer.Name, new { @class = "form-control" })
-                                        @Html.Label("Email", "Email", new { @class = "control-label" })
-                                        @Html.TextBox("Email", Photographer.Email, new { @class = "form-control" })
-                                        @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
-                                        @Html.TextBox("Contact Number", Photographer.ContactNumber, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        Html.RenderPartial("~/Views/Partials/_PhotographerAccordion.cshtml", Model);
                     }
                 </div>
             </div>

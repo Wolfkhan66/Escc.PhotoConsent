@@ -1,0 +1,28 @@
+﻿@model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @foreach (var Photographer in Model.Photographers)
+    {
+        <div class="well-sm">
+            <div class="panel panel-info">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#@Photographer.PhotographerID" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photographer: @Photographer.Name
+                        </a>
+                    </h4>
+                </div>
+                <div id="@Photographer.PhotographerID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                        @Html.TextBox("Name", Photographer.Name, new { @class = "form-control" })
+                        @Html.Label("Email", "Email", new { @class = "control-label" })
+                        @Html.TextBox("Email", Photographer.Email, new { @class = "form-control" })
+                        @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
+                        @Html.TextBox("Contact Number", Photographer.ContactNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
