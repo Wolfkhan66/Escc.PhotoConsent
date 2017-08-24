@@ -4,7 +4,7 @@
 @using System.Configuration;
 @model Escc.PhotoConsent.Models.ViewModels.FormViewModel
 
-@{ 
+@{
     var FormDictionary = new Dictionary<string, string>();
     FormDictionary.Add("Controller", "Form");
     FormDictionary.Add("FormID", Model.Form.FormID.ToString());
@@ -12,7 +12,21 @@
 }
 <p></p>
 <div class="row">
-
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-warning">
+            <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> GDPR / Instructions</div>
+            <div class="panel-body">
+                <div class="row well-sm">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non massa et nisi viverra efficitur.
+                    Aenean pulvinar accumsan nibh, nec pharetra enim convallis ut. Mauris eu odio non massa dignissim sagittis non a diam.
+                    Proin viverra lobortis condimentum. Quisque eu turpis venenatis, eleifend nibh sed, faucibus augue. Praesent ornare pulvinar nibh, et dictum felis imperdiet quis.
+                    Cras congue cursus consectetur. Quisque elit nulla, commodo vitae congue et, dapibus id mauris. Sed eleifend leo mauris, id aliquam nibh rhoncus a.
+                    Maecenas non rhoncus dui. Ut lorem magna, iaculis et rutrum non, pharetra at augue. Donec volutpat odio ac ultrices dapibus. Vivamus id ullamcorper tortor.
+                    Vestibulum dignissim auctor turpis in volutpat. In feugiat congue sem, eget rhoncus est sollicitudin eu.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-sm-9 col-md-9 col-lg-9">
@@ -95,3 +109,24 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-9 col-md-9 col-lg-9">
+        <div class="panel panel-success">
+            <div class="panel-heading"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Submit Form</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6 well-sm">
+                        <p><b>I agree to my participation in this photoshoot/video</b></p>
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1 ">
+                        @Html.CheckBoxFor(x => x.Form.ConsentGiven, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
