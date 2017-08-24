@@ -29,6 +29,8 @@ namespace Escc.PhotoConsent.Controllers
         [Route("ManageForms", Name = "ManageForms")]
         public ActionResult ManageForms()
         {
+            var model = new ManageFormViewModel();
+            model.Forms = _databaseService.GetConsentForms();
             return View();
         }
 
