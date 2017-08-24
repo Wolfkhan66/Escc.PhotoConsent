@@ -52,22 +52,22 @@
                                     <div class="col-sm-3 col-md-3 col-lg-3">
                                         @if (Model.Form.ConsentGiven)
                                         {
-                                                <div class="panel panel-success">
-                                                    <div class="panel-heading"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Consent Given</div>
-                                                    <div class="panel-body">
-                                                        @Html.LabelFor(model => model.Form.DateSubmitted, new { @class = "control-label" })
-                                                        @Html.TextBoxFor(model => model.Form.DateSubmitted, new { @placeholder = "DateSubmitted", @class = "form-control" })
-                                                    </div>
-                                                </div>                                     
+                                            <div class="panel panel-success">
+                                                <div class="panel-heading"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Consent Given</div>
+                                                <div class="panel-body">
+                                                    @Html.LabelFor(model => model.Form.DateSubmitted, new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.Form.DateSubmitted, new { @placeholder = "DateSubmitted", @class = "form-control" })
+                                                </div>
+                                            </div>
                                         }
                                         else
                                         {
-                                                <div class="panel panel-danger">
-                                                    <div class="panel-heading"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Consent Not Given</div>
-                                                    <div class="panel-body">
-                                                        The participant has not given consent yet.
-                                                    </div>
+                                            <div class="panel panel-danger">
+                                                <div class="panel-heading"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Consent Not Given</div>
+                                                <div class="panel-body">
+                                                    The participant has not given consent yet.
                                                 </div>
+                                            </div>
                                         }
                                         <div class="panel panel-info">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Manage Forms</div>

@@ -1,34 +1,27 @@
 ﻿@using Escc.PhotoConsent.Models.DataModels
-@model string
 
 <script src="~/Scripts/jquery-3.1.1.js"></script>
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <div class="text-center">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreateParticipantModal">
-        Create New Participant
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreateFormModal">
+        Create New Form
     </button>
 </div>
 
-@using (Html.BeginForm("CreateParticipant", "Admin", FormMethod.Post))
+@using (Html.BeginForm("CreateForm", "Admin", FormMethod.Post))
 {
-    @Html.Hidden(Model)
     <div class="form-group">
-        <div class="modal fade" id="CreateParticipantModal" tabindex="-1" role="dialog" aria-labelledby="CreateParticipantModalLabel">
+        <div class="modal fade" id="CreateFormModal" tabindex="-1" role="dialog" aria-labelledby="CreateFormModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="CreateParticipantModalLabel">Create New Participant</h4>
+                        <h4 class="modal-title" id="CreateFormModalLabel">Create New Consent Form</h4>
                     </div>
                     <div class="modal-body">
-                        @{
-                            ParticipantModel FormModel = new ParticipantModel();
-                            FormModel.FormID = int.Parse(Model);
-                        }
-
-                        @{Html.RenderPartial("~/Views/Partials/_Participant.cshtml", FormModel);}
+                        @{Html.RenderPartial("~/Views/Partials/_NewConsentForm.cshtml", new ConsentFormModel());}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
