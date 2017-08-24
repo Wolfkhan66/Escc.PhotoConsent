@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,7 +12,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3">
+    <div class="col-sm-3 col-md-3 col-lg-3 pull-left">
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title">Create New Consent Form</h3>
@@ -22,15 +23,52 @@
             </div>
         </div>
     </div>
-
-    <div class="col-sm-3 col-md-3 col-lg-3">
+    <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="panel panel-info">
+            <div class="panel-heading"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Advanced Search </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("SearchForms", "Admin", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                @Html.Label("ProjectReference", new { @class = "control-label" })
+                                @Html.TextBox("ProjectReference", "", new { @placeholder = "e.g. ExampleProject254", @class = "form-control" })
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                @Html.Label("CreatedBy", new { @class = "control-label" })
+                                @Html.TextBox("CreatedBy", "", new { @placeholder = "e.g. Jane Doe", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                @Html.Label("DateCreated", new { @class = "control-label" })
+                                @Html.TextBox("DateCreated", "", new { @placeholder = "e.g. 23/08/2017", @class = "form-control" })
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                @Html.Label("Consent", new { @class = "control-label" })
+                                @Html.DropDownList("Consent", new SelectList(new List<string> { "True", "False", "Both" }), "Please Select", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <p></p>
+                                <input type="submit" class="btn btn-primary" value="Search" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">View Consent Forms</h3>
             </div>
             <div class="panel-body">
-                <p>Click here to view and manage consent forms.</p>
-                @Html.RouteLink("View", "ManageForms", new { }, new { @class = "btn btn-info" })
+                <p>Click here to view and manage all consent forms.</p>
+                @Html.RouteLink("View All", "ManageForms", new { }, new { @class = "btn btn-primary" })
             </div>
         </div>
     </div>
