@@ -4,4 +4,12 @@
 @model Escc.PhotoConsent.Models.ViewModels.ManageFormViewModel
 
 
-
+<p></p>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Manage Forms</h3>
+    </div>
+    <div class="panel-body">
+        @{Html.RenderPartial("~/Views/Partials/_DataTable.cshtml", Model.Forms);}
+    </div>
+</div>

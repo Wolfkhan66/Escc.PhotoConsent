@@ -129,6 +129,7 @@
     <Compile Include="Models\DataModels\ParticipantModel.cs" />
     <Compile Include="Models\DataModels\PhotographerModel.cs" />
     <Compile Include="Models\DataModels\PhotoModel.cs" />
+    <Compile Include="Models\DataModels\TableModel.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\ViewModels\FormViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageFormViewModel.cs" />
@@ -430,6 +431,7 @@
     <Content Include="Views\Partials\_CommissioningOfficerForm.cshtml" />
     <Content Include="Views\Partials\_ParticipantForm.cshtml" />
     <Content Include="Views\Admin\ManageForms.cshtml" />
+    <Content Include="Views\Partials\_DataTable.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

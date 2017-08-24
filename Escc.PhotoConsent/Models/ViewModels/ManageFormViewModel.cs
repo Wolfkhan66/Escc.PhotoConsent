@@ -8,11 +8,11 @@ namespace Escc.PhotoConsent.Models.ViewModels
 {
     public class ManageFormViewModel
     {
-       public  List<ConsentFormModel> Forms { get; set; }
+        public TableModel Forms { get; set; }
 
         public ManageFormViewModel()
         {
-            Forms = new List<ConsentFormModel>();
+            Forms = new TableModel("FormsTable");
         }
     }
 }
