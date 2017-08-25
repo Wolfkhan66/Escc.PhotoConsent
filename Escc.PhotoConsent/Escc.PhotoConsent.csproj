@@ -299,6 +299,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Images\logo-small.gif" />
     <Content Include="Content\Images\No_Image.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -449,6 +450,7 @@
     <Content Include="Views\Partials\ConsentForms\_EditConsentFormForm.cshtml" />
     <Content Include="Views\Partials\ConsentForms\_DeleteConsentFormForm.cshtml" />
     <Content Include="Views\Partials\ConsentForms\_DeleteConsentForm.cshtml" />
+    <Content Include="Views\Form\FormSubmission.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -8,27 +8,13 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-
-                </ul>
-            </div>
-        </div>
+    <div class="navbar navbar-custom navbar-fixed-top">
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - East Sussex County Council</p>
+            <p><a href="https://www.eastsussex.gov.uk/"> <img src="~/Content/Images/logo-small.gif" alt="ESCC"></a> &copy; @DateTime.Now.Year - East Sussex County Council</p>
         </footer>
     </div>
 

@@ -78,7 +78,7 @@ namespace Escc.PhotoConsent.Controllers
             {
                 ConsentForms = ConsentForms.Where(x => x.DateCreated.ToString().Split(' ')[0] == DateCreated).ToList();
             }
-            if (Consent != "" || Consent != "Both")
+            if (Consent != "" && Consent != "Both")
             {
                 bool consentGiven = Consent.ToLower() == "true" ? true : false;
                 ConsentForms = ConsentForms.Where(x => x.ConsentGiven == consentGiven).ToList();
