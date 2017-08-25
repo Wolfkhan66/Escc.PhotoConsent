@@ -1,0 +1,54 @@
+﻿@model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @foreach (var Officer in Model.Officers)
+    {
+
+        var FormDictionary = new Dictionary<string, string>();
+        FormDictionary.Add("Controller", "Form");
+        FormDictionary.Add("FormID", Model.Form.FormID.ToString());
+        FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+        FormDictionary.Add("OfficerID", Officer.OfficerID.ToString());
+        FormDictionary.Add("OfficerName", Officer.Name);
+        FormDictionary.Add("OfficerEmail", Officer.Email);
+        FormDictionary.Add("OfficerContactNumber", Officer.ContactNumber);
+
+        <div class="well-sm">
+            <div class="panel panel-info">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#@Officer.OfficerID" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="glyphicon glyphicon-tower" aria-hidden="true"></span> Comm Officer: @Officer.Name
+                        </a>
+                    </h4>
+                </div>
+                <div id="@Officer.OfficerID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.Label("Name", "Name", new { @class = "control-label" })
+                            @Html.TextBox("Name", Officer.Name, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.Label("Email", "Email", new { @class = "control-label" })
+                            @Html.TextBox("Email", Officer.Email, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
+                            @Html.TextBox("Contact Number", Officer.ContactNumber, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading"></div>
+                                <div class="panel-body">
+                                    @{Html.RenderPartial("~/Views/Partials/CommOfficers/_EditCommOfficerForm.cshtml", FormDictionary);}
+                                </div>
+                            </div>
+                            <div class="panel panel-danger">
+                                <div class="panel-heading"></div>
+                                <div class="panel-body">
+                                    @{Html.RenderPartial("~/Views/Partials/CommOfficers/_DeleteCommOfficerForm.cshtml", FormDictionary);}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                        }
+</div>

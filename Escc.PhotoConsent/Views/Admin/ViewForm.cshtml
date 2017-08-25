@@ -8,6 +8,9 @@
     FormDictionary.Add("Controller", "Admin");
     FormDictionary.Add("FormID", Model.Form.FormID.ToString());
     FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+    FormDictionary.Add("CreatedBy", Model.Form.CreatedBy);
+    FormDictionary.Add("ProjectReference", Model.Form.ProjectReference);
+    FormDictionary.Add("Notes", Model.Form.Notes);
 }
 <p></p>
 <div id="ConsentForm">
@@ -34,23 +37,41 @@
                                             <div class="panel-heading"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></div>
                                             <div class="panel-body">
                                                 <div class="row">
-                                                    <div class="col-sm-3 col-md-3 col-lg-3">
-                                                        @Html.LabelFor(model => model.Form.CreatedBy, new { @class = "control-label" })
-                                                        @Html.TextBoxFor(model => model.Form.CreatedBy, new { @placeholder = "CreatedBy", @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-3 col-md-3 col-lg-3">
-                                                        @Html.LabelFor(model => model.Form.DateCreated, new { @class = "control-label" })
-                                                        @Html.TextBoxFor(model => model.Form.DateCreated, new { @placeholder = "DateCreated", @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-3 col-md-3 col-lg-3">
-                                                        @Html.LabelFor(model => model.Form.ProjectReference, new { @class = "control-label" })
-                                                        @Html.TextBoxFor(model => model.Form.ProjectReference, new { @placeholder = "ProjectReference", @class = "form-control" })
-                                                    </div>
-                                                </div>
-                                                <div class="row">
                                                     <div class="col-sm-9 col-md-9 col-lg-9">
-                                                        @Html.LabelFor(model => model.Form.Notes, new { @class = "control-label" })
-                                                        @Html.TextAreaFor(model => model.Form.Notes, new { @placeholder = "Notes", @class = "form-control" })
+                                                        <div class="row">
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                @Html.LabelFor(model => model.Form.CreatedBy, new { @class = "control-label" })
+                                                                @Html.TextBoxFor(model => model.Form.CreatedBy, new { @placeholder = "CreatedBy", @class = "form-control", @readonly = "readonly" })
+                                                            </div>
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                @Html.LabelFor(model => model.Form.DateCreated, new { @class = "control-label" })
+                                                                @Html.TextBoxFor(model => model.Form.DateCreated, new { @placeholder = "DateCreated", @class = "form-control", @readonly = "readonly" })
+                                                            </div>
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                @Html.LabelFor(model => model.Form.ProjectReference, new { @class = "control-label" })
+                                                                @Html.TextBoxFor(model => model.Form.ProjectReference, new { @placeholder = "ProjectReference", @class = "form-control", @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                @Html.LabelFor(model => model.Form.Notes, new { @class = "control-label" })
+                                                                @Html.TextAreaFor(model => model.Form.Notes, new { @placeholder = "Notes", @class = "form-control", @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <div class="panel panel-warning">
+                                                            <div class="panel-heading"></div>
+                                                            <div class="panel-body">
+                                                                @{Html.RenderPartial("~/Views/Partials/ConsentForms/_EditConsentFormForm.cshtml", FormDictionary);}
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-danger">
+                                                            <div class="panel-heading"></div>
+                                                            <div class="panel-body">
+                                                                @{Html.RenderPartial("~/Views/Partials/ConsentForms/_DeleteConsentFormForm.cshtml", FormDictionary);}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,7 +130,7 @@
                                                     }
                                                     else
                                                     {
-                                                        Html.RenderPartial("~/Views/Partials/_ParticipantAccordion.cshtml", Model);
+                                                        Html.RenderPartial("~/Views/Partials/Participants/_ParticipantAccordion.cshtml", Model);
                                                     }
                                                 </div>
                                             </div>
@@ -119,7 +140,7 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Participant</div>
                                             <div class="panel-body">
-                                                @{Html.RenderPartial("~/Views/Partials/_ParticipantForm.cshtml", FormDictionary);}
+                                                @{Html.RenderPartial("~/Views/Partials/Participants/_ParticipantForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +159,7 @@
                                                     }
                                                     else
                                                     {
-                                                        Html.RenderPartial("~/Views/Partials/_CommissioningOfficerAccordion.cshtml", Model);
+                                                        Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficerAccordion.cshtml", Model);
                                                     }
                                                 </div>
                                             </div>
@@ -148,7 +169,7 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Commissioning Officer</div>
                                             <div class="panel-body">
-                                                @{Html.RenderPartial("~/Views/Partials/_CommissioningOfficerForm.cshtml", FormDictionary);}
+                                                @{Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficerForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
                                     </div>
@@ -167,7 +188,7 @@
                                                     }
                                                     else
                                                     {
-                                                        Html.RenderPartial("~/Views/Partials/_PhotographerAccordion.cshtml", Model);
+                                                        Html.RenderPartial("~/Views/Partials/Photographers/_PhotographerAccordion.cshtml", Model);
                                                     }
                                                 </div>
                                             </div>
@@ -177,7 +198,7 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Photographer</div>
                                             <div class="panel-body">
-                                                @{Html.RenderPartial("~/Views/Partials/_PhotographerForm.cshtml", FormDictionary);}
+                                                @{Html.RenderPartial("~/Views/Partials/Photographers/_PhotographerForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
                                     </div>

@@ -1,0 +1,44 @@
+﻿@using Escc.PhotoConsent.Models.DataModels
+
+@model Dictionary<string, string>
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="text-center">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteFormModal">
+        Delete
+    </button>
+</div>
+
+@using (Html.BeginForm("DeleteForm", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="modal fade" id="DeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="DeleteFormModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="DeleteFormModalLabel">Delete Consent Form</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            ConsentFormModel FormModel = new ConsentFormModel();
+                            FormModel.FormID = int.Parse(Model["FormID"]);
+                            FormModel.GUID = Guid.Parse(Model["FormGUID"]);
+                            FormModel.CreatedBy = Model["CreatedBy"];
+                            FormModel.ProjectReference = Model["ProjectReference"];
+                            FormModel.Notes = Model["Notes"];
+                        }
+                        @{Html.RenderPartial("~/Views/Partials/ConsentForms/_DeleteConsentForm.cshtml", FormModel);}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-danger" value="Delete" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            }

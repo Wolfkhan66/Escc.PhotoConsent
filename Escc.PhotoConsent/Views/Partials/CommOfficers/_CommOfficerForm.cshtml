@@ -1,0 +1,43 @@
+﻿@using Escc.PhotoConsent.Models.DataModels
+@model Dictionary<string, string>
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="text-center">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreateOfficerModal">
+        Create New Officer
+    </button>
+</div>
+
+    @using (Html.BeginForm("CreateOfficer", Model["Controller"], FormMethod.Post))
+    {
+        @Html.Hidden(Model["FormID"])
+        @Html.Hidden(Model["FormGUID"])
+        <div class="form-group">
+            <div class="modal fade" id="CreateOfficerModal" tabindex="-1" role="dialog" aria-labelledby="CreateOfficerModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="CreateOfficerModalLabel">Create New Commissioning Officer</h4>
+                        </div>
+                        <div class="modal-body">
+                            @{
+                                CommissioningOfficerModel FormModel = new CommissioningOfficerModel();
+                                FormModel.FormID = int.Parse(Model["FormID"]);
+                                FormModel.FormGUID = Guid.Parse(Model["FormGUID"]);
+                            }
+                            @{Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficer.cshtml", FormModel);}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-success" value="Submit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                }
+

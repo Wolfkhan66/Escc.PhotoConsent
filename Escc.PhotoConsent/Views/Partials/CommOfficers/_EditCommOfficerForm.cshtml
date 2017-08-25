@@ -1,0 +1,47 @@
+﻿@using Escc.PhotoConsent.Models.DataModels
+@model Dictionary<string, string>
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="text-center">
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditOfficerModal">
+        Edit
+    </button>
+</div>
+
+    @using (Html.BeginForm("CreateOfficer", Model["Controller"], FormMethod.Post))
+    {
+        @Html.Hidden(Model["FormID"])
+        @Html.Hidden(Model["FormGUID"])
+        <div class="form-group">
+            <div class="modal fade" id="EditOfficerModal" tabindex="-1" role="dialog" aria-labelledby="EditOfficerModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-warning">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="EditOfficerModalLabel">Edit Commissioning Officer</h4>
+                        </div>
+                        <div class="modal-body">
+                            @{
+                                CommissioningOfficerModel FormModel = new CommissioningOfficerModel();
+                                FormModel.FormID = int.Parse(Model["FormID"]);
+                                FormModel.FormGUID = Guid.Parse(Model["FormGUID"]);
+                                FormModel.OfficerID = int.Parse(Model["OfficerID"]);
+                                FormModel.Name = Model["OfficerName"];
+                                FormModel.Email = Model["OfficerEmail"];
+                                FormModel.ContactNumber = Model["OfficerContactNumber"];
+                            }
+                            @{Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficer.cshtml", FormModel);}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-warning" value="Edit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                }
+

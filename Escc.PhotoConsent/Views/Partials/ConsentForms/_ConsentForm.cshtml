@@ -1,0 +1,18 @@
+﻿@model Escc.PhotoConsent.Models.DataModels.ConsentFormModel
+
+@Html.HiddenFor(x => x.FormID)
+<div class="row well-sm">
+    @Html.LabelFor(model => model.CreatedBy, new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.CreatedBy, new { @placeholder = "Created By", @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.CreatedBy, null, new { @class = "alert alert-error" })
+</div>
+<div class="row well-sm">
+    @Html.LabelFor(model => model.ProjectReference, new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.ProjectReference, new { @placeholder = "Project Name or Number", @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.ProjectReference, null, new { @class = "alert alert-error" })
+</div>
+<div class="row well-sm">
+    @Html.LabelFor(model => model.Notes, new { @class = "control-label" })
+    @Html.TextAreaFor(model => model.Notes, new { @placeholder = "Notes", @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Notes, null, new { @class = "alert alert-error" })
+</div>

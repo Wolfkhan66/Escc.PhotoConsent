@@ -16,16 +16,16 @@
         <div class="modal fade" id="CreateFormModal" tabindex="-1" role="dialog" aria-labelledby="CreateFormModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header text-success">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="CreateFormModalLabel">Create New Consent Form</h4>
                     </div>
                     <div class="modal-body">
-                        @{Html.RenderPartial("~/Views/Partials/_NewConsentForm.cshtml", new ConsentFormModel());}
+                        @{Html.RenderPartial("~/Views/Partials/ConsentForms/_ConsentForm.cshtml", new ConsentFormModel());}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Submit" />
+                        <input type="submit" class="btn btn-success" value="Create" />
                     </div>
                 </div>
             </div>

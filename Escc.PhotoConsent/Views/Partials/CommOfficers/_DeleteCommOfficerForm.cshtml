@@ -6,34 +6,37 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <div class="text-center">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#CreateOfficerModal">
-        Create New Officer
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteOfficerModal">
+        Delete
     </button>
 </div>
 
-    @using (Html.BeginForm("CreateOfficer", Model["Controller"], FormMethod.Post))
+    @using (Html.BeginForm("DeleteOfficer", Model["Controller"], FormMethod.Post))
     {
         @Html.Hidden(Model["FormID"])
         @Html.Hidden(Model["FormGUID"])
         <div class="form-group">
-            <div class="modal fade" id="CreateOfficerModal" tabindex="-1" role="dialog" aria-labelledby="CreateOfficerModalLabel">
+            <div class="modal fade" id="DeleteOfficerModal" tabindex="-1" role="dialog" aria-labelledby="DeleteOfficerModalLabel">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header text-danger">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="CreateOfficerModalLabel">Create New Commissioning Officer</h4>
+                            <h4 class="modal-title" id="DeleteOfficerModalLabel">Delete Commissioning Officer</h4>
                         </div>
                         <div class="modal-body">
                             @{
                                 CommissioningOfficerModel FormModel = new CommissioningOfficerModel();
                                 FormModel.FormID = int.Parse(Model["FormID"]);
                                 FormModel.FormGUID = Guid.Parse(Model["FormGUID"]);
+                                FormModel.Name = Model["OfficerName"];
+                                FormModel.Email = Model["OfficerEmail"];
+                                FormModel.ContactNumber = Model["OfficerContactNumber"];
                             }
-                            @{Html.RenderPartial("~/Views/Partials/_CommissioningOfficer.cshtml", FormModel);}
+                            @{Html.RenderPartial("~/Views/Partials/CommOfficers/_DeleteCommOfficer.cshtml", FormModel);}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Submit" />
+                            <input type="submit" class="btn btn-danger" value="Delete" />
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,47 @@
+﻿@using Escc.PhotoConsent.Models.DataModels
+@model Dictionary<string, string>
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="text-center">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteParticipantModal">
+        Delete
+    </button>
+</div>
+
+@using (Html.BeginForm("DeleteParticipant", Model["Controller"], FormMethod.Post))
+{
+    @Html.Hidden(Model["FormID"])
+    @Html.Hidden(Model["FormGUID"])
+    <div class="form-group">
+        <div class="modal fade" id="DeleteParticipantModal" tabindex="-1" role="dialog" aria-labelledby="DeleteParticipantModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="DeleteParticipantModalLabel">Delete Participant</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            ParticipantModel FormModel = new ParticipantModel();
+                            FormModel.FormID = int.Parse(Model["FormID"]);
+                            FormModel.FormGUID = Guid.Parse(Model["FormGUID"]);
+                            FormModel.ParticipantID = int.Parse(Model["ParticipantID"]);
+                            FormModel.Name = Model["ParticipantName"];
+                            FormModel.Email = Model["ParticipantEmail"];
+                            FormModel.ContactNumber = Model["ParticipantContactNumber"];
+                        }
+
+                        @{Html.RenderPartial("~/Views/Partials/Participants/_DeleteParticipant.cshtml", FormModel);}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-danger" value="Delete" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            }

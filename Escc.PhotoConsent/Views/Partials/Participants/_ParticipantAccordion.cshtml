@@ -3,6 +3,15 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     @foreach (var Participant in Model.Participants)
     {
+        var FormDictionary = new Dictionary<string, string>();
+        FormDictionary.Add("Controller", "Form");
+        FormDictionary.Add("FormID", Model.Form.FormID.ToString());
+        FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+        FormDictionary.Add("ParticipantID", Participant.ParticipantID.ToString());
+        FormDictionary.Add("ParticipantName", Participant.Name);
+        FormDictionary.Add("ParticipantEmail", Participant.Email);
+        FormDictionary.Add("ParticipantContactNumber", Participant.ContactNumber);
+
         <div class="well-sm">
             <div class="panel panel-info">
                 <div class="panel-heading" role="tab" id="headingOne">
@@ -28,13 +37,27 @@
                                 }
                                 <!---// TO DO // Add Button to Photo Form Modal-->
                             </div>
-                            <div class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
                                 @Html.Label("Name", "Name", new { @class = "control-label" })
-                                @Html.TextBox("Name", Participant.Name, new { @class = "form-control" })
+                                @Html.TextBox("Name", Participant.Name, new { @class = "form-control", @readonly = "readonly" })
                                 @Html.Label("Email", "Email", new { @class = "control-label" })
-                                @Html.TextBox("Email", Participant.Email, new { @class = "form-control" })
+                                @Html.TextBox("Email", Participant.Email, new { @class = "form-control", @readonly = "readonly" })
                                 @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
-                                @Html.TextBox("Contact Number", Participant.ContactNumber, new { @class = "form-control" })
+                                @Html.TextBox("Contact Number", Participant.ContactNumber, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading"></div>
+                                    <div class="panel-body">
+                                        @{Html.RenderPartial("~/Views/Partials/Participants/_EditParticipantForm.cshtml", FormDictionary);}
+                                    </div>
+                                </div>
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading"></div>
+                                    <div class="panel-body">
+                                        @{Html.RenderPartial("~/Views/Partials/Participants/_DeleteParticipantForm.cshtml", FormDictionary);}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

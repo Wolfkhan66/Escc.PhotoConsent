@@ -416,10 +416,10 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Form\ConsentForm.cshtml" />
     <Content Include="Views\Admin\ViewForm.cshtml" />
-    <Content Include="Views\Partials\_Participant.cshtml" />
-    <Content Include="Views\Partials\_CommissioningOfficer.cshtml" />
-    <Content Include="Views\Partials\_Photographer.cshtml" />
-    <Content Include="Views\Partials\_NewConsentForm.cshtml" />
+    <Content Include="Views\Partials\Participants\_Participant.cshtml" />
+    <Content Include="Views\Partials\CommOfficers\_CommOfficer.cshtml" />
+    <Content Include="Views\Partials\Photographers\_Photographer.cshtml" />
+    <Content Include="Views\Partials\ConsentForms\_ConsentForm.cshtml" />
     <Content Include="Web.example.config" />
     <Content Include="Web.example.Debug.config">
       <DependentUpon>Web.example.config</DependentUpon>
@@ -427,16 +427,28 @@
     <Content Include="Web.example.Release.config">
       <DependentUpon>Web.example.config</DependentUpon>
     </Content>
-    <Content Include="Views\Partials\_PhotographerForm.cshtml" />
-    <Content Include="Views\Partials\_CommissioningOfficerForm.cshtml" />
-    <Content Include="Views\Partials\_ParticipantForm.cshtml" />
+    <Content Include="Views\Partials\Photographers\_PhotographerForm.cshtml" />
+    <Content Include="Views\Partials\CommOfficers\_CommOfficerForm.cshtml" />
+    <Content Include="Views\Partials\Participants\_ParticipantForm.cshtml" />
     <Content Include="Views\Admin\ManageForms.cshtml" />
     <Content Include="Views\Partials\_DataTable.cshtml" />
-    <Content Include="Views\Partials\_NewConsentFormForm.cshtml" />
+    <Content Include="Views\Partials\ConsentForms\_ConsentFormForm.cshtml" />
     <Content Include="Views\Shared\_ConsentFormLayout.cshtml" />
-    <Content Include="Views\Partials\_ParticipantAccordion.cshtml" />
-    <Content Include="Views\Partials\_PhotographerAccordion.cshtml" />
-    <Content Include="Views\Partials\_CommissioningOfficerAccordion.cshtml" />
+    <Content Include="Views\Partials\Participants\_ParticipantAccordion.cshtml" />
+    <Content Include="Views\Partials\Photographers\_PhotographerAccordion.cshtml" />
+    <Content Include="Views\Partials\CommOfficers\_CommOfficerAccordion.cshtml" />
+    <Content Include="Views\Partials\Participants\_EditParticipantForm.cshtml" />
+    <Content Include="Views\Partials\Participants\_DeleteParticipantForm.cshtml" />
+    <Content Include="Views\Partials\Participants\_DeleteParticipant.cshtml" />
+    <Content Include="Views\Partials\CommOfficers\_EditCommOfficerForm.cshtml" />
+    <Content Include="Views\Partials\CommOfficers\_DeleteCommOfficerForm.cshtml" />
+    <Content Include="Views\Partials\CommOfficers\_DeleteCommOfficer.cshtml" />
+    <Content Include="Views\Partials\Photographers\_DeletePhotographerForm.cshtml" />
+    <Content Include="Views\Partials\Photographers\_EditPhotographerForm.cshtml" />
+    <Content Include="Views\Partials\Photographers\_DeletePhotographer.cshtml" />
+    <Content Include="Views\Partials\ConsentForms\_EditConsentFormForm.cshtml" />
+    <Content Include="Views\Partials\ConsentForms\_DeleteConsentFormForm.cshtml" />
+    <Content Include="Views\Partials\ConsentForms\_DeleteConsentForm.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,0 +1,52 @@
+﻿@model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @foreach (var Photographer in Model.Photographers)
+    {
+        var FormDictionary = new Dictionary<string, string>();
+        FormDictionary.Add("Controller", "Form");
+        FormDictionary.Add("FormID", Model.Form.FormID.ToString());
+        FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+        FormDictionary.Add("PhotographerID", Photographer.PhotographerID.ToString());
+        FormDictionary.Add("PhotographerName", Photographer.Name);
+        FormDictionary.Add("PhotographerEmail", Photographer.Email);
+        FormDictionary.Add("PhotographerContactNumber", Photographer.ContactNumber);
+        <div class="well-sm">
+            <div class="panel panel-info">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#@Photographer.PhotographerID" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photographer: @Photographer.Name
+                        </a>
+                    </h4>
+                </div>
+                <div id="@Photographer.PhotographerID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.Label("Name", "Name", new { @class = "control-label" })
+                            @Html.TextBox("Name", Photographer.Name, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.Label("Email", "Email", new { @class = "control-label" })
+                            @Html.TextBox("Email", Photographer.Email, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
+                            @Html.TextBox("Contact Number", Photographer.ContactNumber, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading"></div>
+                                <div class="panel-body">
+                                    @{Html.RenderPartial("~/Views/Partials/Photographers/_EditPhotographerForm.cshtml", FormDictionary);}
+                                </div>
+                            </div>
+                            <div class="panel panel-danger">
+                                <div class="panel-heading"></div>
+                                <div class="panel-body">
+                                    @{Html.RenderPartial("~/Views/Partials/Photographers/_DeletePhotographerForm.cshtml", FormDictionary);}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
