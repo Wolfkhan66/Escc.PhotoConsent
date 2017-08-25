@@ -9,6 +9,8 @@
     FormDictionary.Add("Controller", "Form");
     FormDictionary.Add("FormID", Model.Form.FormID.ToString());
     FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+
+    Tuple<string, Escc.PhotoConsent.Models.ViewModels.FormViewModel> AccordionTuple = new Tuple<string, Escc.PhotoConsent.Models.ViewModels.FormViewModel>("Form", Model);
 }
 <p></p>
 <div class="row">
@@ -40,7 +42,7 @@
                     }
                     else
                     {
-                        Html.RenderPartial("~/Views/Partials/Participants/_ParticipantAccordion.cshtml", Model);
+                        Html.RenderPartial("~/Views/Partials/Participants/_ParticipantAccordion.cshtml", AccordionTuple);
                     }
                 </div>
             </div>
@@ -67,7 +69,7 @@
                     }
                     else
                     {
-                        Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficerAccordion.cshtml", Model);
+                        Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficerAccordion.cshtml", AccordionTuple);
                     }
                 </div>
             </div>
@@ -94,7 +96,7 @@
                     }
                     else
                     {
-                        Html.RenderPartial("~/Views/Partials/Photographers/_PhotographerAccordion.cshtml", Model);
+                        Html.RenderPartial("~/Views/Partials/Photographers/_PhotographerAccordion.cshtml", AccordionTuple);
                     }
                 </div>
             </div>

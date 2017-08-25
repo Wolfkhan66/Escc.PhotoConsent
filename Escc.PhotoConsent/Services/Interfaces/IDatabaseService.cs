@@ -16,27 +16,28 @@ namespace Escc.PhotoConsent.Services.Interfaces
         void InsertPhoto(PhotoModel model);
         #endregion
 
-        #region ConsentForm
+        #region Get
         int GetFormIDByGuid(Guid GUID);
         ConsentFormModel GetFormByID(int FormID);
         List<ConsentFormModel> GetConsentForms();
-        #endregion
-
-        #region Participants
         List<ParticipantModel> GetParticipantsByFormID(int FormID);
-        #endregion
-
-        #region Commissioning Officer
         List<CommissioningOfficerModel> GetOfficersByFormID(int FormID);
-        #endregion
-
-        #region Photographers
         List<PhotographerModel> GetPhotographersByFormID(int FormID);
+        List<PhotoModel> GetPhotosByParticipantID(int ParticipantID);
         #endregion
 
+        #region Update
+        void UpdateConsentForm(ConsentFormModel model);
+        void UpdateParticipant(ParticipantModel model);
+        void UpdateCommissioningOfficer(CommissioningOfficerModel model);
+        void UpdatePhotographer(PhotographerModel model);
+        #endregion
 
-        #region Photos
-        List<PhotoModel> GetPhotosByParticipantID(int ParticipantID);
+        #region Delete
+        void DeleteConsentForm(ConsentFormModel model);
+        void DeleteParticipant(ParticipantModel model);
+        void DeleteCommissioningOfficer(CommissioningOfficerModel model);
+        void DeletePhotographer(PhotographerModel model);
         #endregion
     }
 }

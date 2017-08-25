@@ -28,6 +28,7 @@
                                 CommissioningOfficerModel FormModel = new CommissioningOfficerModel();
                                 FormModel.FormID = int.Parse(Model["FormID"]);
                                 FormModel.FormGUID = Guid.Parse(Model["FormGUID"]);
+                                FormModel.OfficerID = int.Parse(Model["OfficerID"]);
                                 FormModel.Name = Model["OfficerName"];
                                 FormModel.Email = Model["OfficerEmail"];
                                 FormModel.ContactNumber = Model["OfficerContactNumber"];

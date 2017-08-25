@@ -22,6 +22,7 @@ namespace Escc.PhotoConsent.Models.DataModels
         public string DateSubmitted { get; set; }
         public bool ConsentGiven { get; set; }
         public string Notes { get; set; }
+        public bool Deleted { get; set; }
        
     }
 }

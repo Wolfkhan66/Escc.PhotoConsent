@@ -1,13 +1,13 @@
-﻿@model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+﻿@model Tuple<string, Escc.PhotoConsent.Models.ViewModels.FormViewModel>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    @foreach (var Officer in Model.Officers)
+    @foreach (var Officer in Model.Item2.Officers)
     {
 
         var FormDictionary = new Dictionary<string, string>();
-        FormDictionary.Add("Controller", "Form");
-        FormDictionary.Add("FormID", Model.Form.FormID.ToString());
-        FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+        FormDictionary.Add("Controller", Model.Item1);
+        FormDictionary.Add("FormID", Model.Item2.Form.FormID.ToString());
+        FormDictionary.Add("FormGUID", Model.Item2.Form.GUID.ToString());
         FormDictionary.Add("OfficerID", Officer.OfficerID.ToString());
         FormDictionary.Add("OfficerName", Officer.Name);
         FormDictionary.Add("OfficerEmail", Officer.Email);

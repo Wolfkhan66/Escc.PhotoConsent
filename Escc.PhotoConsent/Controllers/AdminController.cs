@@ -36,7 +36,7 @@ namespace Escc.PhotoConsent.Controllers
             var model = new ManageFormViewModel();
             if (Forms == null)
             {
-                Forms = _databaseService.GetConsentForms();
+                Forms = _databaseService.GetConsentForms().Where(x => x.Deleted == false).ToList();
             }
             model.Forms.Table = PrepareFormsTable(Forms);
 
@@ -64,7 +64,7 @@ namespace Escc.PhotoConsent.Controllers
 
         public ActionResult SearchForms(string ProjectReference, string CreatedBy, string DateCreated, string Consent)
         {
-            var ConsentForms = _databaseService.GetConsentForms();
+            var ConsentForms = _databaseService.GetConsentForms().Where(x => x.Deleted == false).ToList();
 
             if (ProjectReference != "")
             {
@@ -86,12 +86,14 @@ namespace Escc.PhotoConsent.Controllers
            return ManageForms(ConsentForms);
         }
 
+        #region CreateMethods
         [HttpPost]
         public ActionResult CreateForm(ConsentFormModel model)
         {
             model.DateCreated = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
             model.ConsentGiven = false;
             model.GUID = Guid.NewGuid();
+            model.Deleted = false;
             _databaseService.InsertConsentForm(model);
             var FormID = _databaseService.GetFormIDByGuid(model.GUID);
             return RedirectToRoute("ViewForm", new { ID = FormID });
@@ -116,5 +118,65 @@ namespace Escc.PhotoConsent.Controllers
             _databaseService.InsertPhotographer(model);
             return RedirectToRoute("ViewForm", new { ID = model.FormID });
         }
+        #endregion
+
+        #region EditMethods
+        [HttpPost]
+        public ActionResult EditForm(ConsentFormModel model)
+        {
+            _databaseService.UpdateConsentForm(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+
+        [HttpPost]
+        public ActionResult EditOfficer(CommissioningOfficerModel model)
+        {
+            _databaseService.UpdateCommissioningOfficer(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+
+        [HttpPost]
+        public ActionResult EditParticipant(ParticipantModel model)
+        {
+            _databaseService.UpdateParticipant(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+        [HttpPost]
+        public ActionResult EditPhotographer(PhotographerModel model)
+        {
+            _databaseService.UpdatePhotographer(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+        #endregion
+
+        #region DeleteMethods
+        [HttpPost]
+        public ActionResult DeleteForm(ConsentFormModel model)
+        {
+            model.Deleted = true;
+            _databaseService.DeleteConsentForm(model);
+            return RedirectToRoute("ManageForms");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOfficer(CommissioningOfficerModel model)
+        {
+            _databaseService.DeleteCommissioningOfficer(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteParticipant(ParticipantModel model)
+        {
+            _databaseService.DeleteParticipant(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+        [HttpPost]
+        public ActionResult DeletePhotographer(PhotographerModel model)
+        {
+            _databaseService.DeletePhotographer(model);
+            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+        #endregion
     }
 }

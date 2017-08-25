@@ -11,7 +11,7 @@
     </button>
 </div>
 
-    @using (Html.BeginForm("CreateOfficer", Model["Controller"], FormMethod.Post))
+    @using (Html.BeginForm("EditOfficer", Model["Controller"], FormMethod.Post))
     {
         @Html.Hidden(Model["FormID"])
         @Html.Hidden(Model["FormGUID"])

@@ -28,7 +28,17 @@ namespace Escc.PhotoConsent.Services
         /// <param name="model">ConsentFormModel - </param>
         public void InsertConsentForm(ConsentFormModel model)
         {
-            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes, @GUID", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes, model.GUID });
+            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes, @GUID, @Deleted", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes, model.GUID, model.Deleted });
+        }
+
+        public void UpdateConsentForm(ConsentFormModel model)
+        {
+            _db.Execute("EXEC UpdateConsentForm @CreatedBy, @ProjectReference, @Notes, @FormID, @ConsentGiven", new { model.CreatedBy, model.ProjectReference, model.Notes, model.FormID, model.ConsentGiven });
+        }
+
+        public void DeleteConsentForm(ConsentFormModel model)
+        {
+            _db.Execute("EXEC DeleteConsentForm @FormID, @Deleted", new { model.FormID, model.Deleted });
         }
 
         /// <summary>
@@ -74,6 +84,7 @@ namespace Escc.PhotoConsent.Services
                     model.DateCreated = (string)reader["DateCreated"];
                     model.FormID = (int)reader["FormID"];
                     model.GUID = Guid.Parse(reader["GUID"].ToString());
+                    model.Deleted = (bool)reader["Deleted"];
 
                     try
                     {
@@ -127,6 +138,7 @@ namespace Escc.PhotoConsent.Services
                     model.DateCreated = (string)reader["DateCreated"];
                     model.FormID = (int)reader["FormID"];
                     model.GUID = Guid.Parse(reader["GUID"].ToString());
+                    model.Deleted = (bool)reader["Deleted"];
 
                     try
                     {
@@ -159,6 +171,7 @@ namespace Escc.PhotoConsent.Services
             }
             return forms;
         }
+        
         #endregion
 
         #region Participants
@@ -169,6 +182,16 @@ namespace Escc.PhotoConsent.Services
         public void InsertParticipant(ParticipantModel model)
         {
             _db.Execute("EXEC InsertParticipant @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });
+        }
+
+        public void UpdateParticipant(ParticipantModel model)
+        {
+            _db.Execute("EXEC UpdateParticipant @Name, @Email, @ContactNumber, @ParticipantID", new { model.Name, model.Email, model.ContactNumber, model.ParticipantID });
+        }
+
+        public void DeleteParticipant(ParticipantModel model)
+        {
+            _db.Execute("EXEC DeleteParticipant @ParticipantID", new { model.ParticipantID });
         }
 
         /// <summary>
@@ -211,6 +234,16 @@ namespace Escc.PhotoConsent.Services
             _db.Execute("EXEC InsertCommissioningOfficer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
         }
 
+        public void UpdateCommissioningOfficer(CommissioningOfficerModel model)
+        {
+            _db.Execute("EXEC UpdateCommissioningOfficer @Name, @Email, @ContactNumber, @OfficerID", new {model.Name, model.Email, model.ContactNumber, model.OfficerID });
+        }
+
+        public void DeleteCommissioningOfficer(CommissioningOfficerModel model)
+        {
+            _db.Execute("EXEC DeleteCommissioningOfficer @OfficerID", new { model.OfficerID });
+        }
+
         /// <summary>
         /// Run a query to get all Officers for a consent form
         /// </summary>
@@ -249,6 +282,15 @@ namespace Escc.PhotoConsent.Services
         public void InsertPhotographer(PhotographerModel model)
         {
             _db.Execute("EXEC InsertPhotographer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
+        }
+
+        public void UpdatePhotographer(PhotographerModel model)
+        {
+            _db.Execute("EXEC UpdatePhotographer @Name, @Email, @ContactNumber, @PhotographerID", new { model.Name, model.Email, model.ContactNumber, model.PhotographerID });
+        }
+        public void DeletePhotographer(PhotographerModel model)
+        {
+            _db.Execute("EXEC DeletePhotographer @PhotographerID", new { model.PhotographerID });
         }
 
         /// <summary>

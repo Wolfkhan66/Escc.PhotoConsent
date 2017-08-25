@@ -1,12 +1,13 @@
-﻿@model Escc.PhotoConsent.Models.ViewModels.FormViewModel
+﻿@model Tuple<string,Escc.PhotoConsent.Models.ViewModels.FormViewModel>
+
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    @foreach (var Participant in Model.Participants)
+    @foreach (var Participant in Model.Item2.Participants)
     {
         var FormDictionary = new Dictionary<string, string>();
-        FormDictionary.Add("Controller", "Form");
-        FormDictionary.Add("FormID", Model.Form.FormID.ToString());
-        FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+        FormDictionary.Add("Controller", Model.Item1);
+        FormDictionary.Add("FormID", Model.Item2.Form.FormID.ToString());
+        FormDictionary.Add("FormGUID", Model.Item2.Form.GUID.ToString());
         FormDictionary.Add("ParticipantID", Participant.ParticipantID.ToString());
         FormDictionary.Add("ParticipantName", Participant.Name);
         FormDictionary.Add("ParticipantEmail", Participant.Email);
@@ -25,7 +26,7 @@
                     <div class="panel-body">
                         <div class="row well-sm">
                             <div class="col-sm-4 col-md-4 col-lg-4">
-                                @if (Model.Photos.SingleOrDefault(x => x.ParticipantID == Participant.ParticipantID) == null)
+                                @if (Model.Item2.Photos.SingleOrDefault(x => x.ParticipantID == Participant.ParticipantID) == null)
                                 {
                                     <div class="thumbnail">
                                         <img src="~/Content/Images/No_Image.png" />

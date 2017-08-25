@@ -29,6 +29,7 @@ namespace Escc.PhotoConsent.Controllers
             return View(ViewModel);
         }
 
+        #region Create Methods
         [HttpPost]
         public ActionResult CreateOfficer(CommissioningOfficerModel model)
         {
@@ -48,5 +49,50 @@ namespace Escc.PhotoConsent.Controllers
             _databaseService.InsertPhotographer(model);
             return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
         }
+        #endregion
+
+        #region EditMethods
+        [HttpPost]
+        public ActionResult EditOfficer(CommissioningOfficerModel model)
+        {
+            _databaseService.UpdateCommissioningOfficer(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
+        }
+
+        [HttpPost]
+        public ActionResult EditParticipant(ParticipantModel model)
+        {
+            _databaseService.UpdateParticipant(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
+        }
+        [HttpPost]
+        public ActionResult EditPhotographer(PhotographerModel model)
+        {
+            _databaseService.UpdatePhotographer(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
+        }
+        #endregion
+
+        #region DeleteMethods
+        [HttpPost]
+        public ActionResult DeleteOfficer(CommissioningOfficerModel model)
+        {
+            _databaseService.DeleteCommissioningOfficer(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteParticipant(ParticipantModel model)
+        {
+            _databaseService.DeleteParticipant(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
+        }
+        [HttpPost]
+        public ActionResult DeletePhotographer(PhotographerModel model)
+        {
+            _databaseService.DeletePhotographer(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
+        }
+        #endregion
     }
 }
