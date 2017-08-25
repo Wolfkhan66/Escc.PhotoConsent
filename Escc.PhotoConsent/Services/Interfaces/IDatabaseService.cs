@@ -38,6 +38,7 @@ namespace Escc.PhotoConsent.Services.Interfaces
         void DeleteParticipant(ParticipantModel model);
         void DeleteCommissioningOfficer(CommissioningOfficerModel model);
         void DeletePhotographer(PhotographerModel model);
+        void DeletePhoto(int ParticipantID);
         #endregion
     }
 }

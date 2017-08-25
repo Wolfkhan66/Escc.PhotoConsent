@@ -5,6 +5,7 @@ using Escc.PhotoConsent.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -27,6 +28,22 @@ namespace Escc.PhotoConsent.Controllers
             ViewModel.Officers = _databaseService.GetOfficersByFormID(ID);
             ViewModel.Participants = _databaseService.GetParticipantsByFormID(ID);
             ViewModel.Photographers = _databaseService.GetPhotographersByFormID(ID);
+
+            var Photos = new List<PhotoModel>();
+            foreach (var Particpant in ViewModel.Participants)
+            {
+                Photos.Add(_databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault());
+            }
+
+            foreach (var Photo in Photos)
+            {
+                if(Photo != null)
+                {
+                    var Base64 = "data:image/png;base64," + Convert.ToBase64String(Photo.Image, 0, Photo.Image.Length);
+                    ViewModel.Participants.Single(x => x.ParticipantID == Photo.ParticipantID).Base64Image = Base64;
+                }
+            }
+
             return View(ViewModel);
         }
 
@@ -117,6 +134,26 @@ namespace Escc.PhotoConsent.Controllers
         {
             _databaseService.InsertPhotographer(model);
             return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+
+        [HttpPost]
+        public ActionResult UploadPhoto(HttpPostedFileBase Image, int ParticipantID, int FormID)
+        {
+            var model = new PhotoModel();
+            model.ParticipantID = ParticipantID;
+            byte[] imageByte = null;
+            BinaryReader rdr = new BinaryReader(Image.InputStream);
+            imageByte = rdr.ReadBytes((int)Image.ContentLength);
+            model.Image = imageByte;
+
+            var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
+            if(photo.Count != 0)
+            {
+                _databaseService.DeletePhoto(ParticipantID);
+            }
+
+            _databaseService.InsertPhoto(model);
+            return RedirectToRoute("ViewForm", new { ID = FormID });
         }
         #endregion
 

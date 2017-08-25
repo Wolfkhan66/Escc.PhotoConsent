@@ -12,7 +12,6 @@ namespace Escc.PhotoConsent.Models.ViewModels
         public List<ParticipantModel> Participants { get; set; }
         public List<CommissioningOfficerModel> Officers { get; set; }
         public List<PhotographerModel> Photographers { get; set; }
-        public List<PhotoModel> Photos { get; set; }
         public List<string> ErrorMessage { get; set; }
 
         public FormViewModel()
@@ -20,7 +19,6 @@ namespace Escc.PhotoConsent.Models.ViewModels
             Participants = new List<ParticipantModel>();
             Officers = new List<CommissioningOfficerModel>();
             Photographers = new List<PhotographerModel>();
-            Photos = new List<PhotoModel>();
             ErrorMessage = new List<string>();
         }
     }

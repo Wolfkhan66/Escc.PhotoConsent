@@ -333,6 +333,11 @@ namespace Escc.PhotoConsent.Services
             _db.Execute("EXEC InsertPhoto @ParticipantID, @Image", new { model.ParticipantID, model.Image });
         }
 
+        public void DeletePhoto(int ParticipantID)
+        {
+            _db.Execute("EXEC DeletePhoto @ParticipantID", new { ParticipantID});
+        }
+
         /// <summary>
         /// Run a query to get all Photos for a participant
         /// </summary>
@@ -349,7 +354,7 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new PhotoModel();
-                    model.Image = (string)reader["Image"];
+                    model.Image = (byte[])reader["Image"];
                     model.ParticipantID = (int)reader["ParticipantID"];
                     model.PhotoID = (int)reader["PhotoID"];
 

@@ -18,5 +18,7 @@ namespace Escc.PhotoConsent.Models.DataModels
 
         [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
+
+        public string Base64Image { get; set; }
     }
 }

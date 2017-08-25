@@ -26,7 +26,7 @@
                     <div class="panel-body">
                         <div class="row well-sm">
                             <div class="col-sm-4 col-md-4 col-lg-4">
-                                @if (Model.Item2.Photos.SingleOrDefault(x => x.ParticipantID == Participant.ParticipantID) == null)
+                                @if ( Participant.Base64Image == null || Participant.Base64Image == "")
                                 {
                                     <div class="thumbnail">
                                         <img src="~/Content/Images/No_Image.png" />
@@ -34,9 +34,11 @@
                                 }
                                 else
                                 {
-                                    // TO DO
+                                    <div class="thumbnail">
+                                        <img src="@Participant.Base64Image" />
+                                    </div>
                                 }
-                                <!---// TO DO // Add Button to Photo Form Modal-->
+                                @{Html.RenderPartial("~/Views/Partials/_PhotoUploadForm.cshtml", FormDictionary);}
                             </div>
                             <div class="col-sm-5 col-md-5 col-lg-5">
                                 @Html.Label("Name", "Name", new { @class = "control-label" })

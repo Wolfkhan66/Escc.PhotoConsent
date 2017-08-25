@@ -7,6 +7,7 @@ using Escc.PhotoConsent.Models.ViewModels;
 using Escc.PhotoConsent.Services.Interfaces;
 using Escc.PhotoConsent.Services;
 using Escc.PhotoConsent.Models.DataModels;
+using System.IO;
 
 namespace Escc.PhotoConsent.Controllers
 {
@@ -26,6 +27,21 @@ namespace Escc.PhotoConsent.Controllers
                 ViewModel.Participants = _databaseService.GetParticipantsByFormID(formID);
                 ViewModel.Photographers = _databaseService.GetPhotographersByFormID(formID);
                 ViewModel.ErrorMessage = ErrorMessage == null ? new List<string>() : ErrorMessage;
+
+                var Photos = new List<PhotoModel>();
+                foreach (var Particpant in ViewModel.Participants)
+                {
+                    Photos.Add(_databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault());
+                }
+
+                foreach (var Photo in Photos)
+                {
+                    if (Photo != null)
+                    {
+                        var Base64 = "data:image/png;base64," + Convert.ToBase64String(Photo.Image, 0, Photo.Image.Length);
+                        ViewModel.Participants.Single(x => x.ParticipantID == Photo.ParticipantID).Base64Image = Base64;
+                    }
+                }
             }
 
             if (ViewModel.Form.ConsentGiven)
@@ -64,6 +80,14 @@ namespace Escc.PhotoConsent.Controllers
             {
                 ErrorMessage.Add("You did not add any photographers!. Please add at least one and try again.");
             }
+            foreach (var Particpant in Participants)
+            {
+               var photos = _databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault();
+                if(photos == null)
+                {
+                    ErrorMessage.Add(string.Format("The participant \"{0}\" has no photo. Please upload a photo for \"{1}\". ", Particpant.Name, Particpant.Name));
+                }
+            }
 
             if (ErrorMessage.Count != 0)
             {
@@ -96,6 +120,27 @@ namespace Escc.PhotoConsent.Controllers
             _databaseService.InsertPhotographer(model);
             return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
         }
+
+        [HttpPost]
+        public ActionResult UploadPhoto(HttpPostedFileBase Image, int ParticipantID, int FormID , string Formguid)
+        {
+            var model = new PhotoModel();
+            model.ParticipantID = ParticipantID;
+            byte[] imageByte = null;
+            BinaryReader rdr = new BinaryReader(Image.InputStream);
+            imageByte = rdr.ReadBytes((int)Image.ContentLength);
+            model.Image = imageByte;
+
+            var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
+            if (photo.Count != 0)
+            {
+                _databaseService.DeletePhoto(ParticipantID);
+            }
+
+            _databaseService.InsertPhoto(model);
+            return RedirectToRoute("ConsentForm", new { formGuid = Formguid });
+        }
+
         #endregion
 
         #region EditMethods

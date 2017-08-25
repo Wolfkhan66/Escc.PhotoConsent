@@ -451,6 +451,7 @@
     <Content Include="Views\Partials\ConsentForms\_DeleteConsentFormForm.cshtml" />
     <Content Include="Views\Partials\ConsentForms\_DeleteConsentForm.cshtml" />
     <Content Include="Views\Form\FormSubmission.cshtml" />
+    <Content Include="Views\Partials\_PhotoUploadForm.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
