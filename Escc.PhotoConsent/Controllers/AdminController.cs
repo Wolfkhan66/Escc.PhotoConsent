@@ -15,14 +15,11 @@ namespace Escc.PhotoConsent.Controllers
     public class AdminController : Controller
     {
         private IDatabaseService _databaseService = new DatabaseService();
-
-        [CustomAuthorize()]
         public ActionResult Index()
         {
             return View();
         }
 
-        [CustomAuthorize()]
         [Route("ViewForm/{ID}", Name = "ViewForm")]
         public ActionResult ViewForm(int ID)
         {
@@ -50,7 +47,6 @@ namespace Escc.PhotoConsent.Controllers
             return View(ViewModel);
         }
 
-        [CustomAuthorize()]
         [Route("ManageForms", Name = "ManageForms")]
         public ActionResult ManageForms(List<ConsentFormModel> Forms)
         {
@@ -83,7 +79,8 @@ namespace Escc.PhotoConsent.Controllers
             return Table;
         }
 
-        [CustomAuthorize()]
+        [HttpPost]
+        [Route("SearchForms", Name = "SearchForms")]
         public ActionResult SearchForms(string ProjectReference, string CreatedBy, string DateCreated, string Consent)
         {
             var ConsentForms = _databaseService.GetConsentForms().Where(x => x.Deleted == false).ToList();
