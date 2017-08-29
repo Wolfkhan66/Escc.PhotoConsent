@@ -33,7 +33,7 @@ namespace Escc.PhotoConsent.Services
 
         public void UpdateConsentForm(ConsentFormModel model)
         {
-            _db.Execute("EXEC UpdateConsentForm @CreatedBy, @ProjectReference, @Notes, @FormID, @ConsentGiven", new { model.CreatedBy, model.ProjectReference, model.Notes, model.FormID, model.ConsentGiven });
+            _db.Execute("EXEC UpdateConsentForm @CreatedBy, @ProjectReference, @Notes, @FormID, @ConsentGiven, @DateSubmitted", new { model.CreatedBy, model.ProjectReference, model.Notes, model.FormID, model.ConsentGiven, model.DateSubmitted});
         }
 
         public void DeleteConsentForm(ConsentFormModel model)

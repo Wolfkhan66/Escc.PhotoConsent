@@ -5,8 +5,12 @@
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
+@{
+    var ModalID = string.Format("DeletePhotographerModal{0}", Model["PhotographerID"]);
+}
+
 <div class="text-center">
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeletePhotographerModal">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@ModalID">
         Delete
     </button>
 </div>
@@ -16,7 +20,7 @@
     @Html.Hidden(Model["FormID"])
     @Html.Hidden(Model["FormGUID"])
     <div class="form-group">
-        <div class="modal fade" id="DeletePhotographerModal" tabindex="-1" role="dialog" aria-labelledby="DeletePhotographerModalLabel">
+        <div class="modal fade" id="@ModalID" tabindex="-1" role="dialog" aria-labelledby="DeletePhotographerModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header text-danger">

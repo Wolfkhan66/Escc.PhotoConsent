@@ -8,9 +8,11 @@
     FormDictionary.Add("Controller", "Admin");
     FormDictionary.Add("FormID", Model.Form.FormID.ToString());
     FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
+    FormDictionary.Add("ConsentGiven", Model.Form.ConsentGiven.ToString());
     FormDictionary.Add("CreatedBy", Model.Form.CreatedBy);
     FormDictionary.Add("ProjectReference", Model.Form.ProjectReference);
     FormDictionary.Add("Notes", Model.Form.Notes);
+    FormDictionary.Add("DateSubmitted", Model.Form.DateSubmitted);
 
     Tuple<string, Escc.PhotoConsent.Models.ViewModels.FormViewModel> AccordionTuple = new Tuple<string, Escc.PhotoConsent.Models.ViewModels.FormViewModel>("Admin", Model);
 }
@@ -86,7 +88,7 @@
                                                 <div class="panel-heading"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Consent Given</div>
                                                 <div class="panel-body">
                                                     @Html.LabelFor(model => model.Form.DateSubmitted, new { @class = "control-label" })
-                                                    @Html.TextBoxFor(model => model.Form.DateSubmitted, new { @placeholder = "DateSubmitted", @class = "form-control" })
+                                                    @Html.TextBoxFor(model => model.Form.DateSubmitted, new { @placeholder = "DateSubmitted", @class = "form-control", @readonly = "readonly" })
                                                 </div>
                                             </div>
                                         }

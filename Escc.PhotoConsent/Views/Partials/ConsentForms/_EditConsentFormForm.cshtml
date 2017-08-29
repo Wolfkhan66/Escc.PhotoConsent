@@ -27,10 +27,12 @@
                         @{
                             ConsentFormModel FormModel = new ConsentFormModel();
                             FormModel.FormID = int.Parse(Model["FormID"]);
+                            FormModel.ConsentGiven = bool.Parse((Model["ConsentGiven"]));
                             FormModel.GUID = Guid.Parse(Model["FormGUID"]);
                             FormModel.CreatedBy = Model["CreatedBy"];
                             FormModel.ProjectReference = Model["ProjectReference"];
                             FormModel.Notes = Model["Notes"];
+                            FormModel.DateSubmitted = Model["DateSubmitted"];
                         }
                         @{Html.RenderPartial("~/Views/Partials/ConsentForms/_ConsentForm.cshtml", FormModel);}
                     </div>

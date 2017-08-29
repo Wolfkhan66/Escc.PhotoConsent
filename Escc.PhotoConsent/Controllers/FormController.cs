@@ -95,6 +95,7 @@ namespace Escc.PhotoConsent.Controllers
             }
             else
             {
+                Form.DateSubmitted = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
                 _databaseService.UpdateConsentForm(Form);
                 return View("FormSubmission");
             }

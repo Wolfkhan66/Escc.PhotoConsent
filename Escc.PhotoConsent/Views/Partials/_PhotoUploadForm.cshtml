@@ -4,11 +4,16 @@
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
+@{
+    var ModalID = string.Format("ParticipantPhotoModal{0}", Model["ParticipantID"]);
+}
+
 <div class="text-center">
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#PhotoUploadModal">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#@ModalID">
         Upload
     </button>
 </div>
+
 
 @using (Html.BeginForm("UploadPhoto", Model["Controller"], FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -17,7 +22,7 @@
     @Html.Hidden("FormGuid", Model["FormGUID"])
 
     <div class="form-group">
-        <div class="modal fade" id="PhotoUploadModal" tabindex="-1" role="dialog" aria-labelledby="PhotoUploadModalLabel">
+        <div class="modal fade" id="@ModalID" tabindex="-1" role="dialog" aria-labelledby="PhotoUploadModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
