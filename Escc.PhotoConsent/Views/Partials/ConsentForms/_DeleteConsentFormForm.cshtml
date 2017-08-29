@@ -32,6 +32,7 @@
                             FormModel.Notes = Model["Notes"];
                         }
                         @{Html.RenderPartial("~/Views/Partials/ConsentForms/_DeleteConsentForm.cshtml", FormModel);}
+                        <div class="alert alert-danger" role="alert">This will <b>soft delete</b> the form so it is no longer viewable. The data itself will remain <b>archived</b> in the database.</div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
