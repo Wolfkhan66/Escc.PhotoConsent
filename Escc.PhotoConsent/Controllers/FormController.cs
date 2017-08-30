@@ -23,9 +23,7 @@ namespace Escc.PhotoConsent.Controllers
             {
                 var formID = _databaseService.GetFormIDByGuid(Guid.Parse(formGuid));
                 ViewModel.Form = _databaseService.GetFormByID(formID);
-                ViewModel.Officers = _databaseService.GetOfficersByFormID(formID);
                 ViewModel.Participants = _databaseService.GetParticipantsByFormID(formID);
-                ViewModel.Photographers = _databaseService.GetPhotographersByFormID(formID);
                 ViewModel.ErrorMessage = ErrorMessage == null ? new List<string>() : ErrorMessage;
 
                 var Photos = new List<PhotoModel>();
@@ -60,8 +58,6 @@ namespace Escc.PhotoConsent.Controllers
             var Form = _databaseService.GetFormByID(FormID);
             Form.ConsentGiven = ConsentGiven;
             var Participants = _databaseService.GetParticipantsByFormID(FormID);
-            var Officers = _databaseService.GetOfficersByFormID(FormID);
-            var Photographers = _databaseService.GetPhotographersByFormID(FormID);
 
             var ErrorMessage = new List<string>();
             if (ConsentGiven == false)
@@ -71,14 +67,6 @@ namespace Escc.PhotoConsent.Controllers
             if (Participants.Count == 0)
             {
                 ErrorMessage.Add("You did not add any participants!. Please add at least one and try again.");
-            }
-            if (Officers.Count == 0)
-            {
-                ErrorMessage.Add("You did not add any commissioning officers!. Please add at least one and try again.");
-            }
-            if (Photographers.Count == 0)
-            {
-                ErrorMessage.Add("You did not add any photographers!. Please add at least one and try again.");
             }
             foreach (var Particpant in Participants)
             {
@@ -103,22 +91,9 @@ namespace Escc.PhotoConsent.Controllers
 
         #region Create Methods
         [HttpPost]
-        public ActionResult CreateOfficer(CommissioningOfficerModel model)
-        {
-            _databaseService.InsertCommissioningOfficer(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
-        }
-
-        [HttpPost]
         public ActionResult CreateParticipant(ParticipantModel model)
         {
             _databaseService.InsertParticipant(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
-        }
-        [HttpPost]
-        public ActionResult CreatePhotographer(PhotographerModel model)
-        {
-            _databaseService.InsertPhotographer(model);
             return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
         }
 
@@ -168,22 +143,14 @@ namespace Escc.PhotoConsent.Controllers
 
         #region DeleteMethods
         [HttpPost]
-        public ActionResult DeleteOfficer(CommissioningOfficerModel model)
-        {
-            _databaseService.DeleteCommissioningOfficer(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
-        }
-
-        [HttpPost]
         public ActionResult DeleteParticipant(ParticipantModel model)
         {
+            var photo = _databaseService.GetPhotosByParticipantID(model.ParticipantID).FirstOrDefault();
+            if(photo != null)
+            {
+                _databaseService.DeletePhoto(model.ParticipantID);
+            }
             _databaseService.DeleteParticipant(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
-        }
-        [HttpPost]
-        public ActionResult DeletePhotographer(PhotographerModel model)
-        {
-            _databaseService.DeletePhotographer(model);
             return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
         }
         #endregion

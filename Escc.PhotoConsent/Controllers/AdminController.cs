@@ -234,6 +234,11 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult DeleteParticipant(ParticipantModel model)
         {
+            var photo = _databaseService.GetPhotosByParticipantID(model.ParticipantID).FirstOrDefault();
+            if (photo != null)
+            {
+                _databaseService.DeletePhoto(model.ParticipantID);
+            }
             _databaseService.DeleteParticipant(model);
             return RedirectToRoute("ViewForm", new { ID = model.FormID });
         }
