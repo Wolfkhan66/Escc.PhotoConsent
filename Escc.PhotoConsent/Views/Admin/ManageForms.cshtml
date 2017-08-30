@@ -29,12 +29,12 @@
                         <div class="row">
                             <p></p>
                             <div class="col-sm-4 col-md-4 col-lg-4">
-                                @Html.Label("Consent", new { @class = "control-label" })
-                                @Html.DropDownList("Consent", new SelectList(new List<string> { "True", "False", "Both" }), "Please Select", new { @class = "form-control" })
-                            </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4">
                                 @Html.Label("Paymo Number", new { @class = "control-label" })
                                 @Html.TextBox("PaymoNumber", "", new { @placeholder = "e.g. 515364", @class = "form-control" })
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                @Html.Label("Consent", new { @class = "control-label" })
+                                @Html.DropDownList("Consent", new SelectList(new List<string> { "True", "False", "Both" }), "Please Select", new { @class = "form-control" })
                             </div>
                             <div style="margin-top:24px;">
                                 <div class="col-sm-1 col-md-1 col-lg-1 col-sm-push-1 col-md-push-1 col-lg-push-1">
