@@ -85,7 +85,7 @@ namespace Escc.PhotoConsent.Controllers
                var photos = _databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault();
                 if(photos == null)
                 {
-                    ErrorMessage.Add(string.Format("The participant \"{0}\" has no photo. Please upload a photo for \"{1}\". ", Particpant.Name, Particpant.Name));
+                    ErrorMessage.Add(string.Format("The participant \"{0}\" has no photo. Please click on \"Participant: {1}\" and click on the Upload button below the empty image icon to choose a photo. ", Particpant.Name, Particpant.Name));
                 }
             }
 
