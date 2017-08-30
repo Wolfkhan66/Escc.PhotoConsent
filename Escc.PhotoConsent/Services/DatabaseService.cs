@@ -238,6 +238,35 @@ namespace Escc.PhotoConsent.Services
             }
             return Participants;
         }
+
+        /// <summary>
+        /// Run a query to get all participants
+        /// </summary>
+        /// <param name="FormID"> int </param>
+        public List<ParticipantModel> GetParticipants()
+        {
+            var Participants = new List<ParticipantModel>();
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
+            {
+                cn.Open();
+                var sql = string.Format("SELECT * FROM Participants");
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new ParticipantModel();
+                    model.ContactNumber = (string)reader["ContactNumber"];
+                    model.Email = (string)reader["Email"];
+                    model.FormID = (int)reader["FormID"];
+                    model.Name = (string)reader["Name"];
+                    model.ParticipantID = (int)reader["ParticipantID"];
+
+                    Participants.Add(model);
+                }
+                cn.Close();
+            }
+            return Participants;
+        }
         #endregion
 
         #region Commissioning Officer
@@ -288,6 +317,35 @@ namespace Escc.PhotoConsent.Services
             }
             return Officers;
         }
+
+        /// <summary>
+        /// Run a query to get all Officers
+        /// </summary>
+        /// <param name="FormID"> int </param>
+        public List<CommissioningOfficerModel> GetOfficers()
+        {
+            var Officers = new List<CommissioningOfficerModel>();
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
+            {
+                cn.Open();
+                var sql = string.Format("SELECT * FROM CommissioningOfficer");
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new CommissioningOfficerModel();
+                    model.ContactNumber = (string)reader["ContactNumber"];
+                    model.Email = (string)reader["Email"];
+                    model.FormID = (int)reader["FormID"];
+                    model.Name = (string)reader["Name"];
+                    model.OfficerID = (int)reader["OfficerID"];
+
+                    Officers.Add(model);
+                }
+                cn.Close();
+            }
+            return Officers;
+        }
         #endregion
 
         #region Photographer
@@ -320,6 +378,35 @@ namespace Escc.PhotoConsent.Services
             {
                 cn.Open();
                 var sql = string.Format("SELECT * FROM Photographers WHERE FormID = {0}", FormID);
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new PhotographerModel();
+                    model.ContactNumber = (string)reader["ContactNumber"];
+                    model.Email = (string)reader["Email"];
+                    model.FormID = (int)reader["FormID"];
+                    model.Name = (string)reader["Name"];
+                    model.PhotographerID = (int)reader["PhotographerID"];
+
+                    Photographers.Add(model);
+                }
+                cn.Close();
+            }
+            return Photographers;
+        }
+
+        /// <summary>
+        /// Run a query to get all Photographers
+        /// </summary>
+        /// <param name="FormID"> int </param>
+        public List<PhotographerModel> GetPhotographers()
+        {
+            var Photographers = new List<PhotographerModel>();
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
+            {
+                cn.Open();
+                var sql = string.Format("SELECT * FROM Photographers");
                 SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())

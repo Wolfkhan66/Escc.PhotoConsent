@@ -21,8 +21,11 @@ namespace Escc.PhotoConsent.Services.Interfaces
         ConsentFormModel GetFormByID(int FormID);
         List<ConsentFormModel> GetConsentForms();
         List<ParticipantModel> GetParticipantsByFormID(int FormID);
+        List<ParticipantModel> GetParticipants();
         List<CommissioningOfficerModel> GetOfficersByFormID(int FormID);
+        List<CommissioningOfficerModel> GetOfficers();
         List<PhotographerModel> GetPhotographersByFormID(int FormID);
+        List<PhotographerModel> GetPhotographers();
         List<PhotoModel> GetPhotosByParticipantID(int ParticipantID);
         #endregion
 
