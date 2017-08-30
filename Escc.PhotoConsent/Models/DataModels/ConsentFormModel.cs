@@ -15,10 +15,12 @@ namespace Escc.PhotoConsent.Models.DataModels
         [Display(Name = "Created By")]
         [Required(ErrorMessage = "Please enter your name")]
         public string CreatedBy { get; set; }
-        [Display(Name = "Project Reference")]
-        [Required(ErrorMessage = "Please enter a project reference i.e. project name or number")]
-        public string ProjectReference { get; set; }
+        [Display(Name = "Project Name")]
+        [Required(ErrorMessage = "Please enter a project name")]
+        public string ProjectName { get; set; }
 
+        [Display(Name = "Paymo Number")]
+        public string PaymoNumber { get; set; }
         public string DateSubmitted { get; set; }
         public bool ConsentGiven { get; set; }
         public string Notes { get; set; }

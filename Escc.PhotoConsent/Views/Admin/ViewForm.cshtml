@@ -10,7 +10,8 @@
     FormDictionary.Add("FormGUID", Model.Form.GUID.ToString());
     FormDictionary.Add("ConsentGiven", Model.Form.ConsentGiven.ToString());
     FormDictionary.Add("CreatedBy", Model.Form.CreatedBy);
-    FormDictionary.Add("ProjectReference", Model.Form.ProjectReference);
+    FormDictionary.Add("ProjectName", Model.Form.ProjectName);
+    FormDictionary.Add("PaymoNumber", Model.Form.PaymoNumber);
     FormDictionary.Add("Notes", Model.Form.Notes);
     FormDictionary.Add("DateSubmitted", Model.Form.DateSubmitted);
 
@@ -19,7 +20,7 @@
 <p></p>
 <div id="ConsentForm">
     <div class="list-group panel panel-info">
-        <a href="#FormPanel" class="list-group-item" data-toggle="active" data-parent="#ConsentForm"><b>Form @Model.Form.FormID</b></a>
+        <a href="#FormPanel" class="list-group-item" data-toggle="active" data-parent="#ConsentForm"><b>Form @Model.Form.ProjectName</b></a>
         <div class="active" id="FormPanel">
             <div class="thumbnail">
                 <p>  </p>
@@ -51,9 +52,15 @@
                                                                 @Html.LabelFor(model => model.Form.DateCreated, new { @class = "control-label" })
                                                                 @Html.TextBoxFor(model => model.Form.DateCreated, new { @placeholder = "DateCreated", @class = "form-control", @readonly = "readonly" })
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
                                                             <div class="col-sm-4 col-md-4 col-lg-4">
-                                                                @Html.LabelFor(model => model.Form.ProjectReference, new { @class = "control-label" })
-                                                                @Html.TextBoxFor(model => model.Form.ProjectReference, new { @placeholder = "ProjectReference", @class = "form-control", @readonly = "readonly" })
+                                                                @Html.LabelFor(model => model.Form.ProjectName, new { @class = "control-label" })
+                                                                @Html.TextBoxFor(model => model.Form.ProjectName, new { @placeholder = "ProjectName", @class = "form-control", @readonly = "readonly" })
+                                                            </div>
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                @Html.LabelFor(model => model.Form.PaymoNumber, new { @class = "control-label" })
+                                                                @Html.TextBoxFor(model => model.Form.PaymoNumber, new { @placeholder = "PaymoNumber", @class = "form-control", @readonly = "readonly" })
                                                             </div>
                                                         </div>
                                                         <div class="row">

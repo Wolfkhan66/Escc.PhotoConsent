@@ -28,7 +28,8 @@
                             FormModel.FormID = int.Parse(Model["FormID"]);
                             FormModel.GUID = Guid.Parse(Model["FormGUID"]);
                             FormModel.CreatedBy = Model["CreatedBy"];
-                            FormModel.ProjectReference = Model["ProjectReference"];
+                            FormModel.ProjectName = Model["ProjectName"];
+                            FormModel.PaymoNumber = Model["PaymoNumber"];
                             FormModel.Notes = Model["Notes"];
                         }
                         @{Html.RenderPartial("~/Views/Partials/ConsentForms/_DeleteConsentForm.cshtml", FormModel);}

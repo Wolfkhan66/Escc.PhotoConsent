@@ -28,12 +28,12 @@ namespace Escc.PhotoConsent.Services
         /// <param name="model">ConsentFormModel - </param>
         public void InsertConsentForm(ConsentFormModel model)
         {
-            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectReference, @DateSubmitted, @ConsentGiven, @Notes, @GUID, @Deleted", new { model.DateCreated, model.CreatedBy, model.ProjectReference, model.DateSubmitted, model.ConsentGiven, model.Notes, model.GUID, model.Deleted });
+            _db.Execute("EXEC InsertConsentForm @DateCreated, @CreatedBy, @ProjectName, @DateSubmitted, @ConsentGiven, @Notes, @GUID, @Deleted, @PaymoNumber", new { model.DateCreated, model.CreatedBy, model.ProjectName, model.DateSubmitted, model.ConsentGiven, model.Notes, model.GUID, model.Deleted, model.PaymoNumber });
         }
 
         public void UpdateConsentForm(ConsentFormModel model)
         {
-            _db.Execute("EXEC UpdateConsentForm @CreatedBy, @ProjectReference, @Notes, @FormID, @ConsentGiven, @DateSubmitted", new { model.CreatedBy, model.ProjectReference, model.Notes, model.FormID, model.ConsentGiven, model.DateSubmitted});
+            _db.Execute("EXEC UpdateConsentForm @CreatedBy, @ProjectName, @Notes, @FormID, @ConsentGiven, @DateSubmitted, @PaymoNumber", new { model.CreatedBy, model.ProjectName, model.Notes, model.FormID, model.ConsentGiven, model.DateSubmitted, model.PaymoNumber});
         }
 
         public void DeleteConsentForm(ConsentFormModel model)
@@ -104,11 +104,19 @@ namespace Escc.PhotoConsent.Services
                     }
                     try
                     {
-                        model.ProjectReference = (string)reader["ProjectReference"];
+                        model.ProjectName = (string)reader["ProjectName"];
                     }
                     catch (Exception)
                     {
-                        model.ProjectReference = "";
+                        model.ProjectName = "";
+                    }
+                    try
+                    {
+                        model.PaymoNumber = (string)reader["PaymoNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.PaymoNumber = "";
                     }
 
                     form = model;
@@ -158,11 +166,19 @@ namespace Escc.PhotoConsent.Services
                     }
                     try
                     {
-                        model.ProjectReference = (string)reader["ProjectReference"];
+                        model.ProjectName = (string)reader["ProjectName"];
                     }
                     catch (Exception)
                     {
-                        model.ProjectReference = "";
+                        model.ProjectName = "";
+                    }
+                    try
+                    {
+                        model.PaymoNumber = (string)reader["PaymoNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.PaymoNumber = "";
                     }
 
                     forms.Add(model);

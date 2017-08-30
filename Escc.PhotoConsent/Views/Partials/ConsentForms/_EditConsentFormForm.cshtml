@@ -30,7 +30,8 @@
                             FormModel.ConsentGiven = bool.Parse((Model["ConsentGiven"]));
                             FormModel.GUID = Guid.Parse(Model["FormGUID"]);
                             FormModel.CreatedBy = Model["CreatedBy"];
-                            FormModel.ProjectReference = Model["ProjectReference"];
+                            FormModel.ProjectName = Model["ProjectName"];
+                            FormModel.PaymoNumber = Model["PaymoNumber"];
                             FormModel.Notes = Model["Notes"];
                             FormModel.DateSubmitted = Model["DateSubmitted"];
                         }

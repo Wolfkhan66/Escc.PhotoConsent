@@ -64,8 +64,9 @@ namespace Escc.PhotoConsent.Controllers
         {
             var Table = new DataTable();
             Table.Columns.Add("ID", typeof(string));
-            Table.Columns.Add("Project Reference", typeof(string));
+            Table.Columns.Add("Project Name", typeof(string));
             Table.Columns.Add("Created By", typeof(string));
+            Table.Columns.Add("Paymo Number", typeof(string));
             Table.Columns.Add("Date Created", typeof(string));
             Table.Columns.Add("Consent", typeof(HtmlString));
             Table.Columns.Add("View", typeof(HtmlString));
@@ -74,20 +75,20 @@ namespace Escc.PhotoConsent.Controllers
             {
                 var Consent = Form.ConsentGiven ? new HtmlString("<span class=\"glyphicon glyphicon-ok text-success\" aria-hidden=\"true\"></span>") : new HtmlString("<span class=\"glyphicon glyphicon-remove text-danger\" aria-hidden=\"true\"></span></div>");
                 var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewForm/{0}\">View</a>", Form.FormID));
-                Table.Rows.Add(Form.FormID, Form.ProjectReference, Form.CreatedBy, Form.DateCreated, Consent, ViewLink);
+                Table.Rows.Add(Form.FormID, Form.ProjectName, Form.CreatedBy, Form.PaymoNumber, Form.DateCreated, Consent, ViewLink);
             }
             return Table;
         }
 
         [HttpPost]
         [Route("SearchForms", Name = "SearchForms")]
-        public ActionResult SearchForms(string ProjectReference, string CreatedBy, string DateCreated, string Consent)
+        public ActionResult SearchForms(string ProjectName, string CreatedBy, string DateCreated, string Consent, string PaymoNumber)
         {
             var ConsentForms = _databaseService.GetConsentForms().Where(x => x.Deleted == false).ToList();
 
-            if (ProjectReference != "")
+            if (ProjectName != "")
             {
-                ConsentForms = ConsentForms.Where(x => x.ProjectReference.ToLower() == ProjectReference.ToLower()).ToList();
+                ConsentForms = ConsentForms.Where(x => x.ProjectName.ToLower() == ProjectName.ToLower()).ToList();
             }
             if (CreatedBy != "")
             {
@@ -96,6 +97,10 @@ namespace Escc.PhotoConsent.Controllers
             if (DateCreated != "")
             {
                 ConsentForms = ConsentForms.Where(x => x.DateCreated.ToString().Split(' ')[0] == DateCreated).ToList();
+            }
+            if (PaymoNumber != "")
+            {
+                ConsentForms = ConsentForms.Where(x => x.PaymoNumber.ToLower() == PaymoNumber.ToLower()).ToList();
             }
             if (Consent != "" && Consent != "Both")
             {
