@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using System.Configuration;
+@using Escc.PhotoConsent.Models.DataModels;
 @model Escc.PhotoConsent.Models.ViewModels.FormViewModel
 @{
     var FormDictionary = new Dictionary<string, string>();
@@ -180,6 +181,8 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Commissioning Officer</div>
                                             <div class="panel-body">
+                                                @{ var ExistingCommModel = new Tuple<Dictionary<int,string>, Dictionary<string,string>>(Model.AllCommOfficers, FormDictionary ); }
+                                                @{Html.RenderPartial("~/Views/Partials/CommOfficers/_ExistingCommOfficerForm.cshtml", ExistingCommModel);}
                                                 @{Html.RenderPartial("~/Views/Partials/CommOfficers/_CommOfficerForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>
@@ -209,6 +212,8 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Photographer</div>
                                             <div class="panel-body">
+                                                @{ var ExistingPhotographerModel = new Tuple<Dictionary<int, string>, Dictionary<string, string>>(Model.AllPhotographers, FormDictionary); }
+                                                @{Html.RenderPartial("~/Views/Partials/Photographers/_ExistingPhotographerForm.cshtml", ExistingPhotographerModel);}
                                                 @{Html.RenderPartial("~/Views/Partials/Photographers/_PhotographerForm.cshtml", FormDictionary);}
                                             </div>
                                         </div>

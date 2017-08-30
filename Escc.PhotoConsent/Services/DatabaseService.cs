@@ -346,6 +346,32 @@ namespace Escc.PhotoConsent.Services
             }
             return Officers;
         }
+
+        /// <summary>
+        /// Run a query to get a single Officer by id
+        /// </summary>
+        /// <param name="FormID"> int </param>
+        public CommissioningOfficerModel GetOfficerByID(int OfficerID)
+        {
+            var Officer = new CommissioningOfficerModel();
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
+            {
+                cn.Open();
+                var sql = string.Format("SELECT * FROM CommissioningOfficer Where OfficerID = {0}", OfficerID);
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    Officer.ContactNumber = (string)reader["ContactNumber"];
+                    Officer.Email = (string)reader["Email"];
+                    Officer.FormID = (int)reader["FormID"];
+                    Officer.Name = (string)reader["Name"];
+                    Officer.OfficerID = (int)reader["OfficerID"];
+                }
+                cn.Close();
+            }
+            return Officer;
+        }
         #endregion
 
         #region Photographer
@@ -423,6 +449,32 @@ namespace Escc.PhotoConsent.Services
                 cn.Close();
             }
             return Photographers;
+        }
+
+        /// <summary>
+        /// Run a query to get a Photographer by Id
+        /// </summary>
+        /// <param name="FormID"> int </param>
+        public PhotographerModel GetPhotographerByID(int PhotographerID)
+        {
+            var Photographer = new PhotographerModel();
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["PhotoConsentDB"].ToString()))
+            {
+                cn.Open();
+                var sql = string.Format("SELECT * FROM Photographers Where PhotographerID = {0}", PhotographerID);
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    Photographer.ContactNumber = (string)reader["ContactNumber"];
+                    Photographer.Email = (string)reader["Email"];
+                    Photographer.FormID = (int)reader["FormID"];
+                    Photographer.Name = (string)reader["Name"];
+                    Photographer.PhotographerID = (int)reader["PhotographerID"];
+                }
+                cn.Close();
+            }
+            return Photographer;
         }
         #endregion
 

@@ -13,6 +13,8 @@ namespace Escc.PhotoConsent.Models.ViewModels
         public List<CommissioningOfficerModel> Officers { get; set; }
         public List<PhotographerModel> Photographers { get; set; }
         public List<string> ErrorMessage { get; set; }
+        public Dictionary<int,string> AllCommOfficers { get; set; }
+        public Dictionary<int,string> AllPhotographers { get; set; }
 
         public FormViewModel()
         {
@@ -20,6 +22,9 @@ namespace Escc.PhotoConsent.Models.ViewModels
             Officers = new List<CommissioningOfficerModel>();
             Photographers = new List<PhotographerModel>();
             ErrorMessage = new List<string>();
+
+            AllCommOfficers = new Dictionary<int, string>();
+            AllPhotographers = new Dictionary<int, string>();
         }
     }
 }

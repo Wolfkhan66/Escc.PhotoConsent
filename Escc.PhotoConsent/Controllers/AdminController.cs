@@ -29,6 +29,9 @@ namespace Escc.PhotoConsent.Controllers
             ViewModel.Participants = _databaseService.GetParticipantsByFormID(ID);
             ViewModel.Photographers = _databaseService.GetPhotographersByFormID(ID);
 
+            ViewModel.AllCommOfficers = _databaseService.GetOfficers().GroupBy(x => x.Name).Select(x => x.First()).ToDictionary(x => x.OfficerID, x => x.Name);
+            ViewModel.AllPhotographers = _databaseService.GetPhotographers().GroupBy(x => x.Name).Select(x => x.First()).ToDictionary(x => x.PhotographerID, x => x.Name);
+
             var Photos = new List<PhotoModel>();
             foreach (var Particpant in ViewModel.Participants)
             {
@@ -131,16 +134,35 @@ namespace Escc.PhotoConsent.Controllers
         }
 
         [HttpPost]
+        public ActionResult CreateExistingOfficer(int FormID, int OfficerID)
+        {
+            var model = _databaseService.GetOfficerByID(OfficerID);
+            model.FormID = FormID;
+            _databaseService.InsertCommissioningOfficer(model);
+            return RedirectToRoute("ViewForm", new { ID = FormID });
+        }
+
+        [HttpPost]
         public ActionResult CreateParticipant(ParticipantModel model)
         {
             _databaseService.InsertParticipant(model);
             return RedirectToRoute("ViewForm", new { ID = model.FormID });
         }
+
         [HttpPost]
         public ActionResult CreatePhotographer(PhotographerModel model)
         {
             _databaseService.InsertPhotographer(model);
             return RedirectToRoute("ViewForm", new { ID = model.FormID });
+        }
+
+        [HttpPost]
+        public ActionResult CreateExistingPhotographer(int FormID, int PhotographerID)
+        {
+            var model = _databaseService.GetPhotographerByID(PhotographerID);
+            model.FormID = FormID;
+            _databaseService.InsertPhotographer(model);
+            return RedirectToRoute("ViewForm", new { ID = FormID });
         }
 
         [HttpPost]
