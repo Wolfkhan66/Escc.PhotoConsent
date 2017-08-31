@@ -8,6 +8,9 @@ using Escc.PhotoConsent.Services.Interfaces;
 using Escc.PhotoConsent.Services;
 using Escc.PhotoConsent.Models.DataModels;
 using System.IO;
+using Escc.Services;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace Escc.PhotoConsent.Controllers
 {
@@ -85,7 +88,28 @@ namespace Escc.PhotoConsent.Controllers
             {
                 Form.DateSubmitted = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
                 _databaseService.UpdateConsentForm(Form);
+                SendSuccessEmail(Participants);
                 return View("FormSubmission");
+            }
+        }
+
+        public void SendSuccessEmail(List<ParticipantModel> Participants)
+        {
+            foreach (var Participant in Participants)
+            {
+                if(Participant.Email != "")
+                {
+                    var From = ConfigurationManager.AppSettings["EmailFrom"];
+                    var To = Participant.Email;
+                    var Subject = "Escc PhotoConsent: Consent Form Successfully Submitted";
+                    var Body = string.Format("This email is to confirm that '{0}' has successfully given consent.", Participant.Name);
+                    var Mail = new MailMessage(From, To, Subject, Body);
+                    Mail.IsBodyHtml = true;
+                    Mail.BodyEncoding = System.Text.Encoding.UTF8;
+
+                    var emailService = ServiceContainer.LoadService<IEmailSender>(new ConfigurationServiceRegistry(), null);
+                    emailService.SendAsync(Mail);
+                }
             }
         }
 
