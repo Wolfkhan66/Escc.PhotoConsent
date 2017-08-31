@@ -50,12 +50,14 @@
                             @{Html.RenderPartial("~/Views/Partials/CommOfficers/_EditCommOfficerForm.cshtml", FormDictionary);}
                         </div>
                     </div>
+                    @if(Model.Forms.Table.Rows.Count == 0) { 
                     <div class="panel panel-danger">
                         <div class="panel-heading"></div>
                         <div class="panel-body">
                             @{Html.RenderPartial("~/Views/Partials/CommOfficers/_DeleteCommOfficerForm.cshtml", FormDictionary);}
                         </div>
                     </div>
+                    }
                 </div>
             </div>
         </div>

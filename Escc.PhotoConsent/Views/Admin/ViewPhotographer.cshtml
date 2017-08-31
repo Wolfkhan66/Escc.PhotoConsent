@@ -50,12 +50,15 @@
                             @{Html.RenderPartial("~/Views/Partials/Photographers/_EditPhotographerForm.cshtml", FormDictionary);}
                         </div>
                     </div>
-                    <div class="panel panel-danger">
-                        <div class="panel-heading"></div>
-                        <div class="panel-body">
-                            @{Html.RenderPartial("~/Views/Partials/Photographers/_DeletePhotographerForm.cshtml", FormDictionary);}
+                    @if (Model.Forms.Table.Rows.Count == 0)
+                    {
+                        <div class="panel panel-danger">
+                            <div class="panel-heading"></div>
+                            <div class="panel-body">
+                                @{Html.RenderPartial("~/Views/Partials/Photographers/_DeletePhotographerForm.cshtml", FormDictionary);}
+                            </div>
                         </div>
-                    </div>
+                                    }
                 </div>
             </div>
         </div>
@@ -67,7 +70,7 @@
                 <div class="panel-body">
                     @Html.RouteLink("View All Forms ", "ManageForms", new { }, new { @class = "btn btn-primary" })
                     @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-danger" })
-                   
+
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@ namespace Escc.PhotoConsent.Controllers
 {
     public class AdminController : Controller
     {
+        #region Initilization and Index
         private IDatabaseService _databaseService = new DatabaseService();
         [CustomAuthorize]
         public ActionResult Index()
@@ -21,7 +22,7 @@ namespace Escc.PhotoConsent.Controllers
             // In case this is the first time the application has been set up and the database is new.
             // Ensure the master admin form is present.
             var AdminForm = _databaseService.GetFormByID(1);
-            if(AdminForm == null)
+            if (AdminForm == null)
             {
                 AdminForm = new ConsentFormModel();
                 AdminForm.Notes = "[DO NOT DELETE]";
@@ -36,7 +37,9 @@ namespace Escc.PhotoConsent.Controllers
             }
             return View();
         }
+        #endregion
 
+        #region View ActionResults
         [CustomAuthorize]
         [Route("ViewForm/{ID}", Name = "ViewForm")]
         public ActionResult ViewForm(int ID)
@@ -75,7 +78,7 @@ namespace Escc.PhotoConsent.Controllers
             var model = new PhotographerViewModel();
             model.Photographer = _databaseService.GetPhotographerByID(ID);
 
-            var PhotographerInstances = _databaseService.GetPhotographers().Where(x => x.Name == model.Photographer.Name && x.Email == model.Photographer.Email && x.FormID != 1);
+            var PhotographerInstances = _databaseService.GetPhotographers().Where(x => x.Name == model.Photographer.Name && x.Email == model.Photographer.Email && x.FormID != 1 && x.ContactNumber == model.Photographer.ContactNumber);
 
             var Forms = new List<ConsentFormModel>();
             foreach (var Instance in PhotographerInstances)
@@ -102,7 +105,7 @@ namespace Escc.PhotoConsent.Controllers
             var model = new CommOfficerViewModel();
             model.Officer = _databaseService.GetOfficerByID(ID);
 
-            var OfficerInstances = _databaseService.GetOfficers().Where(x => x.Name == model.Officer.Name && x.Email == model.Officer.Email && x.FormID != 1);
+            var OfficerInstances = _databaseService.GetOfficers().Where(x => x.Name == model.Officer.Name && x.Email == model.Officer.Email && x.FormID != 1 && x.ContactNumber == model.Officer.ContactNumber);
 
             var Forms = new List<ConsentFormModel>();
             foreach (var Instance in OfficerInstances)
@@ -121,7 +124,9 @@ namespace Escc.PhotoConsent.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region Management ActionResults
         [CustomAuthorize]
         [Route("ManageForms", Name = "ManageForms")]
         public ActionResult ManageForms(List<ConsentFormModel> Forms)
@@ -186,6 +191,7 @@ namespace Escc.PhotoConsent.Controllers
             }
             return ManageForms(ConsentForms);
         }
+        #endregion
 
         #region Prepare DataTable Methods
         public DataTable PrepareFormsTable(List<ConsentFormModel> Forms)
@@ -258,7 +264,7 @@ namespace Escc.PhotoConsent.Controllers
         {
             var FormId = model.FormID;
             _databaseService.InsertCommissioningOfficer(model);
-            if(model.FormID == 1)
+            if (model.FormID == 1)
             {
                 return RedirectToRoute("ManageCommOfficers");
             }
@@ -344,8 +350,22 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult EditOfficer(CommissioningOfficerModel model)
         {
-            _databaseService.UpdateCommissioningOfficer(model);
-            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            var OldModel = _databaseService.GetOfficerByID(model.OfficerID);
+            var OfficerInstances = _databaseService.GetOfficers().Where(x => x.Name == OldModel.Name && x.Email == OldModel.Email && x.ContactNumber == OldModel.ContactNumber);
+            
+            foreach (var Instance in OfficerInstances)
+            {
+                model.OfficerID = Instance.OfficerID;
+                _databaseService.UpdateCommissioningOfficer(model);
+            }
+            if (model.FormID == 1)
+            {
+                return RedirectToRoute("ManageCommOfficers");
+            }
+            else
+            {
+                return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            }
         }
 
         [HttpPost]
@@ -357,8 +377,22 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult EditPhotographer(PhotographerModel model)
         {
-            _databaseService.UpdatePhotographer(model);
-            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            var OldModel = _databaseService.GetPhotographerByID(model.PhotographerID);
+            var PhotographerInstances = _databaseService.GetPhotographers().Where(x => x.Name == OldModel.Name && x.Email == OldModel.Email && x.ContactNumber == OldModel.ContactNumber);
+
+            foreach (var Instance in PhotographerInstances)
+            {
+                model.PhotographerID = Instance.PhotographerID;
+                _databaseService.UpdatePhotographer(model);
+            }
+            if (model.FormID == 1)
+            {
+                return RedirectToRoute("ManagePhotographers");
+            }
+            else
+            {
+                return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            }
         }
         #endregion
 
@@ -375,7 +409,14 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult DeleteOfficer(CommissioningOfficerModel model)
         {
             _databaseService.DeleteCommissioningOfficer(model);
-            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            if (model.FormID == 1)
+            {
+                return RedirectToRoute("ManageCommOfficers");
+            }
+            else
+            {
+                return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            }
         }
 
         [HttpPost]
@@ -393,7 +434,14 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult DeletePhotographer(PhotographerModel model)
         {
             _databaseService.DeletePhotographer(model);
-            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            if (model.FormID == 1)
+            {
+                return RedirectToRoute("ManagePhotographers");
+            }
+            else
+            {
+                return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            }
         }
         #endregion
     }
