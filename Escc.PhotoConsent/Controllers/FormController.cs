@@ -16,7 +16,7 @@ namespace Escc.PhotoConsent.Controllers
         private IDatabaseService _databaseService = new DatabaseService();
 
         [Route("ConsentForm/{formGuid}", Name = "ConsentForm")]
-        public ActionResult ConsentForm(string formGuid = "", List<string> ErrorMessage = null)
+        public ActionResult ConsentForm(string formGuid = "", List<HtmlString> ErrorMessage = null)
         {
             var ViewModel = new FormViewModel();
             if (formGuid != "")
@@ -24,7 +24,7 @@ namespace Escc.PhotoConsent.Controllers
                 var formID = _databaseService.GetFormIDByGuid(Guid.Parse(formGuid));
                 ViewModel.Form = _databaseService.GetFormByID(formID);
                 ViewModel.Participants = _databaseService.GetParticipantsByFormID(formID);
-                ViewModel.ErrorMessage = ErrorMessage == null ? new List<string>() : ErrorMessage;
+                ViewModel.ErrorMessage = ErrorMessage == null ? new List<HtmlString>() : ErrorMessage;
 
                 var Photos = new List<PhotoModel>();
                 foreach (var Particpant in ViewModel.Participants)
@@ -59,21 +59,21 @@ namespace Escc.PhotoConsent.Controllers
             Form.ConsentGiven = ConsentGiven;
             var Participants = _databaseService.GetParticipantsByFormID(FormID);
 
-            var ErrorMessage = new List<string>();
+            var ErrorMessage = new List<HtmlString>();
             if (ConsentGiven == false)
             {
-                ErrorMessage.Add("You did not give consent!. Please tick the checkbox confirming your consent and try again.");
+                ErrorMessage.Add(new HtmlString("<b>You did not give consent!</b> Please tick the checkbox confirming your consent and try again."));
             }
             if (Participants.Count == 0)
             {
-                ErrorMessage.Add("You did not add any participants!. Please add at least one and try again.");
+                ErrorMessage.Add(new HtmlString("<b>You did not add any participants!</b> Please add at least one and try again."));
             }
             foreach (var Particpant in Participants)
             {
-               var photos = _databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault();
-                if(photos == null)
+                var photos = _databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault();
+                if (photos == null)
                 {
-                    ErrorMessage.Add(string.Format("The participant \"{0}\" has no photo. Please click on the Upload button below the empty image icon to choose a photo. ", Particpant.Name, Particpant.Name));
+                    ErrorMessage.Add(new HtmlString(string.Format("<b>The participant: \"{0}\" has no photo!</b> Please click on the Upload button below their empty image icon to choose a photo. ", Particpant.Name, Particpant.Name)));
                 }
             }
 
@@ -98,23 +98,40 @@ namespace Escc.PhotoConsent.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadPhoto(HttpPostedFileBase Image, int ParticipantID, int FormID , string Formguid)
+        public ActionResult UploadPhoto(HttpPostedFileBase Image, int ParticipantID, int FormID, string Formguid)
         {
-            var model = new PhotoModel();
-            model.ParticipantID = ParticipantID;
-            byte[] imageByte = null;
-            BinaryReader rdr = new BinaryReader(Image.InputStream);
-            imageByte = rdr.ReadBytes((int)Image.ContentLength);
-            model.Image = imageByte;
+            var extensionsList = new List<string> { ".jpg", ".png", ".gif", ".bmp", ".tif", ".tiff", ".jpeg", ".jif", ".jfif", ".pdf", ".pcd", ".jp2", ".jpx", ".j2k", ".j2c" };
 
-            var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
-            if (photo.Count != 0)
+            if (Image == null)
             {
-                _databaseService.DeletePhoto(ParticipantID);
+                var ErrorMessage = new List<HtmlString>();
+                ErrorMessage.Add(new HtmlString("<b>You did not choose an image!</b> Please try again."));
+                return ConsentForm(Formguid, ErrorMessage);
             }
+            else if (! extensionsList.Any(f => Image.FileName.Contains(f)))
+            {
+                var ErrorMessage = new List<HtmlString>();
+                ErrorMessage.Add(new HtmlString("<b>Thats not an image!</b> Please try again."));
+                return ConsentForm(Formguid, ErrorMessage);
+            }
+            else
+            {
+                var model = new PhotoModel();
+                model.ParticipantID = ParticipantID;
+                byte[] imageByte = null;
+                BinaryReader rdr = new BinaryReader(Image.InputStream);
+                imageByte = rdr.ReadBytes((int)Image.ContentLength);
+                model.Image = imageByte;
 
-            _databaseService.InsertPhoto(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = Formguid });
+                var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
+                if (photo.Count != 0)
+                {
+                    _databaseService.DeletePhoto(ParticipantID);
+                }
+
+                _databaseService.InsertPhoto(model);
+                return RedirectToRoute("ConsentForm", new { formGuid = Formguid });
+            }
         }
 
         #endregion
@@ -146,7 +163,7 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult DeleteParticipant(ParticipantModel model)
         {
             var photo = _databaseService.GetPhotosByParticipantID(model.ParticipantID).FirstOrDefault();
-            if(photo != null)
+            if (photo != null)
             {
                 _databaseService.DeletePhoto(model.ParticipantID);
             }
