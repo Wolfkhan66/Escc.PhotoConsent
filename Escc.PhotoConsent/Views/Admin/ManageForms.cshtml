@@ -6,7 +6,7 @@
 <p></p>
 <div class="row">
     <div class="col-sm-9 col-md-9 col-lg-9">
-        <div class="panel panel-info">
+        <div class="panel panel-primary">
             <div class="panel-heading"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Advanced Search </div>
             <div class="panel-body">
                 @using (Html.BeginForm("SearchForms", "Admin", FormMethod.Post))
@@ -53,10 +53,21 @@
         </div>
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3">
-        <div class="panel panel-success">
-            <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Form</div>
-            <div class="panel-body">
-                @{Html.RenderPartial("~/Views/Partials/ConsentForms/_ConsentFormForm.cshtml");}
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Photographers/Comm Officers</div>
+                <div class="panel-body">
+                    @Html.RouteLink("Photographers", "ManagePhotographers", new { }, new { @class = "btn btn-warning" })
+                    @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Form</div>
+                <div class="panel-body">
+                    @{Html.RenderPartial("~/Views/Partials/ConsentForms/_ConsentFormForm.cshtml");}
+                </div>
             </div>
         </div>
     </div>

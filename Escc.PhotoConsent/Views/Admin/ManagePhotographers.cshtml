@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var FormDictionary = new Dictionary<string, string>
+        ();
+    FormDictionary.Add("Controller", "Admin");
+    FormDictionary.Add("FormID", "1");
+    FormDictionary.Add("FormGUID", "00000000-0000-0000-0000-000000000000");
+}
+@model Escc.PhotoConsent.Models.ViewModels.ManagePhotographerViewModel
+
+
+
+<p></p>
+<div class="row">
+    <div class="col-sm-9 col-md-9 col-lg-9">
+        <div class="panel panel-warning">
+            <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Manage Photographers </div>
+            <div class="panel-body">
+                In hac habitasse platea dictumst. Praesent porta elementum varius. Nulla risus magna, luctus volutpat metus id, congue molestie metus.
+                Fusce mollis lectus ac ipsum vehicula iaculis. Etiam nisi ipsum, consectetur volutpat pellentesque eu, viverra et lectus.
+                Mauris accumsan sapien vitae scelerisque egestas. Mauris facilisis condimentum nibh vitae mollis. Vestibulum commodo aliquam massa viverra dictum.
+                Nunc rutrum tincidunt nisi eget feugiat. Donec sollicitudin ligula in massa pharetra laoreet in eu dolor.
+                Vestibulum efficitur justo ac nisl porttitor laoreet vitae eget est. Nullam urna libero, porta quis imperdiet eu, maximus sit amet metus.
+                Cras eu nibh massa. Nullam quis justo non metus ultrices tincidunt. Mauris cursus accumsan diam eu gravida. Pellentesque et justo ullamcorper, sodales dolor quis, sagittis dolor.
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Forms/Comm Officers</div>
+                <div class="panel-body">
+                    @Html.RouteLink("View All Forms ", "ManageForms", new { }, new { @class = "btn btn-primary" })
+                    @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Photographer</div>
+                <div class="panel-body">
+                    @{Html.RenderPartial("~/Views/Partials/Photographers/_PhotographerForm.cshtml", FormDictionary);}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p></p>
+<div class="row">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photographers</h3>
+        </div>
+        <div class="panel-body">
+            @{Html.RenderPartial("~/Views/Partials/_DataTable.cshtml", Model.Photographers);}
+        </div>
+    </div>
+</div>
+

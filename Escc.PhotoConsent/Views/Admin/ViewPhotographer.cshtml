@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Escc.PhotoConsent.Models.ViewModels.PhotographerViewModel
+@{
+    var FormDictionary = new Dictionary<string, string>();
+    FormDictionary.Add("Controller", "Admin");
+    FormDictionary.Add("FormID", "1");
+    FormDictionary.Add("FormGUID", "00000000-0000-0000-0000-000000000000");
+    FormDictionary.Add("PhotographerID", Model.Photographer.PhotographerID.ToString());
+    FormDictionary.Add("PhotographerName", Model.Photographer.Name);
+    FormDictionary.Add("PhotographerEmail", Model.Photographer.Email);
+    FormDictionary.Add("PhotographerContactNumber", Model.Photographer.ContactNumber);
+}
+
+<p></p>
+<div class="row">
+    <div class="col-sm-9 col-md-9 col-lg-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> @Model.Photographer.Name</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-9 col-md-9 col-lg-9">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            @Html.Label("ID", "Photographer ID", new { @class = "control-label" })
+                            @Html.TextBox("ID", Model.Photographer.PhotographerID, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            @Html.Label("Name", "Name", new { @class = "control-label" })
+                            @Html.TextBox("Name", Model.Photographer.Name, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            @Html.Label("Email", "Email", new { @class = "control-label" })
+                            @Html.TextBox("Email", Model.Photographer.Email, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            @Html.Label("Contact Number", "Contact Number", new { @class = "control-label" })
+                            @Html.TextBox("Contact Number", Model.Photographer.ContactNumber, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            @{Html.RenderPartial("~/Views/Partials/Photographers/_EditPhotographerForm.cshtml", FormDictionary);}
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            @{Html.RenderPartial("~/Views/Partials/Photographers/_DeletePhotographerForm.cshtml", FormDictionary);}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Forms/Comm Officers</div>
+                <div class="panel-body">
+                    @Html.RouteLink("View All Forms ", "ManageForms", new { }, new { @class = "btn btn-primary" })
+                    @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-danger" })
+                   
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-warning">
+                <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Manage Photographers</div>
+                <div class="panel-body text-center">
+                    @Html.RouteLink("Photographers", "ManagePhotographers", new { }, new { @class = "btn btn-warning" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+<div class="row">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Used in the following forms.</h3>
+        </div>
+        <div class="panel-body">
+            @{Html.RenderPartial("~/Views/Partials/_DataTable.cshtml", Model.Forms);}
+        </div>
+    </div>
+</div>

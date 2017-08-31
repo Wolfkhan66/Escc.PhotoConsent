@@ -15,11 +15,29 @@ namespace Escc.PhotoConsent.Controllers
     public class AdminController : Controller
     {
         private IDatabaseService _databaseService = new DatabaseService();
+        [CustomAuthorize]
         public ActionResult Index()
         {
+            // In case this is the first time the application has been set up and the database is new.
+            // Ensure the master admin form is present.
+            var AdminForm = _databaseService.GetFormByID(1);
+            if(AdminForm == null)
+            {
+                AdminForm = new ConsentFormModel();
+                AdminForm.Notes = "[DO NOT DELETE]";
+                AdminForm.ProjectName = "Master Form";
+                AdminForm.CreatedBy = "Admin";
+                AdminForm.GUID = Guid.Parse("00000000-0000-0000-0000-000000000000");
+                AdminForm.Deleted = true;
+                AdminForm.DateCreated = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
+                AdminForm.ConsentGiven = false;
+
+                _databaseService.InsertConsentForm(AdminForm);
+            }
             return View();
         }
 
+        [CustomAuthorize]
         [Route("ViewForm/{ID}", Name = "ViewForm")]
         public ActionResult ViewForm(int ID)
         {
@@ -29,8 +47,8 @@ namespace Escc.PhotoConsent.Controllers
             ViewModel.Participants = _databaseService.GetParticipantsByFormID(ID);
             ViewModel.Photographers = _databaseService.GetPhotographersByFormID(ID);
 
-            ViewModel.AllCommOfficers = _databaseService.GetOfficers().GroupBy(x => x.Name).Select(x => x.First()).ToDictionary(x => x.OfficerID, x => x.Name);
-            ViewModel.AllPhotographers = _databaseService.GetPhotographers().GroupBy(x => x.Name).Select(x => x.First()).ToDictionary(x => x.PhotographerID, x => x.Name);
+            ViewModel.AllCommOfficers = _databaseService.GetOfficers().Where(x => x.FormID == 1).ToDictionary(x => x.OfficerID, x => x.Name);
+            ViewModel.AllPhotographers = _databaseService.GetPhotographers().Where(x => x.FormID == 1).ToDictionary(x => x.PhotographerID, x => x.Name);
 
             var Photos = new List<PhotoModel>();
             foreach (var Particpant in ViewModel.Participants)
@@ -40,7 +58,7 @@ namespace Escc.PhotoConsent.Controllers
 
             foreach (var Photo in Photos)
             {
-                if(Photo != null)
+                if (Photo != null)
                 {
                     var Base64 = "data:image/png;base64," + Convert.ToBase64String(Photo.Image, 0, Photo.Image.Length);
                     ViewModel.Participants.Single(x => x.ParticipantID == Photo.ParticipantID).Base64Image = Base64;
@@ -50,6 +68,61 @@ namespace Escc.PhotoConsent.Controllers
             return View(ViewModel);
         }
 
+        [CustomAuthorize]
+        [Route("ViewPhotographer/{ID}", Name = "ViewPhotographer")]
+        public ActionResult ViewPhotographer(int ID)
+        {
+            var model = new PhotographerViewModel();
+            model.Photographer = _databaseService.GetPhotographerByID(ID);
+
+            var PhotographerInstances = _databaseService.GetPhotographers().Where(x => x.Name == model.Photographer.Name && x.Email == model.Photographer.Email && x.FormID != 1);
+
+            var Forms = new List<ConsentFormModel>();
+            foreach (var Instance in PhotographerInstances)
+            {
+                Forms.Add(_databaseService.GetFormByID(Instance.FormID));
+            }
+
+            model.Forms.Table.Columns.Add("View", typeof(HtmlString));
+            model.Forms.Table.Columns.Add("Project Name", typeof(string));
+            model.Forms.Table.Columns.Add("Date Created", typeof(string));
+            foreach (var Form in Forms)
+            {
+                var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"../ViewForm/{0}\">View</a>", Form.FormID));
+                model.Forms.Table.Rows.Add(ViewLink, Form.ProjectName, Form.DateCreated);
+            }
+
+            return View(model);
+        }
+
+        [CustomAuthorize]
+        [Route("ViewCommOfficer/{ID}", Name = "ViewCommOfficer")]
+        public ActionResult ViewCommOfficer(int ID)
+        {
+            var model = new CommOfficerViewModel();
+            model.Officer = _databaseService.GetOfficerByID(ID);
+
+            var OfficerInstances = _databaseService.GetOfficers().Where(x => x.Name == model.Officer.Name && x.Email == model.Officer.Email && x.FormID != 1);
+
+            var Forms = new List<ConsentFormModel>();
+            foreach (var Instance in OfficerInstances)
+            {
+                Forms.Add(_databaseService.GetFormByID(Instance.FormID));
+            }
+
+            model.Forms.Table.Columns.Add("View", typeof(HtmlString));
+            model.Forms.Table.Columns.Add("Project Name", typeof(string));
+            model.Forms.Table.Columns.Add("Date Created", typeof(string));
+            foreach (var Form in Forms)
+            {
+                var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"../ViewForm/{0}\">View</a>", Form.FormID));
+                model.Forms.Table.Rows.Add(ViewLink, Form.ProjectName, Form.DateCreated);
+            }
+
+            return View(model);
+        }
+
+        [CustomAuthorize]
         [Route("ManageForms", Name = "ManageForms")]
         public ActionResult ManageForms(List<ConsentFormModel> Forms)
         {
@@ -63,26 +136,27 @@ namespace Escc.PhotoConsent.Controllers
             return View("ManageForms", model);
         }
 
-        public DataTable PrepareFormsTable(List<ConsentFormModel> Forms)
+        [CustomAuthorize]
+        [Route("ManagePhotographers", Name = "ManagePhotographers")]
+        public ActionResult ManagePhotographers()
         {
-            var Table = new DataTable();
-            Table.Columns.Add("ID", typeof(string));
-            Table.Columns.Add("Project Name", typeof(string));
-            Table.Columns.Add("Created By", typeof(string));
-            Table.Columns.Add("Paymo Number", typeof(string));
-            Table.Columns.Add("Date Created", typeof(string));
-            Table.Columns.Add("Consent", typeof(HtmlString));
-            Table.Columns.Add("View", typeof(HtmlString));
-
-            foreach (var Form in Forms)
-            {
-                var Consent = Form.ConsentGiven ? new HtmlString("<span class=\"glyphicon glyphicon-ok text-success\" aria-hidden=\"true\"></span>") : new HtmlString("<span class=\"glyphicon glyphicon-remove text-danger\" aria-hidden=\"true\"></span></div>");
-                var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewForm/{0}\">View</a>", Form.FormID));
-                Table.Rows.Add(Form.FormID, Form.ProjectName, Form.CreatedBy, Form.PaymoNumber, Form.DateCreated, Consent, ViewLink);
-            }
-            return Table;
+            var model = new ManagePhotographerViewModel();
+            var photographers = _databaseService.GetPhotographers().Where(x => x.FormID == 1).ToList();
+            model.Photographers.Table = PreparePhotographersTable(photographers);
+            return View("ManagePhotographers", model);
         }
 
+        [CustomAuthorize]
+        [Route("ManageCommOfficers", Name = "ManageCommOfficers")]
+        public ActionResult ManageCommOfficers()
+        {
+            var model = new ManageCommOfficerViewModel();
+            var officers = _databaseService.GetOfficers().Where(x => x.FormID == 1).ToList();
+            model.Officers.Table = PrepareCommOfficersTable(officers);
+            return View("ManageCommOfficers", model);
+        }
+
+        [CustomAuthorize]
         [HttpPost]
         [Route("SearchForms", Name = "SearchForms")]
         public ActionResult SearchForms(string ProjectName, string CreatedBy, string DateCreated, string Consent, string PaymoNumber)
@@ -110,8 +184,61 @@ namespace Escc.PhotoConsent.Controllers
                 bool consentGiven = Consent.ToLower() == "true" ? true : false;
                 ConsentForms = ConsentForms.Where(x => x.ConsentGiven == consentGiven).ToList();
             }
-           return ManageForms(ConsentForms);
+            return ManageForms(ConsentForms);
         }
+
+        #region Prepare DataTable Methods
+        public DataTable PrepareFormsTable(List<ConsentFormModel> Forms)
+        {
+            var Table = new DataTable();
+            Table.Columns.Add("View", typeof(HtmlString));
+            Table.Columns.Add("Date Created", typeof(string));
+            Table.Columns.Add("Project Name", typeof(string));
+            Table.Columns.Add("Consent", typeof(HtmlString));
+            Table.Columns.Add("Paymo Number", typeof(string));
+            Table.Columns.Add("Created By", typeof(string));
+
+            foreach (var Form in Forms)
+            {
+                var Consent = Form.ConsentGiven ? new HtmlString("<span class=\"glyphicon glyphicon-ok text-success\" aria-hidden=\"true\"></span>") : new HtmlString("<span class=\"glyphicon glyphicon-remove text-danger\" aria-hidden=\"true\"></span></div>");
+                var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewForm/{0}\">View</a>", Form.FormID));
+                Table.Rows.Add(ViewLink, Form.DateCreated, Form.ProjectName, Consent, Form.PaymoNumber, Form.CreatedBy);
+            }
+            return Table;
+        }
+
+        public DataTable PreparePhotographersTable(List<PhotographerModel> Photographers)
+        {
+            var Table = new DataTable();
+            Table.Columns.Add("View", typeof(HtmlString));
+            Table.Columns.Add("Name", typeof(string));
+            Table.Columns.Add("Email", typeof(string));
+            Table.Columns.Add("Contact Number", typeof(string));
+
+            foreach (var Photographer in Photographers)
+            {
+                var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewPhotographer/{0}\">View</a>", Photographer.PhotographerID));
+                Table.Rows.Add(ViewLink, Photographer.Name, Photographer.Email, Photographer.ContactNumber);
+            }
+            return Table;
+        }
+
+        public DataTable PrepareCommOfficersTable(List<CommissioningOfficerModel> Officers)
+        {
+            var Table = new DataTable();
+            Table.Columns.Add("View", typeof(HtmlString));
+            Table.Columns.Add("Name", typeof(string));
+            Table.Columns.Add("Email", typeof(string));
+            Table.Columns.Add("Contact Number", typeof(string));
+
+            foreach (var Officer in Officers)
+            {
+                var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewCommOfficer/{0}\">View</a>", Officer.OfficerID));
+                Table.Rows.Add(ViewLink, Officer.Name, Officer.Email, Officer.ContactNumber);
+            }
+            return Table;
+        }
+        #endregion
 
         #region CreateMethods
         [HttpPost]
@@ -129,8 +256,18 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult CreateOfficer(CommissioningOfficerModel model)
         {
+            var FormId = model.FormID;
             _databaseService.InsertCommissioningOfficer(model);
-            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            if(model.FormID == 1)
+            {
+                return RedirectToRoute("ManageCommOfficers");
+            }
+            else
+            {
+                model.FormID = 1;
+                _databaseService.InsertCommissioningOfficer(model);
+                return RedirectToRoute("ViewForm", new { ID = FormId });
+            }
         }
 
         [HttpPost]
@@ -152,8 +289,18 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult CreatePhotographer(PhotographerModel model)
         {
+            var FormId = model.FormID;
             _databaseService.InsertPhotographer(model);
-            return RedirectToRoute("ViewForm", new { ID = model.FormID });
+            if (model.FormID == 1)
+            {
+                return RedirectToRoute("ManagePhotographers");
+            }
+            else
+            {
+                model.FormID = 1;
+                _databaseService.InsertPhotographer(model);
+                return RedirectToRoute("ViewForm", new { ID = FormId });
+            }
         }
 
         [HttpPost]
@@ -176,7 +323,7 @@ namespace Escc.PhotoConsent.Controllers
             model.Image = imageByte;
 
             var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
-            if(photo.Count != 0)
+            if (photo.Count != 0)
             {
                 _databaseService.DeletePhoto(ParticipantID);
             }
