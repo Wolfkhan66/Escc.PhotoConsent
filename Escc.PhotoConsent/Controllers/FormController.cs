@@ -24,17 +24,20 @@ namespace Escc.PhotoConsent.Controllers
             var ViewModel = new FormViewModel();
             if (formGuid != "")
             {
+                // get the formID using the passed form GUID. Use the form ID to then get the form details.
                 var formID = _databaseService.GetFormIDByGuid(Guid.Parse(formGuid));
                 ViewModel.Form = _databaseService.GetFormByID(formID);
                 ViewModel.Participants = _databaseService.GetParticipantsByFormID(formID);
                 ViewModel.ErrorMessage = ErrorMessage == null ? new List<HtmlString>() : ErrorMessage;
 
+                // For each participant get any photos linked to that participant.
                 var Photos = new List<PhotoModel>();
                 foreach (var Particpant in ViewModel.Participants)
                 {
                     Photos.Add(_databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault());
                 }
 
+                // For each photo, convert to a base64string and add the string to the related participants model to be used in the view.
                 foreach (var Photo in Photos)
                 {
                     if (Photo != null)
@@ -45,6 +48,7 @@ namespace Escc.PhotoConsent.Controllers
                 }
             }
 
+            // If consent is already give, then redirect to the FormSubmission view
             if (ViewModel.Form.ConsentGiven)
             {
                 return View("FormSubmission");
@@ -58,6 +62,7 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult FormSubmission(int FormID, bool ConsentGiven, string FormGuid)
         {
+            //Get the form details by the form Id
             var Form = _databaseService.GetFormByID(FormID);
             Form.ConsentGiven = ConsentGiven;
             var Participants = _databaseService.GetParticipantsByFormID(FormID);
@@ -71,6 +76,7 @@ namespace Escc.PhotoConsent.Controllers
             {
                 ErrorMessage.Add(new HtmlString("<b>You did not add any participants!</b> Please add at least one and try again."));
             }
+            // Check each participant for a photo
             foreach (var Particpant in Participants)
             {
                 var photos = _databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault();
@@ -80,12 +86,14 @@ namespace Escc.PhotoConsent.Controllers
                 }
             }
 
+            // If there are any errors from the above validation, then redirect back to the form and pass the error messages.
             if (ErrorMessage.Count != 0)
             {
                 return ConsentForm(FormGuid, ErrorMessage);
             }
             else
             {
+                // Record the time, update the form to list consent and send a success email.
                 Form.DateSubmitted = string.Format("{0} {1}:{2}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(), DateTime.Now.Second);
                 _databaseService.UpdateConsentForm(Form);
                 SendSuccessEmail(Participants);
@@ -95,10 +103,13 @@ namespace Escc.PhotoConsent.Controllers
 
         public void SendSuccessEmail(List<ParticipantModel> Participants)
         {
+            // For each participant listed on the form
             foreach (var Participant in Participants)
             {
+                // if that participant has an email address
                 if(Participant.Email != "")
                 {
+                    // Craft a Mail Message object and send using Escc.Services.Azure
                     var From = ConfigurationManager.AppSettings["EmailFrom"];
                     var To = Participant.Email;
                     var Subject = "Escc PhotoConsent: Consent Form Successfully Submitted";
@@ -124,14 +135,17 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult UploadPhoto(HttpPostedFileBase Image, int ParticipantID, int FormID, string Formguid)
         {
+            // Create a list of the common image file extensions.
             var extensionsList = new List<string> { ".jpg", ".png", ".gif", ".bmp", ".tif", ".tiff", ".jpeg", ".jif", ".jfif", ".pdf", ".pcd", ".jp2", ".jpx", ".j2k", ".j2c" };
 
+            // if no image was upload 
             if (Image == null)
             {
                 var ErrorMessage = new List<HtmlString>();
                 ErrorMessage.Add(new HtmlString("<b>You did not choose an image!</b> Please try again."));
                 return ConsentForm(Formguid, ErrorMessage);
             }
+            // if the image does not contain an image file extension
             else if (! extensionsList.Any(f => Image.FileName.Contains(f)))
             {
                 var ErrorMessage = new List<HtmlString>();
@@ -140,6 +154,7 @@ namespace Escc.PhotoConsent.Controllers
             }
             else
             {
+                // create a Photomodel and convert the uploaded image to a byte[]
                 var model = new PhotoModel();
                 model.ParticipantID = ParticipantID;
                 byte[] imageByte = null;
@@ -147,9 +162,11 @@ namespace Escc.PhotoConsent.Controllers
                 imageByte = rdr.ReadBytes((int)Image.ContentLength);
                 model.Image = imageByte;
 
+                // Check if an image for the selected participant already exists
                 var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
                 if (photo.Count != 0)
                 {
+                    // if there is an image, delete it
                     _databaseService.DeletePhoto(ParticipantID);
                 }
 
@@ -162,22 +179,9 @@ namespace Escc.PhotoConsent.Controllers
 
         #region EditMethods
         [HttpPost]
-        public ActionResult EditOfficer(CommissioningOfficerModel model)
-        {
-            _databaseService.UpdateCommissioningOfficer(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
-        }
-
-        [HttpPost]
         public ActionResult EditParticipant(ParticipantModel model)
         {
             _databaseService.UpdateParticipant(model);
-            return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
-        }
-        [HttpPost]
-        public ActionResult EditPhotographer(PhotographerModel model)
-        {
-            _databaseService.UpdatePhotographer(model);
             return RedirectToRoute("ConsentForm", new { formGuid = model.FormGUID });
         }
         #endregion
@@ -186,6 +190,8 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult DeleteParticipant(ParticipantModel model)
         {
+            // First get the photo for the participant as there is a relationship constraint in the database.
+            // Delete the photo, Then delete the participant.
             var photo = _databaseService.GetPhotosByParticipantID(model.ParticipantID).FirstOrDefault();
             if (photo != null)
             {
