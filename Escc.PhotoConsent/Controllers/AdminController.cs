@@ -164,7 +164,7 @@ namespace Escc.PhotoConsent.Controllers
         [CustomAuthorize]
         [HttpPost]
         [Route("SearchForms", Name = "SearchForms")]
-        public ActionResult SearchForms(string ProjectName, string CreatedBy, string DateCreated, string Consent, string PaymoNumber)
+        public ActionResult SearchForms(string ProjectName, string CreatedBy, string DateFrom, string DateTo, string Consent, string PaymoNumber)
         {
             var ConsentForms = _databaseService.GetConsentForms().Where(x => x.Deleted == false).ToList();
 
@@ -176,9 +176,13 @@ namespace Escc.PhotoConsent.Controllers
             {
                 ConsentForms = ConsentForms.Where(x => x.CreatedBy.ToLower() == CreatedBy.ToLower()).ToList();
             }
-            if (DateCreated != "")
+            if (DateFrom != "")
             {
-                ConsentForms = ConsentForms.Where(x => x.DateCreated.ToString().Split(' ')[0] == DateCreated).ToList();
+                ConsentForms = ConsentForms.Where(x => DateTime.Parse(x.DateCreated.ToString().Split(' ')[0]) >= DateTime.Parse(DateFrom)).ToList();
+            }
+            if (DateTo != "")
+            {
+                ConsentForms = ConsentForms.Where(x => DateTime.Parse(x.DateCreated.ToString().Split(' ')[0]) <= DateTime.Parse(DateTo)).ToList();
             }
             if (PaymoNumber != "")
             {

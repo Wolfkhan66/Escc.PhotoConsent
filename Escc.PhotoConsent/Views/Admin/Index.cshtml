@@ -48,21 +48,25 @@
                         <div class="row">
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 @Html.Label("Project Name", new { @class = "control-label" })
-                                @Html.TextBox("ProjectName", "", new { @placeholder = "e.g. ExampleProject254", @class = "form-control" })
+                                @Html.TextBox("ProjectName", "", new { @placeholder = "Example Project 254", @class = "form-control" })
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 @Html.Label("Created By", new { @class = "control-label" })
-                                @Html.TextBox("CreatedBy", "", new { @placeholder = "e.g. Jane Doe", @class = "form-control" })
+                                @Html.TextBox("CreatedBy", "", new { @placeholder = "Jane Doe", @class = "form-control" })
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 @Html.Label("Paymo Number", new { @class = "control-label" })
-                                @Html.TextBox("PaymoNumber", "", new { @placeholder = "e.g. 515364", @class = "form-control" })
+                                @Html.TextBox("PaymoNumber", "", new { @placeholder = "515364", @class = "form-control" })
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                @Html.Label("Date Created", new { @class = "control-label" })
-                                @Html.TextBox("DateCreated", "", new { @placeholder = "e.g. 23/08/2017", @class = "form-control" })
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                @Html.Label("Date From", new { @class = "control-label" })
+                                @Html.TextBox("DateFrom", "", new { @placeholder = "01/07/2017", @class = "form-control" })
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                @Html.Label("Date To", new { @class = "control-label" })
+                                @Html.TextBox("DateTo", "", new { @placeholder = "01/08/2017", @class = "form-control" })
                             </div>
                         </div>
                         <div class="row">
