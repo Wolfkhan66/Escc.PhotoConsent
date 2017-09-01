@@ -42,7 +42,7 @@ namespace Escc.PhotoConsent.Controllers
         #region View ActionResults
         [CustomAuthorize]
         [Route("ViewForm/{ID}", Name = "ViewForm")]
-        public ActionResult ViewForm(int ID)
+        public ActionResult ViewForm(int ID, string ErrorMessage = "")
         {
             var ViewModel = new FormViewModel();
             ViewModel.Form = _databaseService.GetFormByID(ID);
@@ -50,15 +50,18 @@ namespace Escc.PhotoConsent.Controllers
             ViewModel.Participants = _databaseService.GetParticipantsByFormID(ID);
             ViewModel.Photographers = _databaseService.GetPhotographersByFormID(ID);
 
+            // Create dictionaries of comm officers and photographers so they can be reused in the add existing modals.
             ViewModel.AllCommOfficers = _databaseService.GetOfficers().Where(x => x.FormID == 1).ToDictionary(x => x.OfficerID, x => x.Name);
             ViewModel.AllPhotographers = _databaseService.GetPhotographers().Where(x => x.FormID == 1).ToDictionary(x => x.PhotographerID, x => x.Name);
 
+            // For each participant get any photos linked to that participant.
             var Photos = new List<PhotoModel>();
             foreach (var Particpant in ViewModel.Participants)
             {
                 Photos.Add(_databaseService.GetPhotosByParticipantID(Particpant.ParticipantID).FirstOrDefault());
             }
 
+            // For each photo, convert to a base64string and add the string to the related participants model to be used in the view.
             foreach (var Photo in Photos)
             {
                 if (Photo != null)
@@ -68,7 +71,12 @@ namespace Escc.PhotoConsent.Controllers
                 }
             }
 
-            return View(ViewModel);
+            if(ErrorMessage != "")
+            {
+                ViewModel.ErrorMessage.Add(new HtmlString(ErrorMessage));
+            }
+
+            return View("viewForm", ViewModel);
         }
 
         [CustomAuthorize]
@@ -78,8 +86,10 @@ namespace Escc.PhotoConsent.Controllers
             var model = new PhotographerViewModel();
             model.Photographer = _databaseService.GetPhotographerByID(ID);
 
+            // Get all instances of the photographer.
             var PhotographerInstances = _databaseService.GetPhotographers().Where(x => x.Name == model.Photographer.Name && x.Email == model.Photographer.Email && x.FormID != 1 && x.ContactNumber == model.Photographer.ContactNumber);
 
+            // For each instance, add a row to the table listing the forms the photographer is part of.
             var Forms = new List<ConsentFormModel>();
             foreach (var Instance in PhotographerInstances)
             {
@@ -105,8 +115,10 @@ namespace Escc.PhotoConsent.Controllers
             var model = new CommOfficerViewModel();
             model.Officer = _databaseService.GetOfficerByID(ID);
 
+            // Get all instances of the comm officer.
             var OfficerInstances = _databaseService.GetOfficers().Where(x => x.Name == model.Officer.Name && x.Email == model.Officer.Email && x.FormID != 1 && x.ContactNumber == model.Officer.ContactNumber);
 
+            // For each instance, add a row to the table listing the forms the comm officer is part of.
             var Forms = new List<ConsentFormModel>();
             foreach (var Instance in OfficerInstances)
             {
@@ -131,6 +143,7 @@ namespace Escc.PhotoConsent.Controllers
         [Route("ManageForms", Name = "ManageForms")]
         public ActionResult ManageForms(List<ConsentFormModel> Forms)
         {
+            // Get all forms that are not soft deleted.
             var model = new ManageFormViewModel();
             if (Forms == null)
             {
@@ -146,6 +159,7 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult ManagePhotographers()
         {
             var model = new ManagePhotographerViewModel();
+            // Only get photographers from the master form.
             var photographers = _databaseService.GetPhotographers().Where(x => x.FormID == 1).ToList();
             model.Photographers.Table = PreparePhotographersTable(photographers);
             return View("ManagePhotographers", model);
@@ -156,6 +170,7 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult ManageCommOfficers()
         {
             var model = new ManageCommOfficerViewModel();
+            // Only get comm officers from the master form.
             var officers = _databaseService.GetOfficers().Where(x => x.FormID == 1).ToList();
             model.Officers.Table = PrepareCommOfficersTable(officers);
             return View("ManageCommOfficers", model);
@@ -166,8 +181,10 @@ namespace Escc.PhotoConsent.Controllers
         [Route("SearchForms", Name = "SearchForms")]
         public ActionResult SearchForms(string ProjectName, string CreatedBy, string DateFrom, string DateTo, string Consent, string PaymoNumber)
         {
+            // get all froms that are not soft deleted.
             var ConsentForms = _databaseService.GetConsentForms().Where(x => x.Deleted == false).ToList();
 
+            // if any of the passed parameters are not empty. Filter with LINQ by the passed parameter
             if (ProjectName != "")
             {
                 ConsentForms = ConsentForms.Where(x => x.ProjectName.ToLower() == ProjectName.ToLower()).ToList();
@@ -210,6 +227,7 @@ namespace Escc.PhotoConsent.Controllers
 
             foreach (var Form in Forms)
             {
+                // If consent is true, create a success tick glyphicon. If consent is false, create an error cross glyphicon
                 var Consent = Form.ConsentGiven ? new HtmlString("<span class=\"glyphicon glyphicon-ok text-success\" aria-hidden=\"true\"></span>") : new HtmlString("<span class=\"glyphicon glyphicon-remove text-danger\" aria-hidden=\"true\"></span></div>");
                 var ViewLink = new HtmlString(string.Format("<a type=\"button\" class=\"btn btn-primary btn-sm\" href=\"ViewForm/{0}\">View</a>", Form.FormID));
                 Table.Rows.Add(ViewLink, Form.DateCreated, Form.ProjectName, Consent, Form.PaymoNumber, Form.CreatedBy);
@@ -259,6 +277,8 @@ namespace Escc.PhotoConsent.Controllers
             model.GUID = Guid.NewGuid();
             model.Deleted = false;
             _databaseService.InsertConsentForm(model);
+            // Get the form ID of the newly created form by the GUID just created.
+            // use the form id to redirect the user to the forms view.
             var FormID = _databaseService.GetFormIDByGuid(model.GUID);
             return RedirectToRoute("ViewForm", new { ID = FormID });
         }
@@ -268,12 +288,15 @@ namespace Escc.PhotoConsent.Controllers
         {
             var FormId = model.FormID;
             _databaseService.InsertCommissioningOfficer(model);
+            // If the formID is 1 then the user is on the ManageCommOfficers view and should be redirected there after creation.
             if (model.FormID == 1)
             {
                 return RedirectToRoute("ManageCommOfficers");
             }
             else
             {
+                // If the formID is not 1 then user is on a forms view and should be redirected back to that forms view after creation.
+                // An instance of the officer is also created on the master form.
                 model.FormID = 1;
                 _databaseService.InsertCommissioningOfficer(model);
                 return RedirectToRoute("ViewForm", new { ID = FormId });
@@ -301,12 +324,15 @@ namespace Escc.PhotoConsent.Controllers
         {
             var FormId = model.FormID;
             _databaseService.InsertPhotographer(model);
+            // If the formID is 1 then the user is on the ManagePhotographers view and should be redirected there after creation.
             if (model.FormID == 1)
             {
                 return RedirectToRoute("ManagePhotographers");
             }
             else
             {
+                // If the formID is not 1 then user is on a forms view and should be redirected back to that forms view after creation.
+                // An instance of the photographer is also created on the master form.
                 model.FormID = 1;
                 _databaseService.InsertPhotographer(model);
                 return RedirectToRoute("ViewForm", new { ID = FormId });
@@ -325,21 +351,43 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult UploadPhoto(HttpPostedFileBase Image, int ParticipantID, int FormID)
         {
-            var model = new PhotoModel();
-            model.ParticipantID = ParticipantID;
-            byte[] imageByte = null;
-            BinaryReader rdr = new BinaryReader(Image.InputStream);
-            imageByte = rdr.ReadBytes((int)Image.ContentLength);
-            model.Image = imageByte;
+            // Create a list of the common image file extensions.
+            var extensionsList = new List<string> { ".jpg", ".png", ".gif", ".bmp", ".tif", ".tiff", ".jpeg", ".jif", ".jfif", ".pdf", ".pcd", ".jp2", ".jpx", ".j2k", ".j2c" };
+            var ErrorMessage = "";
 
-            var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
-            if (photo.Count != 0)
+            // if no image was upload 
+            if (Image == null)
             {
-                _databaseService.DeletePhoto(ParticipantID);
+                ErrorMessage = "<b>You did not choose an image!</b> Please try again.";
+                return ViewForm(FormID, ErrorMessage);
             }
+            // if the image does not contain an image file extension
+            else if (!extensionsList.Any(f => Image.FileName.Contains(f)))
+            {
+                ErrorMessage = "<b>Thats not an image!</b> Please try again.";
+                return ViewForm(FormID, ErrorMessage);
+            }
+            else
+            {
+                // create a Photomodel and convert the uploaded image to a byte[]
+                var model = new PhotoModel();
+                model.ParticipantID = ParticipantID;
+                byte[] imageByte = null;
+                BinaryReader rdr = new BinaryReader(Image.InputStream);
+                imageByte = rdr.ReadBytes((int)Image.ContentLength);
+                model.Image = imageByte;
 
-            _databaseService.InsertPhoto(model);
-            return RedirectToRoute("ViewForm", new { ID = FormID });
+                // Check if an image for the selected participant already exists
+                var photo = _databaseService.GetPhotosByParticipantID(ParticipantID);
+                if (photo.Count != 0)
+                {
+                    // if there is an image, delete it
+                    _databaseService.DeletePhoto(ParticipantID);
+                }
+
+                _databaseService.InsertPhoto(model);
+                return RedirectToRoute("ViewForm", new { ID = FormID });
+            }
         }
         #endregion
 
@@ -354,14 +402,20 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult EditOfficer(CommissioningOfficerModel model)
         {
+            // store the old details of the officer before the edit.
+            // get all instances of the officer using the old model.
             var OldModel = _databaseService.GetOfficerByID(model.OfficerID);
             var OfficerInstances = _databaseService.GetOfficers().Where(x => x.Name == OldModel.Name && x.Email == OldModel.Email && x.ContactNumber == OldModel.ContactNumber);
             
+            // for each instance, update the instance to the new model.
             foreach (var Instance in OfficerInstances)
             {
                 model.OfficerID = Instance.OfficerID;
                 _databaseService.UpdateCommissioningOfficer(model);
             }
+
+            // if the form id is 1, then the user is on the manageCommOfficers view, and should be redirected there. 
+            // Otherwise redirect back to the form view
             if (model.FormID == 1)
             {
                 return RedirectToRoute("ManageCommOfficers");
@@ -381,14 +435,20 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult EditPhotographer(PhotographerModel model)
         {
+            // store the old details of the photographer before the edit.
+            // get all instances of the photographer using the old model.
             var OldModel = _databaseService.GetPhotographerByID(model.PhotographerID);
             var PhotographerInstances = _databaseService.GetPhotographers().Where(x => x.Name == OldModel.Name && x.Email == OldModel.Email && x.ContactNumber == OldModel.ContactNumber);
 
+            // for each instance, update the instance to the new model.
             foreach (var Instance in PhotographerInstances)
             {
                 model.PhotographerID = Instance.PhotographerID;
                 _databaseService.UpdatePhotographer(model);
             }
+
+            // if the form id is 1, then the user is on the ManagePhotographers view, and should be redirected there. 
+            // Otherwise redirect back to the form view
             if (model.FormID == 1)
             {
                 return RedirectToRoute("ManagePhotographers");
@@ -404,6 +464,7 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult DeleteForm(ConsentFormModel model)
         {
+            // For forms only soft delete to retain data.
             model.Deleted = true;
             _databaseService.DeleteConsentForm(model);
             return RedirectToRoute("ManageForms");
@@ -411,8 +472,10 @@ namespace Escc.PhotoConsent.Controllers
 
         [HttpPost]
         public ActionResult DeleteOfficer(CommissioningOfficerModel model)
-        {
+        { 
             _databaseService.DeleteCommissioningOfficer(model);
+            // if the form id is 1, then the user is on the manageCommOfficers view, and should be redirected there. 
+            // Otherwise redirect back to the form view
             if (model.FormID == 1)
             {
                 return RedirectToRoute("ManageCommOfficers");
@@ -426,6 +489,8 @@ namespace Escc.PhotoConsent.Controllers
         [HttpPost]
         public ActionResult DeleteParticipant(ParticipantModel model)
         {
+            // First get the photo for the participant as there is a relationship constraint in the database.
+            // Delete the photo, Then delete the participant.
             var photo = _databaseService.GetPhotosByParticipantID(model.ParticipantID).FirstOrDefault();
             if (photo != null)
             {
@@ -438,6 +503,8 @@ namespace Escc.PhotoConsent.Controllers
         public ActionResult DeletePhotographer(PhotographerModel model)
         {
             _databaseService.DeletePhotographer(model);
+            // if the form id is 1, then the user is on the ManagePhotographers view, and should be redirected there. 
+            // Otherwise redirect back to the form view
             if (model.FormID == 1)
             {
                 return RedirectToRoute("ManagePhotographers");
