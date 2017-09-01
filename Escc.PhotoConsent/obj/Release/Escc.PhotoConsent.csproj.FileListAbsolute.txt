@@ -77,3 +77,4 @@ D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\ko\System.Spatial.resources.dll
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\ru\System.Spatial.resources.dll
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\zh-Hans\System.Spatial.resources.dll
 D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\bin\zh-Hant\System.Spatial.resources.dll
+D:\Work\Escc.PhotoConsent\Escc.PhotoConsent\obj\Release\Escc.PhotoConsent.csprojResolveAssemblyReference.cache

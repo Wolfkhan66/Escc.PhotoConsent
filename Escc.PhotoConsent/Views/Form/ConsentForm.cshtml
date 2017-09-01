@@ -21,12 +21,19 @@
             <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> GDPR / Instructions</div>
             <div class="panel-body">
                 <div class="row well-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non massa et nisi viverra efficitur.
-                    Aenean pulvinar accumsan nibh, nec pharetra enim convallis ut. Mauris eu odio non massa dignissim sagittis non a diam.
-                    Proin viverra lobortis condimentum. Quisque eu turpis venenatis, eleifend nibh sed, faucibus augue. Praesent ornare pulvinar nibh, et dictum felis imperdiet quis.
-                    Cras congue cursus consectetur. Quisque elit nulla, commodo vitae congue et, dapibus id mauris. Sed eleifend leo mauris, id aliquam nibh rhoncus a.
-                    Maecenas non rhoncus dui. Ut lorem magna, iaculis et rutrum non, pharetra at augue. Donec volutpat odio ac ultrices dapibus. Vivamus id ullamcorper tortor.
-                    Vestibulum dignissim auctor turpis in volutpat. In feugiat congue sem, eget rhoncus est sollicitudin eu.
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non massa et nisi viverra efficitur. Aenean pulvinar accumsan nibh, nec pharetra enim convallis ut. Mauris eu odio non massa dignissim sagittis non a diam. Proin viverra lobortis condimentum. Quisque eu turpis venenatis, eleifend nibh sed, faucibus augue. Praesent ornare pulvinar nibh, et dictum felis imperdiet quis. </p>
+                </div>
+                <div class="row well-sm">
+                    <ul>
+                        <li>Click the <b>'Create New Participant'</b> button to get started.</li>
+                        <li>Enter the participants details and ensure they are correct. Then click the <b>Create</b> button to continue.</li>
+                        <li>Next click the <b>Upload</b> button below the empty image icon of the newly created particpant and choose a photo to upload.</li>
+                        <li>Repeat the first 3 steps for each participant.</li>
+                        <li>When your ready, tick the consent checkbox at the bottom of this form and click the <b>Submit</b> button</li>
+                    </ul>
+                </div>
+                <div class="row well-sm">
+                    <p><b>Hint:</b> You can click on a participants name to collapse or open their panel.</p>
                 </div>
             </div>
         </div>
@@ -74,7 +81,7 @@
 
 @using (Html.BeginForm("FormSubmission", "Form", FormMethod.Post))
 {
-    @Html.Hidden("FormID",Model.Form.FormID);
+    @Html.Hidden("FormID", Model.Form.FormID);
     @Html.Hidden("FormGuid", Model.Form.GUID);
     <div class="row">
         <div class="col-sm-9 col-md-9 col-lg-9">
@@ -86,7 +93,7 @@
                             <p><b>I agree to my participation in this photoshoot/video</b></p>
                         </div>
                         <div class="col-sm-5 col-md-5 col-lg-5 ">
-                            @Html.CheckBox("ConsentGiven", false , new { @class = "form-control" })
+                            @Html.CheckBox("ConsentGiven", false, new { @class = "form-control" })
                         </div>
                     </div>
                 </div>

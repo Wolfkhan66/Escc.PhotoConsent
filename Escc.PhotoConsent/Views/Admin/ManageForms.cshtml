@@ -12,45 +12,42 @@
                 @using (Html.BeginForm("SearchForms", "Admin", FormMethod.Post))
                 {
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <div class="row well-sm">
                                 @Html.Label("Project Name", new { @class = "control-label" })
                                 @Html.TextBox("ProjectName", "", new { @placeholder = "Example Project 254", @class = "form-control" })
                             </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4">
-                                @Html.Label("Created By", new { @class = "control-label" })
-                                @Html.TextBox("CreatedBy", "", new { @placeholder = "Jane Doe", @class = "form-control" })
-                            </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2">
-                                @Html.Label("Date From", new { @class = "control-label" })
-                                @Html.TextBox("DateFrom", "", new { @placeholder = "01/07/2017", @class = "form-control" })
-                            </div>
-                            <div style="margin-top:16px;">
-                                <div class="col-sm-1 col-md-1 col-lg-1">
-                                    <p></p>
-                                    @Html.RouteLink("Clear", "ManageForms", new { }, new { @class = "btn btn-default" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <p></p>
-                            <div class="col-sm-4 col-md-4 col-lg-4">
+                            <div class="row well-sm">
                                 @Html.Label("Paymo Number", new { @class = "control-label" })
                                 @Html.TextBox("PaymoNumber", "", new { @placeholder = "515364", @class = "form-control" })
                             </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4">
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <div class="row well-sm">
+                                @Html.Label("Created By", new { @class = "control-label" })
+                                @Html.TextBox("CreatedBy", "", new { @placeholder = "Jane Doe", @class = "form-control" })
+                            </div>
+                            <div class="row well-sm">
                                 @Html.Label("Consent", new { @class = "control-label" })
                                 @Html.DropDownList("Consent", new SelectList(new List<string> { "True", "False", "Both" }), "Please Select", new { @class = "form-control" })
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2">
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="row well-sm">
+                                @Html.Label("Date From", new { @class = "control-label" })
+                                @Html.TextBox("DateFrom", "", new { @placeholder = "01/07/2017", @class = "form-control" })
+                            </div>
+                            <div class="row well-sm">
                                 @Html.Label("Date To", new { @class = "control-label" })
                                 @Html.TextBox("DateTo", "", new { @placeholder = "01/08/2017", @class = "form-control" })
                             </div>
-                            <div style="margin-top:24px;">
-                                <div class="col-sm-1 col-md-1 col-lg-1">
-                                    <p></p>
-                                    <input type="submit" class="btn btn-primary" value="Search" />
-                                </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                            <div class="row well-sm" style="margin-top:25px;">
+                                @Html.RouteLink("Clear", "ManageForms", new { }, new { @class = "btn btn-default" })
+                            </div>
+                            <div class="row well-sm" style="margin-top:25px;">
+                                <input type="submit" class="btn btn-primary" value="Search" />
                             </div>
                         </div>
                     </div>
@@ -60,7 +57,7 @@
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3">
         <div class="row">
-            <div class="panel panel-default">
+            <div class="panel panel-default text-center">
                 <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Photographers/Comm Officers</div>
                 <div class="panel-body">
                     @Html.RouteLink("Photographers", "ManagePhotographers", new { }, new { @class = "btn btn-warning" })
