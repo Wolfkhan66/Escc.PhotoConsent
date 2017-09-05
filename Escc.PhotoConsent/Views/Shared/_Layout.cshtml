@@ -16,6 +16,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <p class="navbar-brand">
+                    <a href="https://www.eastsussex.gov.uk/">
+                        <img src="~/Content/Images/logo-large.png" width="40" height="30" alt="East Sussex County Council" />
+                    </a>
+                </p>
                 @Html.ActionLink("Escc.PhotoConsent", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
@@ -32,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - East Sussex County Council</p>
+            <p><a href="https://www.eastsussex.gov.uk/"> <img src="~/Content/Images/logo-small.gif" alt="ESCC"></a> &copy; @DateTime.Now.Year - East Sussex County Council</p>
         </footer>
     </div>
 

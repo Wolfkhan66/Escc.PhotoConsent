@@ -344,6 +344,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Images\logo-large.png" />
     <Content Include="Content\Images\logo-small.gif" />
     <Content Include="Content\Images\No_Image.png" />
     <Content Include="favicon.ico" />
