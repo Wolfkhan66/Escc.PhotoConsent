@@ -24,7 +24,7 @@ namespace Escc.PhotoConsent
                       "~/Scripts/respond.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-readable-theme.css",
+                      "~/Content/bootswatch-readable-theme.css",
                       "~/Content/site.css"));
         }
     }
