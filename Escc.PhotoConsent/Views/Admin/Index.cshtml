@@ -12,35 +12,59 @@
 </div>
 
 <div class="row">
+
     <div class="col-sm-3 col-md-3 col-lg-3">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-warning">
-                    <div class="panel-heading"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Manage Photographers</div>
-                    <div class="panel-body text-center">
-                        @Html.RouteLink("Photographers", "ManagePhotographers", new { }, new { @class = "btn btn-warning" })
+                <div class="panel panel-success">
+                    <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Consent Form</div>
+                    <div class="panel-body">
+                        @{Html.RenderPartial("~/Views/Partials/ConsentForms/_ConsentFormForm.cshtml");}
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-danger">
-                    <div class="panel-heading"><span class="glyphicon glyphicon-tower" aria-hidden="true"></span> Manage Comm Officers</div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Manage Consent Forms</div>
                     <div class="panel-body text-center">
-                        @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-danger" })
+                        @Html.RouteLink("Consent Forms", "ManageForms", new { }, new { @class = "btn btn-default" })
+                        <p></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Manage Photographers</div>
+                    <div class="panel-body text-center">
+                        @Html.RouteLink("Photographers", "ManagePhotographers", new { }, new { @class = "btn btn-default" })
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span class="glyphicon glyphicon-tower" aria-hidden="true"></span> Manage Comm Officers</div>
+                    <div class="panel-body text-center">
+                        @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-default" })
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="col-sm-6 col-md-6 col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Advanced Search </h3>
-            </div>
+        <div class="panel panel-info">
+            <div class="panel-heading"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Advanced Search</div>
             <div class="panel-body">
                 @using (Html.BeginForm("SearchForms", "Admin", FormMethod.Post))
             {
@@ -75,7 +99,7 @@
                                 @Html.DropDownList("Consent", new SelectList(new List<string> { "True", "False", "Both" }), "Please Select", new { @class = "form-control" })
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-6 col-sm-push-2 col-md-push-2 col-lg-push-2" style="margin-top:24px;">
-                                <input type="submit" class="btn btn-primary" value="Search" />
+                                <input type="submit" class="btn btn-info" value="Search" />
                             </div>
                         </div>
                     </div>
@@ -84,28 +108,5 @@
         </div>
     </div>
 
-    <div class="col-sm-3 col-md-3 col-lg-3">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-
-                <div class="panel panel-info">
-                    <div class="panel-heading"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Manage Consent Forms</div>
-                    <div class="panel-body text-center">
-                        @Html.RouteLink("Consent Forms", "ManageForms", new { }, new { @class = "btn btn-info" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Consent Form</div>
-                    <div class="panel-body">
-                        @{Html.RenderPartial("~/Views/Partials/ConsentForms/_ConsentFormForm.cshtml");}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 

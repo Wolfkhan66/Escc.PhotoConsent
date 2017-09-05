@@ -16,7 +16,7 @@
 <div class="row">
     <p></p>
     <div class="col-sm-9 col-md-9 col-lg-9">
-        <div class="panel panel-warning">
+        <div class="panel panel-info">
             <div class="panel-heading"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Manage Photographers </div>
             <div class="panel-body">
                 <ul>
@@ -33,7 +33,7 @@
             <div class="panel panel-default text-center">
                 <div class="panel-heading"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Forms/Comm Officers</div>
                 <div class="panel-body">
-                    @Html.RouteLink("View All Forms ", "ManageForms", new { }, new { @class = "btn btn-info" })
+                    @Html.RouteLink("View All Forms ", "ManageForms", new { }, new { @class = "btn btn-primary" })
                     @Html.RouteLink("Comm Officers", "ManageCommOfficers", new { }, new { @class = "btn btn-danger" })
                 </div>
             </div>
@@ -52,9 +52,7 @@
 <p></p>
 <div class="row">
     <div class="panel panel-warning">
-        <div class="panel-heading">
-            <h3 class="panel-title"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photographers</h3>
-        </div>
+        <div class="panel-heading"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photographers</div>
         <div class="panel-body">
             @{Html.RenderPartial("~/Views/Partials/_DataTable.cshtml", Model.Photographers);}
         </div>
