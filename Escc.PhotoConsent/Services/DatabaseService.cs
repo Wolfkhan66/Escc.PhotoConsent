@@ -226,11 +226,26 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new ParticipantModel();
-                    model.ContactNumber = (string)reader["ContactNumber"];
-                    model.Email = (string)reader["Email"];
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.ParticipantID = (int)reader["ParticipantID"];
+                    try
+                    {
+                        model.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        model.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Email = "";
+                    }
 
                     Participants.Add(model);
                 }
@@ -255,11 +270,27 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new ParticipantModel();
-                    model.ContactNumber = (string)reader["ContactNumber"];
-                    model.Email = (string)reader["Email"];
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.ParticipantID = (int)reader["ParticipantID"];
+
+                    try
+                    {
+                        model.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        model.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Email = "";
+                    }
 
                     Participants.Add(model);
                 }
@@ -305,11 +336,27 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new CommissioningOfficerModel();
-                    model.ContactNumber = (string)reader["ContactNumber"];
-                    model.Email = (string)reader["Email"];
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.OfficerID = (int)reader["OfficerID"];
+
+                    try
+                    {
+                        model.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        model.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Email = "";
+                    }
 
                     Officers.Add(model);
                 }
@@ -334,11 +381,27 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new CommissioningOfficerModel();
-                    model.ContactNumber = (string)reader["ContactNumber"];
-                    model.Email = (string)reader["Email"];
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.OfficerID = (int)reader["OfficerID"];
+
+                    try
+                    {
+                        model.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        model.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Email = "";
+                    }
 
                     Officers.Add(model);
                 }
@@ -362,11 +425,27 @@ namespace Escc.PhotoConsent.Services
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
                 {
-                    Officer.ContactNumber = (string)reader["ContactNumber"];
-                    Officer.Email = (string)reader["Email"];
                     Officer.FormID = (int)reader["FormID"];
                     Officer.Name = (string)reader["Name"];
                     Officer.OfficerID = (int)reader["OfficerID"];
+
+                    try
+                    {
+                        Officer.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        Officer.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        Officer.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        Officer.Email = "";
+                    }
                 }
                 cn.Close();
             }
@@ -409,11 +488,27 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new PhotographerModel();
-                    model.ContactNumber = (string)reader["ContactNumber"];
-                    model.Email = (string)reader["Email"];
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.PhotographerID = (int)reader["PhotographerID"];
+
+                    try
+                    {
+                        model.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        model.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Email = "";
+                    }
 
                     Photographers.Add(model);
                 }
@@ -438,12 +533,27 @@ namespace Escc.PhotoConsent.Services
                 while (reader.Read())
                 {
                     var model = new PhotographerModel();
-                    model.ContactNumber = (string)reader["ContactNumber"];
-                    model.Email = (string)reader["Email"];
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.PhotographerID = (int)reader["PhotographerID"];
 
+                    try
+                    {
+                        model.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        model.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        model.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        model.Email = "";
+                    }
                     Photographers.Add(model);
                 }
                 cn.Close();
@@ -466,11 +576,26 @@ namespace Escc.PhotoConsent.Services
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
                 {
-                    Photographer.ContactNumber = (string)reader["ContactNumber"];
-                    Photographer.Email = (string)reader["Email"];
                     Photographer.FormID = (int)reader["FormID"];
                     Photographer.Name = (string)reader["Name"];
                     Photographer.PhotographerID = (int)reader["PhotographerID"];
+                    try
+                    {
+                        Photographer.ContactNumber = (string)reader["ContactNumber"];
+                    }
+                    catch (Exception)
+                    {
+                        Photographer.ContactNumber = "";
+                    }
+
+                    try
+                    {
+                        Photographer.Email = (string)reader["Email"];
+                    }
+                    catch (Exception)
+                    {
+                        Photographer.Email = "";
+                    }
                 }
                 cn.Close();
             }
