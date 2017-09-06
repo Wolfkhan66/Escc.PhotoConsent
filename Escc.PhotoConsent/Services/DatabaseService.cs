@@ -42,9 +42,9 @@ namespace Escc.PhotoConsent.Services
         }
 
         /// <summary>
-        /// Run query to get form ID form by Project Reference, Date Created and Created By
+        /// Run query to get form ID by GUID
         /// </summary>
-        /// <param name="ProjectReference, DateCreated, CreatedBy">string, DateTime, string </param>
+        /// <param name="GUID">Guid </param>
         public int GetFormIDByGuid(Guid GUID)
         {
             int FormID = 0;
@@ -257,7 +257,6 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run a query to get all participants
         /// </summary>
-        /// <param name="FormID"> int </param>
         public List<ParticipantModel> GetParticipants()
         {
             var Participants = new List<ParticipantModel>();
@@ -304,7 +303,7 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run SP to input a Commissioning Officer into the database
         /// </summary>
-        /// <param name="model">ConsentFormModel - </param>
+        /// <param name="model">CommissioningOfficerModel - </param>
         public void InsertCommissioningOfficer(CommissioningOfficerModel model)
         {
             _db.Execute("EXEC InsertCommissioningOfficer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
@@ -368,7 +367,6 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run a query to get all Officers
         /// </summary>
-        /// <param name="FormID"> int </param>
         public List<CommissioningOfficerModel> GetOfficers()
         {
             var Officers = new List<CommissioningOfficerModel>();
@@ -413,7 +411,7 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run a query to get a single Officer by id
         /// </summary>
-        /// <param name="FormID"> int </param>
+        /// <param name="OfficerID"> int </param>
         public CommissioningOfficerModel GetOfficerByID(int OfficerID)
         {
             var Officer = new CommissioningOfficerModel();
@@ -457,7 +455,7 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run SP to input a Photographer into the database
         /// </summary>
-        /// <param name="model">ConsentFormModel - </param>
+        /// <param name="model">PhotographerModel - </param>
         public void InsertPhotographer(PhotographerModel model)
         {
             _db.Execute("EXEC InsertPhotographer @FormID, @Name, @Email, @ContactNumber", new { model.FormID, model.Name, model.Email, model.ContactNumber });        
@@ -520,7 +518,6 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run a query to get all Photographers
         /// </summary>
-        /// <param name="FormID"> int </param>
         public List<PhotographerModel> GetPhotographers()
         {
             var Photographers = new List<PhotographerModel>();
@@ -564,7 +561,7 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run a query to get a Photographer by Id
         /// </summary>
-        /// <param name="FormID"> int </param>
+        /// <param name="PhotographerID"> int </param>
         public PhotographerModel GetPhotographerByID(int PhotographerID)
         {
             var Photographer = new PhotographerModel();
@@ -607,7 +604,7 @@ namespace Escc.PhotoConsent.Services
         /// <summary>
         /// Run SP to input an image into the database
         /// </summary>
-        /// <param name="model">ConsentFormModel - </param>
+        /// <param name="model">PhotoModel - </param>
         public void InsertPhoto(PhotoModel model)
         {
             _db.Execute("EXEC InsertPhoto @ParticipantID, @Image", new { model.ParticipantID, model.Image });
