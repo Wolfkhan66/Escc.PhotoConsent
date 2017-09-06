@@ -86,38 +86,10 @@ namespace Escc.PhotoConsent.Services
                     model.GUID = Guid.Parse(reader["GUID"].ToString());
                     model.Deleted = (bool)reader["Deleted"];
 
-                    try
-                    {
-                        model.DateSubmitted = (string)reader["DateSubmitted"];
-                    }
-                    catch (Exception)
-                    {
-                        model.DateSubmitted = "";
-                    }
-                    try
-                    {
-                        model.Notes = (string)reader["Notes"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Notes = "";
-                    }
-                    try
-                    {
-                        model.ProjectName = (string)reader["ProjectName"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ProjectName = "";
-                    }
-                    try
-                    {
-                        model.PaymoNumber = (string)reader["PaymoNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.PaymoNumber = "";
-                    }
+                    model.DateSubmitted = reader["DateSubmitted"] == DBNull.Value ? "" : (string)reader["DateSubmitted"];
+                    model.Notes = reader["Notes"] == DBNull.Value ? "" : (string)reader["Notes"];
+                    model.ProjectName = reader["ProjectName"] == DBNull.Value ? "" : (string)reader["ProjectName"];
+                    model.PaymoNumber = reader["PaymoNumber"] == DBNull.Value ? "" : (string)reader["PaymoNumber"];
 
                     form = model;
                 }
@@ -148,38 +120,10 @@ namespace Escc.PhotoConsent.Services
                     model.GUID = Guid.Parse(reader["GUID"].ToString());
                     model.Deleted = (bool)reader["Deleted"];
 
-                    try
-                    {
-                        model.DateSubmitted = (string)reader["DateSubmitted"];
-                    }
-                    catch (Exception)
-                    {
-                        model.DateSubmitted = "";
-                    }
-                    try
-                    {
-                        model.Notes = (string)reader["Notes"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Notes = "";
-                    }
-                    try
-                    {
-                        model.ProjectName = (string)reader["ProjectName"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ProjectName = "";
-                    }
-                    try
-                    {
-                        model.PaymoNumber = (string)reader["PaymoNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.PaymoNumber = "";
-                    }
+                    model.DateSubmitted = reader["DateSubmitted"] == DBNull.Value ? "" : (string)reader["DateSubmitted"];
+                    model.Notes = reader["Notes"] == DBNull.Value ? "" : (string)reader["Notes"];
+                    model.ProjectName = reader["ProjectName"] == DBNull.Value ? "" : (string)reader["ProjectName"];
+                    model.PaymoNumber = reader["PaymoNumber"] == DBNull.Value ? "" : (string)reader["PaymoNumber"];
 
                     forms.Add(model);
                 }
@@ -229,23 +173,9 @@ namespace Escc.PhotoConsent.Services
                     model.FormID = (int)reader["FormID"];
                     model.Name = (string)reader["Name"];
                     model.ParticipantID = (int)reader["ParticipantID"];
-                    try
-                    {
-                        model.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ContactNumber = "";
-                    }
 
-                    try
-                    {
-                        model.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Email = "";
-                    }
+                    model.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    model.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
 
                     Participants.Add(model);
                 }
@@ -273,23 +203,8 @@ namespace Escc.PhotoConsent.Services
                     model.Name = (string)reader["Name"];
                     model.ParticipantID = (int)reader["ParticipantID"];
 
-                    try
-                    {
-                        model.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ContactNumber = "";
-                    }
-
-                    try
-                    {
-                        model.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Email = "";
-                    }
+                    model.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    model.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
 
                     Participants.Add(model);
                 }
@@ -339,23 +254,8 @@ namespace Escc.PhotoConsent.Services
                     model.Name = (string)reader["Name"];
                     model.OfficerID = (int)reader["OfficerID"];
 
-                    try
-                    {
-                        model.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ContactNumber = "";
-                    }
-
-                    try
-                    {
-                        model.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Email = "";
-                    }
+                    model.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    model.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
 
                     Officers.Add(model);
                 }
@@ -383,23 +283,8 @@ namespace Escc.PhotoConsent.Services
                     model.Name = (string)reader["Name"];
                     model.OfficerID = (int)reader["OfficerID"];
 
-                    try
-                    {
-                        model.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ContactNumber = "";
-                    }
-
-                    try
-                    {
-                        model.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Email = "";
-                    }
+                    model.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    model.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
 
                     Officers.Add(model);
                 }
@@ -427,23 +312,8 @@ namespace Escc.PhotoConsent.Services
                     Officer.Name = (string)reader["Name"];
                     Officer.OfficerID = (int)reader["OfficerID"];
 
-                    try
-                    {
-                        Officer.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        Officer.ContactNumber = "";
-                    }
-
-                    try
-                    {
-                        Officer.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        Officer.Email = "";
-                    }
+                    Officer.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    Officer.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
                 }
                 cn.Close();
             }
@@ -490,23 +360,8 @@ namespace Escc.PhotoConsent.Services
                     model.Name = (string)reader["Name"];
                     model.PhotographerID = (int)reader["PhotographerID"];
 
-                    try
-                    {
-                        model.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ContactNumber = "";
-                    }
-
-                    try
-                    {
-                        model.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Email = "";
-                    }
+                    model.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    model.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
 
                     Photographers.Add(model);
                 }
@@ -534,23 +389,9 @@ namespace Escc.PhotoConsent.Services
                     model.Name = (string)reader["Name"];
                     model.PhotographerID = (int)reader["PhotographerID"];
 
-                    try
-                    {
-                        model.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        model.ContactNumber = "";
-                    }
+                    model.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    model.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
 
-                    try
-                    {
-                        model.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        model.Email = "";
-                    }
                     Photographers.Add(model);
                 }
                 cn.Close();
@@ -576,23 +417,10 @@ namespace Escc.PhotoConsent.Services
                     Photographer.FormID = (int)reader["FormID"];
                     Photographer.Name = (string)reader["Name"];
                     Photographer.PhotographerID = (int)reader["PhotographerID"];
-                    try
-                    {
-                        Photographer.ContactNumber = (string)reader["ContactNumber"];
-                    }
-                    catch (Exception)
-                    {
-                        Photographer.ContactNumber = "";
-                    }
 
-                    try
-                    {
-                        Photographer.Email = (string)reader["Email"];
-                    }
-                    catch (Exception)
-                    {
-                        Photographer.Email = "";
-                    }
+                    Photographer.ContactNumber = reader["ContactNumber"] == DBNull.Value ? "" : (string)reader["ContactNumber"];
+                    Photographer.Email = reader["Email"] == DBNull.Value ? "" : (string)reader["Email"];
+
                 }
                 cn.Close();
             }
